@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207064758) do
+ActiveRecord::Schema.define(version: 20160207074711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,26 @@ ActiveRecord::Schema.define(version: 20160207064758) do
   add_index "applications", ["membership_id"], name: "index_applications_on_membership_id", using: :btree
   add_index "applications", ["state_id"], name: "index_applications_on_state_id", using: :btree
   add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
+
+  create_table "membership_requests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "membership_id"
+    t.date     "startdate"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "membership_requests", ["membership_id"], name: "index_membership_requests_on_membership_id", using: :btree
+  add_index "membership_requests", ["user_id"], name: "index_membership_requests_on_user_id", using: :btree
+
+  create_table "membership_types", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "price"
+    t.boolean  "recurring"
+    t.boolean  "autoapprove"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "memberships", force: :cascade do |t|
     t.string   "name"
@@ -77,4 +97,6 @@ ActiveRecord::Schema.define(version: 20160207064758) do
   add_foreign_key "applications", "memberships"
   add_foreign_key "applications", "states"
   add_foreign_key "applications", "users"
+  add_foreign_key "membership_requests", "memberships"
+  add_foreign_key "membership_requests", "users"
 end
