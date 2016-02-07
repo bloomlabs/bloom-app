@@ -3,6 +3,7 @@ class CreateMembershipTypes < ActiveRecord::Migration
     create_table :membership_types do |t|
       t.string :name
       t.integer :price
+      t.string :stripe_id
       t.boolean :recurring
       t.boolean :autoapprove
 

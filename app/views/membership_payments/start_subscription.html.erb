@@ -1,0 +1,17 @@
+<% if flash[:error].present? %>
+    <div id="error_explanation">
+      <p><%= flash[:error] %></p>
+    </div>
+<% end %>
+<%= form_tag(controller: "membership_payments", action: "capture_subscription", method: "post") do %>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-name="Bloom <%= @membership_type.name %> Subscription"
+            data-description="Subscribe (<%= number_to_currency(@membership_type.price/100) %> per month)"
+            data-panel-label="Subscribe"
+            data-label="Subscribe"
+            data-amount="<%= @membership_type.price %>"
+            data-allow-remember-me="false">
+    </script>
+<% end %>

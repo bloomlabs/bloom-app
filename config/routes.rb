@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  post 'membership_payments/stripe_webhook'
+  get 'membership_payments/capture_subscription'
+  get 'membership_payments/pay_single'
+  get 'membership_payments/start_subscription'
+  get 'membership_payments/cancel_subscription'
+
   resources :membership_types
   resources :membership_requests
   resources :users
