@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @membership_type.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @membership_type.price %>
+</p>
+
+<p>
+  <strong>Recurring:</strong>
+  <%= @membership_type.recurring %>
+</p>
+
+<p>
+  <strong>Autoapprove:</strong>
+  <%= @membership_type.autoapprove %>
+</p>
+
+<%= link_to 'Edit', edit_membership_type_path(@membership_type) %> |
+<%= link_to 'Back', membership_types_path %>

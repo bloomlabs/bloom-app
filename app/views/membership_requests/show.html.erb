@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @membership_request.user %>
+</p>
+
+<p>
+  <strong>Membership:</strong>
+  <%= @membership_request.membership %>
+</p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @membership_request.startdate %>
+</p>
+
+<%= link_to 'Edit', edit_membership_request_path(@membership_request) %> |
+<%= link_to 'Back', membership_requests_path %>
