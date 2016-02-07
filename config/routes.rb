@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
+  resources :membership_types
+  resources :membership_requests
   resources :users
-  resources :states
-  resources :applications
-  resources :memberships
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
