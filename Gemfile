@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'paper_trail'
+gem 'workflow'
 
 #For some nice CSS I hope
 gem 'bourbon'
