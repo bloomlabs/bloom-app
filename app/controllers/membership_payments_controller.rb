@@ -53,7 +53,7 @@ class MembershipPaymentsController < ApplicationController
     membership_type = MembershipType.find_by(id: params[:type_id])
     token = params[:stripeToken]
     stripe_email = params[:stripeEmail]
-    if membership_type == nil or token == nil or stripe_email == nil or !membership_type.recurring
+    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring
       render nil, status: 500
       return
     end
