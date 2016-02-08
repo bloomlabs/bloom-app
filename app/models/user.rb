@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
     !self.stripe_customer_id.nil? and !self.stripe_subscription_id.nil?
   end
 
+  def latest_request
+    membership_requests.order(created_at: :desc).first
+  end
+
   def stripe_customer
     Stripe::Customer.retrieve(self.stripe_customer_id)
   end
