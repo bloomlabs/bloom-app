@@ -3,7 +3,8 @@
       <p><%= flash[:error] %></p>
     </div>
 <% end %>
-<%= form_tag(controller: "membership_payments", action: "capture_subscription", method: "post") do %>
+<%= form_tag(controller: 'membership_payments', action: 'capture_subscription', method: 'post') do %>
+    <input type="hidden" value="<%= @membership_type.id %>" name="type_id">
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

@@ -1,2 +1,18 @@
-<h1>MembershipPayments#pay_single</h1>
-<p>Find me in app/views/membership_payments/pay_single.html.erb</p>
+<% if flash[:error].present? %>
+    <div id="error_explanation">
+      <p><%= flash[:error] %></p>
+    </div>
+<% end %>
+<%= form_tag(controller: 'membership_payments', action: 'capture_single', method: 'post') do %>
+    <input type="hidden" value="<%= @membership_type.id %>" name="type_id">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-name="<%= @membership_type.name %>"
+            data-description="Pay for a semester (<%= number_to_currency(@membership_type.price/100) %>)"
+            data-panel-label="Pay"
+            data-label="Pay"
+            data-amount="<%= @membership_type.price %>"
+            data-allow-remember-me="false">
+    </script>
+<% end %>

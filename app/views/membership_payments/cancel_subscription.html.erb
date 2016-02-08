@@ -1,2 +1,7 @@
-<h1>MembershipPayments#cancel_subscription</h1>
-<p>Find me in app/views/membership_payments/cancel_subscription.html.erb</p>
+<h1>Cancel subscription</h1>
+<%= form_tag(controller: 'membership_payments', action: 'process_cancel_subscription') do %>
+  <h3>We're sorry to see you go!</h3>
+  <p>Please tell us why you're leaving so we can make our services better.</p>
+  <textarea name="feedback" placeholder="Feedback (optional)"></textarea>
+  <button type="submit">Submit</button>
+<% end %>

@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20160207082117) do
 
   create_table "membership_types", force: :cascade do |t|
     t.string   "name"
+    t.string   "stripe_id"
     t.integer  "price"
     t.boolean  "recurring"
     t.boolean  "autoapprove"
@@ -69,6 +70,8 @@ ActiveRecord::Schema.define(version: 20160207082117) do
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
+    t.string   "stripe_customer_id"
+    t.string   "stripe_subscription_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
