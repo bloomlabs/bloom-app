@@ -25,10 +25,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'paper_trail'
+gem 'workflow'
 
 #For some nice CSS I hope
 gem 'bourbon'
 gem 'neat'
+
+gem 'stripe'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
