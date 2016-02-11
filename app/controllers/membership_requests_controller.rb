@@ -26,6 +26,9 @@ class MembershipRequestsController < ApplicationController
   def create
     @membership_request = MembershipRequest.new(membership_request_params)
 
+    #TODO
+    #Check the fields of the form to make sure they are legit by placing rules in the model
+
     respond_to do |format|
       if @membership_request.save
         format.html { redirect_to @membership_request, notice: 'Membership request was successfully created.' }
