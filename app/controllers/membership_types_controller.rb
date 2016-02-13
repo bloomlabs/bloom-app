@@ -1,5 +1,6 @@
 class MembershipTypesController < ApplicationController
   before_action :set_membership_type, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /membership_types
   # GET /membership_types.json

@@ -1,5 +1,6 @@
 class MembershipPaymentsController < ApplicationController
   protect_from_forgery :except => :stripe_webhook
+  before_action :authenticate_user!
 
   require 'json'
 
