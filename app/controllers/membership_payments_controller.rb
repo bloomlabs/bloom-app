@@ -11,7 +11,7 @@ class MembershipPaymentsController < ApplicationController
         return
       end
       deleted_user.stripe_subscription_id = nil
-      deleted_user.latest_request.fire_state_event(:cancel)
+      deleted_user.latest_request.cancel!
       deleted_user.save
     end
     status 200
@@ -41,12 +41,12 @@ class MembershipPaymentsController < ApplicationController
           :source => token,
           :description => current_user.email
       )
-      current_user.latest_request.fire_state_event(:paid)
+      current_user.latest_request.paid!
       current_user.save
       redirect_to payment_confirmation, type_id: params[:type_id]
     rescue => e
       flash[:error] = 'Error charging supplied card.'
-      current_user.latest_request.fire_state_event(:payment_failed)
+      current_user.latest_request.payment_failed!
       current_user.save
       redirect_to pay_single, type_id: params[:type_id]
     end
@@ -71,7 +71,7 @@ class MembershipPaymentsController < ApplicationController
       return
     end
     current_user.set_subscription!(membership_type.stripe_id)
-    current_user.latest_request.fire_state_event(:paid)
+    current_user.latest_request.paid!
     current_user.save
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
   end
@@ -91,7 +91,7 @@ class MembershipPaymentsController < ApplicationController
   def process_cancel_subscription
     if current_user.has_subscription?
       current_user.delete_current_subscription
-      current_user.latest_request.fire_state_event(:cancel)
+      current_user.latest_request.cancel!
       current_user.save
     end
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
