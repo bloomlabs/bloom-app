@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213090318) do
+ActiveRecord::Schema.define(version: 20160213143229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 20160213090318) do
   create_table "membership_requests", force: :cascade do |t|
     t.integer  "user_id"
     t.date     "startdate"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "workflow_state"
     t.integer  "membership_type_id"
+    t.boolean  "closed",             default: false
   end
 
   add_index "membership_requests", ["membership_type_id"], name: "index_membership_requests_on_membership_type_id", using: :btree
@@ -68,20 +69,21 @@ ActiveRecord::Schema.define(version: 20160213090318) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "firstname"
     t.string   "lastname"
+    t.boolean  "staff",                  default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
