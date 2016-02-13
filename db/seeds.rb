@@ -6,4 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-State.create(name: "")
+# Create example users
+User.create(firstname: 'Staff', lastname: 'User', email: 'staff@example.com', staff: true, password: '12345678', password_confirmation: '12345678')
+User.create(firstname: 'Normal', lastname: 'User', email: 'user@example.com', staff: false, password: '12345678', password_confirmation: '12345678')
+
+# Recurring memberships have a stripe ID but no price (pricing is stored in the stripe subscription information)
+MembershipType.create(name: 'Reviewed Member', stripe_id: '1', recurring: true, autoapprove: false)
+
+# Once-off memberships have a price but no stripe ID
+MembershipType.create(name: 'Community Member', price: 1000, recurring: false, autoapprove: true)
