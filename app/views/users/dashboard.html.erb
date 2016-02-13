@@ -1,0 +1,8 @@
+<h1>User Dashboard</h1>
+
+<p>
+  <%= @user.email %> <br>
+  <%= @user.display_name %> <br>
+</p>
+
+<%= link_to "Apply to be a member", new_membership_request_path %>

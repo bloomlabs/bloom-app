@@ -3,8 +3,12 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+         # confirmable - confirm account through emails?
 
   has_many :membership_requests
+
+  validates :firstname, presence: true, length: { in: 2..35 }
+  validates :lastname, presence: true, length: { in: 2..35 }
 
   def has_subscription?
     !self.stripe_customer_id.nil? and !self.stripe_subscription_id.nil?
@@ -48,5 +52,14 @@ class User < ActiveRecord::Base
       )
       self.stripe_subscription_id = sub.id
     end
+  end
+
+  def display_name
+    return "#{self.firstname} #{self.lastname}".titleize
+  end
+
+  # Use front-end helpers in the model for certain formatting
+  def helper
+    ActionController::Base.helpers
   end
 end

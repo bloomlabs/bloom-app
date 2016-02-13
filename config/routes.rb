@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  
+
   post 'membership_payments/stripe_webhook'
   authenticate :user do
     get 'dashboard/dashboard'
@@ -16,7 +16,12 @@ Rails.application.routes.draw do
 
   resources :membership_types
   resources :membership_requests
-  resources :users
+
+  resources :users do 
+    member do
+      get :dashboard
+    end
+  end
 
   get 'welcome/index'
 
