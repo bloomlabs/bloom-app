@@ -1,4 +1,5 @@
 class MembershipRequestsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_membership_request, only: [:show, :edit, :update, :destroy]
 
   # GET /membership_requests

@@ -35,7 +35,6 @@ class Ability
     else
       can :create, MembershipRequest
       can :read, MembershipRequest, :user_id => user.id
-      can :update, MembershipRequest, :user_id => user.id
     end
   end
 end
