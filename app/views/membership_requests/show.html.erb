@@ -15,5 +15,10 @@
   <%= @membership_request.startdate %>
 </p>
 
+<p>
+  <strong>Application status:</strong>
+  <%= @membership_request.workflow_state %>
+</p>
+
 <%= link_to 'Edit', edit_membership_request_path(@membership_request) %> |
 <%= link_to 'Back', membership_requests_path %>
