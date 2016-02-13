@@ -9,6 +9,13 @@ class MembershipRequest < ActiveRecord::Base
   validates :user_id, presence: true
   validates :membership_type_id, presence: true
   validates :startdate, presence: true
+  validate :only_one_open_application
+
+  def only_one_open_application
+    if MembershipRequest.where(user_id: user_id, closed: false, membership_type_id: membership_type_id).count != 0
+      errors.add(:base, "you may only have one application per membership type open at a time")
+    end
+  end
 
   workflow do
     state :new do
@@ -64,11 +71,17 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def expired
+    self.closed = true
     puts 'TODO: Expired!!!'
   end
 
   def reject
+    self.closed = true
     puts 'TODO: Send reject email'
+  end
+
+  def cancelled
+    self.closed = true
   end
 
 end
