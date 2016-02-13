@@ -12,13 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
+    <%= f.label :membership_type_id %><br>
+    <%= f.select(:membership_type_id, MembershipType.all.collect {|a| [a.name, a.id]}) %>
   </div>
-  <div class="field">
-    <%= f.label :membership_id %><br>
-    <%= f.text_field :membership_id %>
-  </div>
+
   <div class="field">
     <%= f.label :startdate %><br>
     <%= f.date_select :startdate %>

@@ -24,14 +24,15 @@ class MembershipRequestsController < ApplicationController
   # POST /membership_requests
   # POST /membership_requests.json
   def create
-    @membership_request = MembershipRequest.new(membership_request_params)
+    @membership_request = current_user.membership_requests.build(membership_request_params)
 
     #TODO
     #Check the fields of the form to make sure they are legit by placing rules in the model
 
     respond_to do |format|
       if @membership_request.save
-        format.html { redirect_to @membership_request, notice: 'Membership request was successfully created.' }
+        format.html { redirect_to dashboard_user_path(current_user), notice: 'Membership request was successfully submitted.' }
+        # Email bloom admin - or account notification or something...
         format.json { render :show, status: :created, location: @membership_request }
       else
         format.html { render :new }
@@ -72,6 +73,6 @@ class MembershipRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def membership_request_params
-      params.require(:membership_request).permit(:user_id, :membership_id, :startdate)
+      params.require(:membership_request).permit(:user_id, :membership_type_id, :startdate)
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213073119) do
+ActiveRecord::Schema.define(version: 20160213090318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,14 +31,14 @@ ActiveRecord::Schema.define(version: 20160213073119) do
 
   create_table "membership_requests", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "membership_id"
     t.date     "startdate"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "workflow_state"
+    t.integer  "membership_type_id"
   end
 
-  add_index "membership_requests", ["membership_id"], name: "index_membership_requests_on_membership_id", using: :btree
+  add_index "membership_requests", ["membership_type_id"], name: "index_membership_requests_on_membership_type_id", using: :btree
   add_index "membership_requests", ["user_id"], name: "index_membership_requests_on_user_id", using: :btree
 
   create_table "membership_types", force: :cascade do |t|
@@ -101,6 +101,6 @@ ActiveRecord::Schema.define(version: 20160213073119) do
   add_foreign_key "applications", "memberships"
   add_foreign_key "applications", "states"
   add_foreign_key "applications", "users"
-  add_foreign_key "membership_requests", "memberships"
+  add_foreign_key "membership_requests", "membership_types"
   add_foreign_key "membership_requests", "users"
 end
