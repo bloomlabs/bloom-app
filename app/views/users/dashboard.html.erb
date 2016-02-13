@@ -6,7 +6,7 @@
 </p>
 
 <% @user.membership_requests.each do |request| %>
-  <%= link_to "#{request.membership_type.name}##{request.id}", edit_membership_request_path(request) %> <br>
+  <%= link_to "#{request.membership_type.name}##{request.id}", request %> <br>
 <% end %>
 
 <% if not @user.membership_requests.any? %>

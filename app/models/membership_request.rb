@@ -6,6 +6,10 @@ class MembershipRequest < ActiveRecord::Base
   belongs_to :user
   belongs_to :membership_type
 
+  validates :user_id, presence: true
+  validates :membership_type_id, presence: true
+  validates :startdate, presence: true
+
   workflow do
     state :new do
       event :submit, transitions_to: :book_interview
