@@ -9,6 +9,4 @@
   <%= link_to "#{request.membership_type.name}##{request.id}", request %> <br>
 <% end %>
 
-<% if not @user.membership_requests.any? %>
-  <%= link_to "Apply to be a member", new_membership_request_path %>
-<% end %>
+<%= link_to "Apply to be a member", new_membership_request_path %>
