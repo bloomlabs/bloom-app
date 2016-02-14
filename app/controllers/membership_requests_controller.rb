@@ -74,7 +74,13 @@ class MembershipRequestsController < ApplicationController
   # Workflow views
 
   def workflow_new
+    if request.post?
+      @membership_request.info = params[:info]
+      @membership_request.save()
 
+      @membership_request.submit!
+      redirect_to membership_request_path(@membership_request)
+    end
   end
 
   def workflow_book_interview

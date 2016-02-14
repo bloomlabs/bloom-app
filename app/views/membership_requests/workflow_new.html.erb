@@ -1,0 +1,9 @@
+<%= render 'workflow_header' %>
+
+<p>Can you tell us a bit more about your startup?</p>
+<%= form_tag do %>
+    <%= text_area_tag(:info) %>
+    <%= submit_tag("Continue") %>
+<% end %>
+
+<%= render 'workflow_footer' %>
