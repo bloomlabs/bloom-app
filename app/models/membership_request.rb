@@ -17,10 +17,20 @@ class MembershipRequest < ActiveRecord::Base
     end
   end
 
+  after_create :autoapprove_check
+
+  # We advance the application to the payment stage if autoapprove is on for the given membership type
+  def autoapprove_check
+    if self.membership_type.autoapprove?
+      self.autoapprove!
+    end
+  end
+
   workflow do
     state :new do
       event :submit, transitions_to: :book_interview
       event :cancel, transitions_to: :cancelled
+      event :autoapprove, transitions_to: :payment_required
     end
 
     state :book_interview do
@@ -48,6 +58,10 @@ class MembershipRequest < ActiveRecord::Base
     state :rejected
     state :cancelled
     state :expired
+  end
+
+  def autoapprove
+    puts 'TODO: Autoapprove yay!'
   end
 
   def booked
