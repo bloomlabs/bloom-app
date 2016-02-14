@@ -12,7 +12,7 @@ class MembershipRequest < ActiveRecord::Base
   validate :only_one_open_application
 
   def only_one_open_application
-    if MembershipRequest.where(user_id: user_id, closed: false, membership_type_id: membership_type_id).count != 0
+    if MembershipRequest.where(user_id: user_id, closed: false, membership_type_id: membership_type_id).where.not(id: id).count != 0
       errors.add(:base, "you may only have one application per membership type open at a time")
     end
   end
