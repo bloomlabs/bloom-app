@@ -64,9 +64,9 @@ class MembershipRequestsController < ApplicationController
   # DELETE /membership_requests/1
   # DELETE /membership_requests/1.json
   def destroy
-    @membership_request.destroy
+    @membership_request.cancel!
     respond_to do |format|
-      format.html { redirect_to membership_requests_url, notice: 'Membership request was successfully destroyed.' }
+      format.html { redirect_to membership_requests_url, notice: 'Membership request was successfully cancelled' }
       format.json { head :no_content }
     end
   end
