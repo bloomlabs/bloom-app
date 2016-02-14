@@ -32,7 +32,7 @@ gem 'bourbon'
 gem 'neat'
 
 gem 'stripe'
-gem 'cancan'
+gem 'cancancan'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

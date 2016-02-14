@@ -35,6 +35,15 @@ class Ability
     else
       can :create, MembershipRequest
       can :read, MembershipRequest, :user_id => user.id
+
+      can :workflow_new, MembershipRequest, :user_id => user.id
+      can :workflow_book_interview, MembershipRequest, :user_id => user.id
+      can :workflow_pending_decision, MembershipRequest, :user_id => user.id
+      can :workflow_payment_required, MembershipRequest, :user_id => user.id
+      can :workflow_current, MembershipRequest, :user_id => user.id
+      can :workflow_rejected, MembershipRequest, :user_id => user.id
+      can :workflow_cancelled, MembershipRequest, :user_id => user.id
+      can :workflow_expiredcan , MembershipRequest, :user_id => user.id
     end
   end
 end

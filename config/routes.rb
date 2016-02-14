@@ -14,8 +14,18 @@ Rails.application.routes.draw do
     get 'membership_payments/cancel_subscription'
   end
 
+
+
   resources :membership_types
-  resources :membership_requests
+
+  resources :membership_requests do
+    member do
+      MembershipRequest.workflow_spec.states.keys.each do |state|
+        get "stage/#{state}" => "membership_requests#workflow_#{state}", as: "workflow_#{state}"
+      end
+    end
+  end
+
 
   resources :users do 
     member do
