@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  # Track users who made changes to models
+  before_filter :set_paper_trail_whodunnit
+
   # Devise 
   def redirect_back_or(path)
     redirect_to request.referer || path
