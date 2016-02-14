@@ -37,7 +37,7 @@ class MembershipRequestsController < ApplicationController
 
     respond_to do |format|
       if @membership_request.save
-        format.html { redirect_to show_path(current_user), notice: 'Membership request was successfully submitted.' }
+        format.html { redirect_to membership_request_path(@membership_request.id), notice: 'Membership request was successfully submitted.' }
         # Email bloom admin - or account notification or something...
         format.json { render :show, status: :created, location: @membership_request }
       else
