@@ -21,8 +21,8 @@ class MembershipRequest < ActiveRecord::Base
 
   # We advance the application to the payment stage if autoapprove is on for the given membership type
   def autoapprove_check
-    if self.membership_type.autoapprove?
-      self.autoapprove!
+    if membership_type.autoapprove?
+      autoapprove!
     end
   end
 
