@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213143229) do
+ActiveRecord::Schema.define(version: 20160214114518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160213143229) do
     t.string   "workflow_state"
     t.integer  "membership_type_id"
     t.boolean  "closed",             default: false
+    t.text     "info"
   end
 
   add_index "membership_requests", ["membership_type_id"], name: "index_membership_requests_on_membership_type_id", using: :btree
