@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     member do
       MembershipRequest.workflow_spec.states.keys.each do |state|
         get "stage/#{state}" => "membership_requests#workflow_#{state}", as: "workflow_#{state}"
+        post "stage/#{state}" => "membership_requests#workflow_#{state}", as: "workflow_submit_#{state}"
       end
     end
   end
