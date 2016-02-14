@@ -46,6 +46,11 @@ class Ability
       can :workflow_rejected, MembershipRequest, :user_id => user.id
       can :workflow_cancelled, MembershipRequest, :user_id => user.id
       can :workflow_expired, MembershipRequest, :user_id => user.id
+
+      can :create, User
+      can :read, User, :id => user.id
+      can :update, User, :id => user.id
+      can :dashboard, User, :id => user.id
     end
   end
 end

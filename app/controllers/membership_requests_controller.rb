@@ -2,11 +2,17 @@ class MembershipRequestsController < ApplicationController
   load_and_authorize_resource
   before_action :set_membership_request, only: [:show, :edit, :update, :destroy]
   before_action :workflow_redirect
+  before_action :authenticate_user!
 
   # GET /membership_requests
   # GET /membership_requests.json
   def index
-    @membership_requests = MembershipRequest.all
+    if current_user.staff?
+      @membership_requests = MembershipRequest.all
+    else
+      @membership_requests = MembershipRequest.where(user_id: current_user.id)
+    end
+
   end
 
   # GET /membership_requests/1

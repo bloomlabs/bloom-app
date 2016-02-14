@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
   before_action :set_user, only: [:show, :edit, :update, :destroy, :dashboard]
 
   # GET /users
   # GET /users.json
   def index
+    if not current_user.staff?
+      redirect_to welcome_index_path
+    end
+
     @users = User.all
   end
 
