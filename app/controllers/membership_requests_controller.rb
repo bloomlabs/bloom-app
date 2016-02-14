@@ -89,7 +89,7 @@ class MembershipRequestsController < ApplicationController
 
   end
 
-  def workflow_current
+  def workflow_active_membership
 
   end
 

@@ -34,7 +34,7 @@ class MembershipRequest < ActiveRecord::Base
     end
 
     state :book_interview do
-      event :booked, transitions_to: :pending_decision
+      event :book, transitions_to: :pending_decision
       event :cancel, transitions_to: :cancelled
     end
 
@@ -45,13 +45,13 @@ class MembershipRequest < ActiveRecord::Base
     end
 
     state :payment_required do
-      event :paid, transitions_to: :current
+      event :pay, transitions_to: :active_membership
       event :cancel, transitions_to: :cancelled
     end
 
-    state :current do
-      event :payment_failed, transitions_to: :payment_required
-      event :expired, transitions_to: :expired
+    state :active_membership do
+      event :payment_fail, transitions_to: :payment_required
+      event :expire, transitions_to: :expired
       event :cancel, transitions_to: :cancelled
     end
 
@@ -64,38 +64,38 @@ class MembershipRequest < ActiveRecord::Base
     puts 'TODO: Autoapprove yay!'
   end
 
-  def booked
+  def book
     puts 'TODO: Send pre-interview email'
-  end
-
-  def cancel
-    puts 'TODO: Sorry to see you go email'
   end
 
   def accept
     puts 'TODO: Acceptance email, ask for payment'
   end
 
-  def paid
+  def pay
     puts 'TODO: Yay you\'re a member!'
   end
 
-  def payment_failed
+  def payment_fail
     puts 'TODO: Uh oh ya messed up'
   end
 
-  def expired
-    self.closed = true
+  def cancel
+    update_attribute(:closed, true)
+
+    puts 'TODO: Sorry to see you go email'
+  end
+
+  def expire
+    update_attribute(:closed, true)
+
     puts 'TODO: Expired!!!'
   end
 
   def reject
-    self.closed = true
-    puts 'TODO: Send reject email'
-  end
+    update_attribute(:closed, true)
 
-  def cancelled
-    self.closed = true
+    puts 'TODO: Send reject email'
   end
 
 end
