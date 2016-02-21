@@ -26,11 +26,6 @@ class User < ActiveRecord::Base
     self.stripe_customer.retrieve(self.stripe_subscription_id)
   end
 
-  def delete_current_subscription
-    stripe_subscription.delete
-    self.stripe_subscription_id = nil
-  end
-
   def ensure_customer!(token, email)
     if self.stripe_customer_id.nil?
       customer = Stripe::Customer.create(

@@ -26,6 +26,11 @@ class MembershipRequest < ActiveRecord::Base
     end
   end
 
+  def delete_subscription
+    stripe_subscription.delete
+    self.stripe_subscription_id = nil
+  end
+
   def set_subscription!(customer, plan_id)
     sub = customer.subscriptions.create(
         :plan => plan_id
