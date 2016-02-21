@@ -33,6 +33,7 @@ gem 'neat'
 
 gem 'stripe'
 gem 'cancancan'
+gem 'delayed_job_active_record'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -56,3 +57,10 @@ group :development do
   gem 'spring'
 end
 
+# Heroku
+gem 'rails_12factor', group: :production
+
+gem 'puma'
+
+# Explicit Ruby version
+ruby '2.2.1'
