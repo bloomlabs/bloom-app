@@ -10,25 +10,57 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require normalize-rails
  *= require_self
  */
-
 @import "bourbon";
 @import "base/base";
 @import "neat";
 
 body {
-    font-family: 'Muli', sans-serif;
+  font-family: 'Muli', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Arvo', sans-serif;
+  font-family: 'Arvo', sans-serif;
 }
 
 .bg-primary {
-    background-color: #03a9f4;;
+  background-color: #03a9f4;
 }
 
 .text-primary {
-    color: #03a9f4;
+  color: #03a9f4;
+}
+
+.bloom-header {
+  width: 100%;
+  background-color: #03a9f4;
+  height: 60px;
+}
+
+.bloom-logo {
+  height: 90%;
+  margin-top: 2px;
+}
+
+.bloom-container {
+  @include outer-container;
+  @include pad();
+  padding-top: 0;
+}
+
+.bloom-logo-container {
+  @include span-columns(2);
+  @include shift(1);
+  $mobile: new-breakpoint(max-width 500px 4);
+  @include media($mobile) {
+    @include span-columns(2);
+    @include shift(1);
+  }
+  text-align: center;
+  height: 60px;
+  padding: 0;
+  max-width: 100%;
+  display: inline-block;
 }

@@ -29,10 +29,12 @@ gem 'workflow'
 #For some nice CSS I hope
 gem 'bourbon'
 gem 'neat'
+gem 'normalize-rails'
 
 gem 'stripe'
 gem 'cancancan'
 gem 'delayed_job_active_record'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
