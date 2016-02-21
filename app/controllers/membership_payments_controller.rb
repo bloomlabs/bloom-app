@@ -60,7 +60,7 @@ class MembershipPaymentsController < ApplicationController
     membership_type = MembershipType.find_by(id: params[:type_id])
     token = params[:stripeToken]
     stripe_email = params[:stripeEmail]
-    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring
+    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring or current_user.has_subscription?
       render nil, status: 500
       return
     end
@@ -71,8 +71,9 @@ class MembershipPaymentsController < ApplicationController
       redirect_to start_subscription, type_id: params[:type_id]
       return
     end
-    current_user.set_subscription!(membership_type.stripe_id)
+    current_user.latest_request.set_subscription!(membership_type.stripe_id)
     current_user.latest_request.paid!
+    current_user.latest_request.save
     current_user.save
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
   end

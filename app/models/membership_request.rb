@@ -26,6 +26,13 @@ class MembershipRequest < ActiveRecord::Base
     end
   end
 
+  def set_subscription!(plan_id)
+    sub = Stripe::Subscription.create(
+        :plan => plan_id
+    )
+    self.stripe_subscription_id = sub.id
+  end
+
   workflow do
     state :new do
       event :submit, transitions_to: :book_interview

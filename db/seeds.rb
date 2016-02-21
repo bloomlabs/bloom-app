@@ -11,7 +11,8 @@ User.create(firstname: 'Staff', lastname: 'User', email: 'staff@example.com', st
 User.create(firstname: 'Normal', lastname: 'User', email: 'user@example.com', staff: false, password: '12345678', password_confirmation: '12345678')
 
 # Recurring memberships have a stripe ID but no price (pricing is stored in the stripe subscription information)
-MembershipType.create(name: 'Reviewed Member', stripe_id: '1', recurring: true, autoapprove: false)
+MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurring: true, autoapprove: false)
+MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', recurring: true, autoapprove: false)
 
 # Once-off memberships have a price but no stripe ID
 MembershipType.create(name: 'Community Member', price: 1000, recurring: false, autoapprove: true)

@@ -41,21 +41,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def set_subscription!(plan_id)
-    if has_subscription?
-      sub = stripe_subscription
-      sub.plan = plan_id
-      sub.save
-    else
-      sub = Stripe::Subscription.create(
-          :plan => plan_id
-      )
-      self.stripe_subscription_id = sub.id
-    end
-  end
-
   def display_name
-    return "#{self.firstname} #{self.lastname}".titleize
+    "#{self.firstname} #{self.lastname}".titleize
   end
 
   # Use front-end helpers in the model for certain formatting
