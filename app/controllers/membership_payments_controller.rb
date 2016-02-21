@@ -78,15 +78,6 @@ class MembershipPaymentsController < ApplicationController
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
   end
 
-  def start_subscription
-    @membership_type = MembershipType.find_by(id: params[:type_id])
-    if @membership_type == nil or !@membership_type.recurring or current_user.state?(:payment_required) or not current_user.latest_request.check_transition(:paid)
-      render nil, status: 500
-    else
-      # TODO: check if they are eligible to start the membership
-    end
-  end
-
   def cancel_subscription
   end
 

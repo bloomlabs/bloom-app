@@ -102,7 +102,7 @@ class MembershipRequestsController < ApplicationController
   end
 
   def workflow_payment_required
-
+    @membership_type = @membership_request.membership_type
   end
 
   def workflow_active_membership
