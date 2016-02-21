@@ -26,13 +26,16 @@ class User < ActiveRecord::Base
     self.stripe_customer.retrieve(self.stripe_subscription_id)
   end
 
-  def ensure_customer!(token, email)
+  def ensure_customer!(token)
     if self.stripe_customer_id.nil?
       customer = Stripe::Customer.create(
           :source => token,
           :email => email
       )
-      self.stripe_customer_id = customer.id
+      stripe_customer_id = customer.id
+      customer
+    else
+      stripe_customer
     end
   end
 

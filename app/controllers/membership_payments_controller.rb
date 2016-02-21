@@ -29,7 +29,7 @@ class MembershipPaymentsController < ApplicationController
     membership_type = membership_request.membership_type
     token = params[:stripeToken]
     stripe_email = params[:stripeEmail]
-    if membership_type == nil or token == nil or stripe_email == nil or !membership_type.recurring or membership_request.current_state != :payment_required
+    if membership_type == nil or token == nil or stripe_email == nil or membership_type.recurring or membership_request.current_state != :payment_required
       render nil, status: 500
       return
     end
@@ -61,14 +61,14 @@ class MembershipPaymentsController < ApplicationController
       return
     end
     begin
-      current_user.ensure_customer!(token, stripe_email)
+      stripe_customer = current_user.ensure_customer!(token)
     rescue => e
       puts e
       flash[:error] = 'Error with your details. Please make sure they are correct.'.freeze
       redirect_to membership_request_path(membership_request.id)
       return
     end
-    membership_request.set_subscription!(current_user.stripe_customer, membership_type.stripe_id)
+    membership_request.set_subscription!(stripe_customer, membership_type.stripe_id)
     membership_request.pay!
     membership_request.save
     current_user.save
