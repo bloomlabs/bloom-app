@@ -7,14 +7,19 @@ class MembershipPaymentsController < ApplicationController
 
   def stripe_webhook
     event = JSON.parse(request.body.read)
+    begin
+      Stripe::Event.retrieve(:id => event.id)
+    rescue => e
+      status 500 and return
+    end
     if params[:type] == 'customer.subscription.deleted'
-      deleted_user = User.find_by(stripe_subscription_id: params[:data][:object][:id])
-      if deleted_user.nil?
+      deleted_request = MembershipRequest.find_by(stripe_subscription_id: params[:data][:object][:id])
+      if deleted_request.nil?
         return
       end
-      deleted_user.stripe_subscription_id = nil
-      deleted_user.latest_request.cancel!
-      deleted_user.save
+      deleted_request.delete_subscription
+      deleted_request.cancel!
+      deleted_request.save
       # TODO: chargebacks!
     end
     status 200
@@ -85,10 +90,11 @@ class MembershipPaymentsController < ApplicationController
   end
 
   def process_cancel_subscription
-    if current_user.has_subscription?
-      current_user.delete_current_subscription
-      current_user.latest_request.cancel!
-      current_user.save
+    membership_request = MembershipRequest.find_by!(id: params[:application_id])
+    if not membership_request.closed?
+      membership_request.delete_subscription
+      membership_request.cancel!
+      membership_request.save
     end
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
   end
