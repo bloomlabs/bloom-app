@@ -14,24 +14,17 @@ class MembershipPaymentsController < ApplicationController
       deleted_user.stripe_subscription_id = nil
       deleted_user.latest_request.cancel!
       deleted_user.save
+      # TODO: chargebacks!
     end
     status 200
   end
 
-  def pay_single
-    @membership_type = MembershipType.find_by(id: params[:type_id])
-    if @membership_type == nil or @membership_type.recurring or not current_user.latest_request.check_transition(:paid)
-      render nil, status: 500
-    else
-      # TODO: check if they are eligible to pay the membership type
-    end
-  end
-
   def capture_single
-    membership_type = MembershipType.find_by(id: params[:type_id])
+    membership_request = MembershipRequest.find_by!(id: params[:application_id])
+    membership_type = membership_request.membership_type
     token = params[:stripeToken]
     stripe_email = params[:stripeEmail]
-    if membership_type == nil or token == nil or stripe_email == nil or !membership_type.recurring
+    if membership_type == nil or token == nil or stripe_email == nil or !membership_type.recurring or membership_request.current_state != :payment_required
       render nil, status: 500
       return
     end
@@ -42,25 +35,23 @@ class MembershipPaymentsController < ApplicationController
           :source => token,
           :description => current_user.email
       )
-      current_user.latest_request.paid!
+      membership_request.pay!
       current_user.save
-      redirect_to payment_confirmation, type_id: params[:type_id]
     rescue => e
       flash[:error] = 'Error charging supplied card.'
-      current_user.latest_request.payment_failed!
-      current_user.save
-      redirect_to pay_single, type_id: params[:type_id]
     end
+    redirect_to membership_request_path(membership_request.id)
   end
 
   def payment_confirmation
   end
 
   def capture_subscription
-    membership_type = MembershipType.find_by(id: params[:type_id])
+    membership_request = MembershipRequest.find_by!(id: params[:application_id])
+    membership_type = membership_request.membership_type
     token = params[:stripeToken]
     stripe_email = params[:stripeEmail]
-    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring or current_user.has_subscription?
+    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring or current_user.has_subscription? or membership_request.current_state != :payment_required
       render nil, status: 500
       return
     end
@@ -69,12 +60,12 @@ class MembershipPaymentsController < ApplicationController
     rescue => e
       puts e
       flash[:error] = 'Error with your details. Please make sure they are correct.'.freeze
-      redirect_to action: 'start_subscription'.freeze, type_id: params[:type_id]
+      redirect_to membership_request_path(membership_request.id)
       return
     end
-    current_user.latest_request.set_subscription!(current_user.stripe_customer, membership_type.stripe_id)
-    current_user.latest_request.pay!
-    current_user.latest_request.save
+    membership_request.set_subscription!(current_user.stripe_customer, membership_type.stripe_id)
+    membership_request.pay!
+    membership_request.save
     current_user.save
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
   end
