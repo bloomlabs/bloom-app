@@ -12,13 +12,13 @@ class MembershipPaymentsController < ApplicationController
       status 500 and return
     end
     if params[:type] == 'customer.subscription.deleted'
-      deleted_user = User.find_by(stripe_subscription_id: params[:data][:object][:id])
-      if deleted_user.nil?
+      deleted_request = MembershipRequest.find_by(stripe_subscription_id: params[:data][:object][:id])
+      if deleted_request.nil?
         return
       end
-      deleted_user.stripe_subscription_id = nil
-      deleted_user.latest_request.cancel!
-      deleted_user.save
+      deleted_request.delete_subscription
+      deleted_request.cancel!
+      deleted_request.save
       # TODO: chargebacks!
     end
     status 200
