@@ -11,23 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221044741) do
+ActiveRecord::Schema.define(version: 20160221073707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "applications", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "state_id"
-    t.integer  "membership_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.date     "start_date"
-  end
-
-  add_index "applications", ["membership_id"], name: "index_applications_on_membership_id", using: :btree
-  add_index "applications", ["state_id"], name: "index_applications_on_state_id", using: :btree
-  add_index "applications", ["user_id"], name: "index_applications_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -47,13 +34,14 @@ ActiveRecord::Schema.define(version: 20160221044741) do
 
   create_table "membership_requests", force: :cascade do |t|
     t.integer  "user_id"
-    t.date     "startdate"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "workflow_state"
     t.integer  "membership_type_id"
-    t.boolean  "closed",             default: false
+    t.date     "startdate"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "workflow_state"
+    t.boolean  "closed",                 default: false
     t.text     "info"
+    t.string   "stripe_subscription_id"
   end
 
   add_index "membership_requests", ["membership_type_id"], name: "index_membership_requests_on_membership_type_id", using: :btree
@@ -67,22 +55,6 @@ ActiveRecord::Schema.define(version: 20160221044741) do
     t.boolean  "autoapprove"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  create_table "memberships", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "price"
-    t.boolean  "recurring"
-    t.text     "expiry"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "states", force: :cascade do |t|
-    t.string   "name"
-    t.text     "desc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,6 +73,7 @@ ActiveRecord::Schema.define(version: 20160221044741) do
     t.string   "firstname"
     t.string   "lastname"
     t.boolean  "staff",                  default: false
+    t.string   "stripe_customer_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -117,9 +90,6 @@ ActiveRecord::Schema.define(version: 20160221044741) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
-  add_foreign_key "applications", "memberships"
-  add_foreign_key "applications", "states"
-  add_foreign_key "applications", "users"
   add_foreign_key "membership_requests", "membership_types"
   add_foreign_key "membership_requests", "users"
 end
