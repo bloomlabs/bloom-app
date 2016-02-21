@@ -67,21 +67,22 @@ class MembershipPaymentsController < ApplicationController
     begin
       current_user.ensure_customer!(token, stripe_email)
     rescue => e
-      flash[:error] = 'Error with your details. Please make sure they are correct.'
-      redirect_to start_subscription, type_id: params[:type_id]
+      puts e
+      flash[:error] = 'Error with your details. Please make sure they are correct.'.freeze
+      redirect_to action: 'start_subscription'.freeze, type_id: params[:type_id]
       return
     end
-    current_user.latest_request.set_subscription!(membership_type.stripe_id)
-    current_user.latest_request.paid!
+    current_user.latest_request.set_subscription!(current_user.stripe_customer, membership_type.stripe_id)
+    current_user.latest_request.pay!
     current_user.latest_request.save
     current_user.save
     redirect_to url_for(:controller => :dashboard, :action => :dashboard)
   end
 
   def start_subscription
-    @membership_type = MembershipType.find_by(id: params[:type_id])
-    if @membership_type == nil or !@membership_type.recurring or current_user.state?(:payment_required) or not current_user.latest_request.check_transition(:paid)
-      render nil, status: 500
+    @membership_type = MembershipType.find_by!(id: params[:type_id])
+    if !@membership_type.recurring or current_user.latest_request.current_state != :payment_required
+      render json: nil, status: 500
     else
       # TODO: check if they are eligible to start the membership
     end

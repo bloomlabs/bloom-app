@@ -5,6 +5,10 @@ class MembershipType < ActiveRecord::Base
   validates_inclusion_of :recurring, :autoapprove, in: [true, false]
   validate :recurrence_validation
 
+  def stripe_plan
+    Stripe::Plan.retrieve(self.stripe_id)
+  end
+
   def recurrence_validation
     if recurring
       if stripe_id.blank?

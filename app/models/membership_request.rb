@@ -26,8 +26,8 @@ class MembershipRequest < ActiveRecord::Base
     end
   end
 
-  def set_subscription!(plan_id)
-    sub = Stripe::Subscription.create(
+  def set_subscription!(customer, plan_id)
+    sub = customer.subscriptions.create(
         :plan => plan_id
     )
     self.stripe_subscription_id = sub.id

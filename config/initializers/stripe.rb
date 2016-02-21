@@ -1,6 +1,6 @@
 Rails.configuration.stripe = {
-    :publishable_key => "pk_test_KjDDe3Cg8UBQBBF6y60wMkLe",
-    :secret_key      => "sk_test_NinhGYyULFnn6CmHXkScHtYP"
+    :publishable_key => ENV["STRIPE_PUBLISHABLE_KEY".freeze],
+    :secret_key      => ENV["STRIPE_SECRET_KEY".freeze]
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
