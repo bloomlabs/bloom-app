@@ -2,27 +2,33 @@
 <html>
 <head>
   <title>BloomApp</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <header>
-  <% if user_signed_in? %>
-    <%= link_to current_user.firstname.titleize, dashboard_user_path(current_user) %> | 
-    <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-  <% else %>
-    <%= link_to "sign up", new_user_registration_path %> |
-    <%= link_to "login", new_user_session_path %>
-  <% end %>
+  <div class="bloom-header">
+    <div class="bloom-logo-container"><%= image_tag "logo.png", class: "bloom-logo" %></div>
+  </div>
 </header>
 <br>
 <% flash.each do |key, value| %>
-    <div class="alert alert-<%= key %>"><%= value %></div><br>
+    <div class="alert alert-<%= key %>"><%= value %></div>
+    <br>
 <% end %>
-<%= yield %>
+<div class="bloom-container">
+  <% if user_signed_in? %>
+      <%= link_to current_user.firstname.titleize, dashboard_user_path(current_user) %> |
+      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+  <% else %>
+      <%= link_to "sign up", new_user_registration_path %> |
+      <%= link_to "login", new_user_session_path %>
+  <% end %>
+  <%= yield %>
+</div>
 <footer>
-  
+
 </footer>
 </body>
 </html>
