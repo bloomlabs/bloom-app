@@ -40,3 +40,5 @@ bower.json
 /.idea
 
 .DS_Store
+
+.env
