@@ -32,6 +32,8 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.staff?
       can :manage, :all
+
+      cannot :create, MembershipRequest
     else
       can :create, MembershipRequest
 
