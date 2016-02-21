@@ -9,6 +9,10 @@ class MembershipType < ActiveRecord::Base
     Stripe::Plan.retrieve(self.stripe_id)
   end
 
+  def price
+    self.read_attribute(:price) or self.stripe_plan.amount
+  end
+
   def recurrence_validation
     if recurring
       if stripe_id.blank?
