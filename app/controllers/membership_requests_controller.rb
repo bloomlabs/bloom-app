@@ -90,7 +90,11 @@ class MembershipRequestsController < ApplicationController
   end
 
   def workflow_book_interview
-
+    if request.post?
+      MembershipRequestsMailer.delay.interview_booked(current_user)
+      @membership_request.book!
+      redirect_to membership_request_path(@membership_request)
+    end
   end
 
   def workflow_pending_decision
