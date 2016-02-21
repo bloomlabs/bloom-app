@@ -56,8 +56,8 @@ class MembershipPaymentsController < ApplicationController
     membership_type = membership_request.membership_type
     token = params[:stripeToken]
     stripe_email = params[:stripeEmail]
-    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring or current_user.has_subscription? or membership_request.current_state != :payment_required
-      render nil, status: 500
+    if membership_type == nil or token == nil or stripe_email.nil? or !membership_type.recurring or membership_request.has_subscription? or membership_request.current_state != :payment_required
+      render json: nil, status: 500
       return
     end
     begin

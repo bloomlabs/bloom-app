@@ -31,6 +31,10 @@ class MembershipRequest < ActiveRecord::Base
     self.stripe_subscription_id = nil
   end
 
+  def has_subscription
+    !self.stripe_subscription_id.nil?
+  end
+
   def set_subscription!(customer, plan_id)
     sub = customer.subscriptions.create(
         :plan => plan_id
