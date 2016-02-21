@@ -1,0 +1,21 @@
+<h1>Pending Membership Requests</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>User</th>
+    <th>Membership Type</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @membership_requests.each do |membership_request| %>
+      <tr>
+        <td><%= membership_request.user.display_name %></td>
+        <td><%= membership_request.membership_type.name %></td>
+        <td><%= link_to 'Edit', admin_membership_request(membership_request) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

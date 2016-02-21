@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
 
   post 'membership_payments/stripe_webhook'
@@ -12,8 +11,6 @@ Rails.application.routes.draw do
     get 'membership_payments/pay_single'
     get 'membership_payments/cancel_subscription'
   end
-
-
 
   resources :membership_types
 
@@ -31,6 +28,10 @@ Rails.application.routes.draw do
     member do
       get :dashboard
     end
+  end
+
+  namespace :admin do
+    resources :membership_requests, only: [:index, :show, :update]
   end
 
   get 'welcome/index'

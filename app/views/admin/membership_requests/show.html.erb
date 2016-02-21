@@ -1,0 +1,38 @@
+<p>
+  <strong>User:</strong>
+  <%= @membership_request.user.display_name %>
+</p>
+
+<p>
+  <strong>Membership:</strong>
+  <%= @membership_request.membership_type.name %>
+</p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @membership_request.startdate %>
+</p>
+
+<p>
+  <strong>Application status:</strong>
+  <%= @membership_request.workflow_state %>
+</p>
+
+<p>
+  <strong>Startup info:</strong>
+  <%= @membership_request.info %>
+</p>
+
+<p>
+  <%= form_tag(controller: 'admin/membership_requests', action: 'update') do %>
+    <select name="action">
+      <option>Choose Action</option>
+      <option value="reject">Reject</option>
+      <option value="accept">Accept</option>
+    </select>
+    <button type="submit">Submit</button>
+<% end %>
+</p>
+
+
+<%= link_to 'Back', membership_requests_path %>
