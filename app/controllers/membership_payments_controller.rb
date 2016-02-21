@@ -18,15 +18,6 @@ class MembershipPaymentsController < ApplicationController
     status 200
   end
 
-  def pay_single
-    @membership_type = MembershipType.find_by(id: params[:type_id])
-    if @membership_type == nil or @membership_type.recurring or not current_user.latest_request.check_transition(:paid)
-      render nil, status: 500
-    else
-      # TODO: check if they are eligible to pay the membership type
-    end
-  end
-
   def capture_single
     membership_type = MembershipType.find_by(id: params[:type_id])
     token = params[:stripeToken]

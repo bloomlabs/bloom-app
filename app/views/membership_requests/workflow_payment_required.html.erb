@@ -2,12 +2,12 @@
 
 <% if @membership_type.recurring %>
   <%= form_tag(controller: 'membership_payments', action: 'capture_subscription', method: 'post') do %>
-      <input type="hidden" value="<%= @membership_type.id %>" name="type_id">
+      <input type="hidden" value="<%= @membership_request.id %>" name="application_id">
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
               data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
               data-name="Bloom <%= @membership_type.name %> Subscription"
-              data-description="Subscribe (<%= number_to_currency(@membership_type.price/100) %> per month)"
+              data-description="Subscribe (<%= "TODO" %> per month)"
               data-panel-label="Subscribe"
               data-label="Subscribe"
               data-amount="<%= @membership_type.price %>"
@@ -15,7 +15,19 @@
       </script>
   <% end %>
 <% else %>
-  <p>No support for once off payments yet</p>
+  <%= form_tag(controller: 'membership_payments', action: 'capture_single', method: 'post') do %>
+      <input type="hidden" value="<%= @membership_request.id %>" name="application_id">
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-name="<%= @membership_type.name %>"
+              data-description="Pay for a semester (<%= number_to_currency(@membership_type.price/100) %>)"
+              data-panel-label="Pay"
+              data-label="Pay"
+              data-amount="<%= @membership_type.price %>"
+              data-allow-remember-me="false">
+      </script>
+  <% end %>
 <% end %>
 
 <%= render 'workflow_footer' %>
