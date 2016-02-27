@@ -61,7 +61,6 @@ class MembershipPaymentsController < ApplicationController
     user = @membership_request.user
 
     token = params[:stripeToken]
-    stripe_email = params[:stripeEmail]
 
     if !membership_type.recurring or
         @membership_request.current_state != :payment_required
@@ -71,7 +70,7 @@ class MembershipPaymentsController < ApplicationController
     end
 
     begin
-      user.ensure_customer!(token, stripe_email)
+      user.ensure_customer!(token)
     rescue => e
       puts e
       flash[:error] = 'Error with your details. Please make sure they are correct.'.freeze
@@ -83,7 +82,7 @@ class MembershipPaymentsController < ApplicationController
     @membership_request.pay!
     @membership_request.save
 
-    redirect_to url_for(:controller => :dashboard, :action => :dashboard)
+    redirect_to dashboard_users_path(current_user)
   end
 
   def cancel_subscription
@@ -96,13 +95,13 @@ class MembershipPaymentsController < ApplicationController
       membership_request.cancel!
       membership_request.save
     end
-    redirect_to url_for(:controller => :dashboard, :action => :dashboard)
+    redirect_to dashboard_users_path(current_user)
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_membership_request
-      @membership_request = MembershipRequest.find(params[:membership_request_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_membership_request
+    @membership_request = MembershipRequest.find(params[:membership_request_id])
+  end
 
 end

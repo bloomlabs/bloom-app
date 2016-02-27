@@ -31,6 +31,10 @@ class MembershipRequest < ActiveRecord::Base
     self.stripe_subscription_id = nil
   end
 
+  def stripe_subscription
+    self.user.stripe_customer.subscriptions.retrieve(self.user.stripe_customer_id, self.stripe_subscription_id)
+  end
+
   def has_subscription
     !self.stripe_subscription_id.nil?
   end

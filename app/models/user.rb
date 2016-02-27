@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:google_oauth2]
-         # confirmable - confirm account through emails?
+  # confirmable - confirm account through emails?
 
   has_many :membership_requests
 
@@ -13,19 +13,19 @@ class User < ActiveRecord::Base
     user = User.where(email: data['email']).first
 
     unless user
-        user = User.create(
-            firstname: data['first_name'],
-            lastname: data['last_name'],
-            email: data['email'],
-            password: Devise.friendly_token[0,20]
-        )
+      user = User.create(
+          firstname: data['first_name'],
+          lastname: data['last_name'],
+          email: data['email'],
+          password: Devise.friendly_token[0, 20]
+      )
     end
 
     user
   end
 
-  validates :firstname, presence: true, length: { in: 2..35 }
-  validates :lastname, presence: true, length: { in: 2..35 }
+  validates :firstname, presence: true, length: {in: 2..35}
+  validates :lastname, presence: true, length: {in: 2..35}
 
   def has_subscription?
     !self.stripe_customer_id.nil? and latest_request.has_subscription
@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
           :email => email
       )
       self.stripe_customer_id = customer.id
+      save
       customer
     else
       stripe_customer
