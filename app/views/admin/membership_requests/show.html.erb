@@ -9,7 +9,7 @@
 </p>
 
 <p>
-  <strong>Startdate:</strong>
+  <strong>Start date:</strong>
   <%= @membership_request.startdate %>
 </p>
 
@@ -24,15 +24,15 @@
 </p>
 
 <p>
-  <%= form_tag(controller: 'admin/membership_requests', action: 'update') do %>
-    <select name="action">
-      <option>Choose Action</option>
-      <option value="reject">Reject</option>
-      <option value="accept">Accept</option>
-    </select>
-    <button type="submit">Submit</button>
-<% end %>
+  <%= form_tag({controller: 'admin/membership_requests', action: :update}, :method => 'patch') do %>
+      <select name="decision">
+        <option>Choose Action</option>
+        <option value="reject">Reject</option>
+        <option value="accept">Accept</option>
+      </select>
+      <button type="submit">Submit</button>
+  <% end %>
 </p>
 
 
-<%= link_to 'Back', membership_requests_path %>
+<%= link_to 'Back', admin_membership_requests_path %>

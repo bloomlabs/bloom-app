@@ -14,7 +14,7 @@
       <tr>
         <td><%= membership_request.user.display_name %></td>
         <td><%= membership_request.membership_type.name %></td>
-        <td><%= link_to 'Edit', admin_membership_request(membership_request) %></td>
+        <td><%= link_to 'Edit', admin_membership_request_path(membership_request) %></td>
       </tr>
   <% end %>
   </tbody>

@@ -15,9 +15,9 @@ class Admin::MembershipRequestsController < AdminController
       return
     end
 
-    action = params[:action]
+    decision = params[:decision]
 
-    case action
+    case decision
       when 'accept'
         @membership_request.accept!
       when 'reject'
