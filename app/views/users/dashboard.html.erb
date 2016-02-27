@@ -8,16 +8,18 @@
     </p>
 <% end %>
 
-<% if current_user.latest_request.active_membership? %>
-    <% if current_user.latest_request.has_subscription %>
-        Currently subscribed: <%= current_user.latest_request.stripe_subscription.plan %>
-        <%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments' %>
+<% if !@current_request.nil? %>
+    <% if @current_request.active_membership? %>
+        <% if @current_request.has_subscription %>
+            Currently subscribed: <%= @current_request.stripe_subscription.plan %>
+            <%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments' %>
+        <% else %>
+            You are currently a community member.
+        <% end %>
     <% else %>
-        You are currently a community member.
-    <% end %>
-<% else %>
-    <% if current_user.latest_request.expired? %>
-        Your membership has expired! Please reapply.
+        <% if @current_request.expired? %>
+            Your membership has expired! Please reapply.
+        <% end %>
     <% end %>
 <% end %>
 

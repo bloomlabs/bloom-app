@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def dashboard
+    @current_request = current_user.latest_request
   end
 
   # GET /users/1
