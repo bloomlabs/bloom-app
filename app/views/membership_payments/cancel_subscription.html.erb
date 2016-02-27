@@ -1,7 +1,7 @@
 <h1>Cancel subscription</h1>
-<%= form_tag(controller: 'membership_payments', action: 'process_cancel_subscription') do %>
-  <h3>We're sorry to see you go!</h3>
-  <p>Please tell us why you're leaving so we can make our services better.</p>
-  <textarea name="feedback" placeholder="Feedback (optional)"></textarea>
-  <button type="submit">Submit</button>
+<%= form_tag(controller: 'membership_payments', action: 'process_cancel_subscription', :application_id => params[:membership_request_id]) do %>
+    <h3>We're sorry to see you go!</h3>
+    <p>Please tell us why you're leaving so we can make our services better.</p>
+    <textarea class="field" name="feedback" placeholder="Feedback (optional)"></textarea>
+    <button type="submit">Submit</button>
 <% end %>

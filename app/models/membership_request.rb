@@ -32,7 +32,7 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def stripe_subscription
-    self.user.stripe_customer.subscriptions.retrieve(self.user.stripe_customer_id, self.stripe_subscription_id)
+    self.user.stripe_customer.subscriptions.retrieve(self.stripe_subscription_id)
   end
 
   def has_subscription

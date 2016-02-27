@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
     post 'membership_payments/capture_single'
     post 'membership_payments/capture_subscription'
+    post 'membership_payments/process_cancel_subscription'
     get 'membership_payments/payment_confirmation'
     get 'membership_payments/pay_single'
     get 'membership_payments/cancel_subscription'

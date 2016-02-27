@@ -10,7 +10,11 @@ class MembershipType < ActiveRecord::Base
   end
 
   def price
-    self.read_attribute(:price) or self.stripe_plan.amount
+    attr = self.read_attribute(:price)
+    if not attr and Stripe.api_key
+      return self.stripe_plan.amount
+    end
+    attr
   end
 
   def recurrence_validation

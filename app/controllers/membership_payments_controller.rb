@@ -1,6 +1,6 @@
 class MembershipPaymentsController < ApplicationController
   protect_from_forgery :except => :stripe_webhook
-  before_action :set_membership_request, except: [:stripe_webhook]
+  before_action :set_membership_request, except: [:stripe_webhook, :process_cancel_subscription]
   before_action :authenticate_user!
 
   require 'json'
@@ -82,7 +82,7 @@ class MembershipPaymentsController < ApplicationController
     @membership_request.pay!
     @membership_request.save
 
-    redirect_to dashboard_users_path(current_user)
+    redirect_to dashboard_users_path(user)
   end
 
   def cancel_subscription
@@ -95,7 +95,7 @@ class MembershipPaymentsController < ApplicationController
       membership_request.cancel!
       membership_request.save
     end
-    redirect_to dashboard_users_path(current_user)
+    redirect_to dashboard_users_path(membership_request.user)
   end
 
   private
@@ -103,5 +103,4 @@ class MembershipPaymentsController < ApplicationController
   def set_membership_request
     @membership_request = MembershipRequest.find(params[:membership_request_id])
   end
-
 end
