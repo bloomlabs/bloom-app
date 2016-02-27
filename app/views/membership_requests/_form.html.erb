@@ -1,26 +1,27 @@
 <%= form_for(@membership_request) do |f| %>
-  <% if @membership_request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@membership_request.errors.count, "error") %> prohibited this membership_request from being saved:</h2>
+    <% if @membership_request.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@membership_request.errors.count, "error") %> prohibited this membership_request from being
+            saved:</h2>
 
-      <ul>
-      <% @membership_request.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @membership_request.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :membership_type_id %><br>
+      <%= f.select(:membership_type_id, MembershipType.all.collect { |a| [a.name, a.id] }) %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :membership_type_id %><br>
-    <%= f.select(:membership_type_id, MembershipType.all.collect {|a| [a.name, a.id]}) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :startdate %><br>
-    <%= f.date_select :startdate %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :startdate, "Membership start date" %><br>
+      <%= f.date_select :startdate, :with_css_classes => true %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

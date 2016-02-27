@@ -1,12 +1,33 @@
-<h1>User Dashboard</h1>
+<h1>Dashboard</h1>
 
-<p>
-  <%= @user.email %> <br>
-  <%= @user.display_name %> <br>
-</p>
-
-<% @user.membership_requests.each do |request| %>
-  <%= link_to "#{request.membership_type.name}##{request.id}", request %> <br>
+<% if current_user.staff %>
+    <p>
+      Showing dashboard for:
+      <%= @user.display_name %>
+      (<%= @user.email %>)
+    </p>
 <% end %>
 
-<%= link_to "Apply to be a member", new_membership_request_path %>
+<% if current_user.latest_request.active_membership? %>
+    <% if current_user.latest_request.has_subscription %>
+        Currently subscribed: <%= current_user.latest_request.stripe_subscription.plan %>
+        <%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments' %>
+    <% else %>
+        You are currently a community member.
+    <% end %>
+<% else %>
+    <% if current_user.latest_request.expired? %>
+        Your membership has expired! Please reapply.
+    <% end %>
+<% end %>
+
+<h2>Active Applications</h2>
+<% @user.membership_requests.each do |request| %>
+    <% if not request.cancelled? and not request.expired? %>
+        <%= link_to "#{request.membership_type.name}##{request.id}", request %> <br>
+    <% end %>
+<% end %>
+
+<% if not current_user.latest_request.has_subscription %>
+    <%= button_to "Apply to be a member", new_membership_request_path, :method => "get" %>
+<% end %>

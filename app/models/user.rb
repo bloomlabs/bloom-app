@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates :lastname, presence: true, length: { in: 2..35 }
 
   def has_subscription?
-    !self.stripe_customer_id.nil? and !self.stripe_subscription_id.nil?
+    !self.stripe_customer_id.nil? and latest_request.has_subscription
   end
 
   def latest_request
@@ -39,17 +39,13 @@ class User < ActiveRecord::Base
     Stripe::Customer.retrieve(self.stripe_customer_id)
   end
 
-  def stripe_subscription
-    self.stripe_customer.retrieve(self.stripe_subscription_id)
-  end
-
   def ensure_customer!(token)
     if self.stripe_customer_id.nil?
       customer = Stripe::Customer.create(
           :source => token,
           :email => email
       )
-      stripe_customer_id = customer.id
+      self.stripe_customer_id = customer.id
       customer
     else
       stripe_customer

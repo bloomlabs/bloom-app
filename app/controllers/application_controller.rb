@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    return dashboard_user_path(current_user)
+    dashboard_user_path(current_user)
   end
 
   protected
