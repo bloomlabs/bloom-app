@@ -30,6 +30,6 @@
     <% end %>
 <% end %>
 
-<% if not @current_request.nil? and not @current_request.has_subscription %>
+<% if @current_request.nil? or not @current_request.has_subscription %>
     <%= button_to "Apply to be a member", new_membership_request_path, :method => "get" %>
 <% end %>
