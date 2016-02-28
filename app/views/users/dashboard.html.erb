@@ -23,11 +23,13 @@
     <% end %>
 <% end %>
 
-<h2>Active Applications</h2>
-<% @user.membership_requests.each do |request| %>
-    <% if not request.cancelled? and not request.expired? %>
-        <%= link_to "#{request.membership_type.name}##{request.id}", request %> <br>
-    <% end %>
+<% if @active_applications.any? %>
+  <h2>Active Applications</h2>
+  <% @active_applications.each do |request| %>
+      <% if not request.cancelled? and not request.expired? %>
+          <%= link_to "#{request.membership_type.name}##{request.id}", request %> <br>
+      <% end %>
+  <% end %>
 <% end %>
 
 <% if @current_request.nil? or not @current_request.has_subscription %>

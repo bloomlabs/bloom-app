@@ -2,7 +2,9 @@ class Admin::MembershipRequestsController < AdminController
   before_action :set_membership_request, only: [:show, :update]
 
   def index
-    @membership_requests = MembershipRequest.where(workflow_state: 'pending_decision')
+    @membership_requests_pending = MembershipRequest.where(workflow_state: 'pending_decision')
+    @membership_requests_active = MembershipRequest.where(workflow_state: 'active_membership')
+    @membership_types = MembershipType.all
   end
 
   def show
@@ -28,8 +30,10 @@ class Admin::MembershipRequestsController < AdminController
 
     case decision
       when 'accept'
+        flash[:info] = 'Request accepted'
         @membership_request.accept!
       when 'reject'
+        flash[:info] = 'Request rejected'
         @membership_request.reject!
       else
         render json: nil, status: 500
