@@ -81,8 +81,8 @@ class MembershipRequestsController < ApplicationController
 
   def workflow_new
     if request.post?
-      @membership_request.info = params[:info]
-      if !params[:info].chomp
+      @membership_request.info = params[:info].chomp!
+      if !@membership_request.info
         @bad_startup_info = true
       else
         @membership_request.save!
