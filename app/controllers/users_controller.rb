@@ -13,7 +13,12 @@ class UsersController < ApplicationController
   end
 
   def dashboard
+    if current_user.staff?
+      redirect_to admin_membership_requests_path
+    end
+
     @current_request = current_user.latest_request
+    @active_applications = current_user.membership_requests.where.not(closed: true)
   end
 
   # GET /users/1

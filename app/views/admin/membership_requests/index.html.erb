@@ -1,21 +1,58 @@
 <h1>Pending Membership Requests</h1>
 
-<table>
-  <thead>
-  <tr>
-    <th>User</th>
-    <th>Membership Type</th>
-    <th></th>
-  </tr>
-  </thead>
+<% if @membership_requests_pending.any? %>
+  <table>
+    <thead>
+    <tr>
+      <th>User</th>
+      <th>Membership Type</th>
+      <th></th>
+    </tr>
+    </thead>
 
-  <tbody>
-  <% @membership_requests.each do |membership_request| %>
-      <tr>
-        <td><%= membership_request.user.display_name %></td>
-        <td><%= membership_request.membership_type.name %></td>
-        <td><%= link_to 'Edit', admin_membership_request_path(membership_request) %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+    <tbody>
+    <% @membership_requests_pending.each do |membership_request| %>
+        <tr>
+          <td><%= membership_request.user.display_name %></td>
+          <td><%= membership_request.membership_type.name %></td>
+          <td><%= link_to 'Approve / Reject', admin_membership_request_path(membership_request) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>None</p>
+<% end %>
+
+<br><br>
+
+<h1>Active Memberships</h1>
+
+<% @membership_types.each do |membership_type| %>
+    <% memberships = @membership_requests_active.where(membership_type: membership_type) %>
+
+    <h2><%= membership_type.name %></h2>
+
+    <% if memberships.any? %>
+      <table>
+        <thead>
+        <tr>
+          <th>User</th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% memberships.each do |membership_request| %>
+            <tr>
+              <td><%= membership_request.user.display_name %></td>
+              <td><%= link_to 'View', admin_membership_request_path(membership_request) %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>None</p>
+    <% end %>
+<% end %>
+

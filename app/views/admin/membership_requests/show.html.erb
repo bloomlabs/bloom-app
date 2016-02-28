@@ -33,16 +33,18 @@
   <%= @membership_request.interview_book_info %>
 </p>
 
-<p>
-  <%= form_tag({controller: 'admin/membership_requests', action: :update}, :method => 'patch') do %>
-      <select name="decision">
-        <option>Choose Action</option>
-        <option value="reject">Reject</option>
-        <option value="accept">Accept</option>
-      </select>
-      <button type="submit">Submit</button>
-  <% end %>
-</p>
+<% if @membership_request.current_state == :pending_decision %>
+    <p>
+    <%= form_tag({controller: 'admin/membership_requests', action: :update}, :method => 'patch') do %>
+        <select name="decision">
+          <option>Choose Action</option>
+          <option value="reject">Reject</option>
+          <option value="accept">Accept</option>
+        </select>
+        <button type="submit">Submit</button>
+    <% end %>
+    </p>
+<% end %>
 
 
 <%= link_to 'Back', admin_membership_requests_path %>
