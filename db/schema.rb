@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227070951) do
+ActiveRecord::Schema.define(version: 20160228021943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160227070951) do
     t.boolean  "closed",                 default: false
     t.text     "info"
     t.string   "stripe_subscription_id"
+    t.text     "interview_book_info"
   end
 
   add_index "membership_requests", ["membership_type_id"], name: "index_membership_requests_on_membership_type_id", using: :btree

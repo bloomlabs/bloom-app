@@ -72,7 +72,7 @@ class MembershipRequestsController < ApplicationController
   def destroy
     @membership_request.cancel!
     respond_to do |format|
-      format.html { redirect_to membership_requests_url, notice: 'Membership request was successfully cancelled' }
+      format.html { redirect_to dashboard_user_path(@membership_request.user), notice: 'Membership request was successfully cancelled' }
       format.json { head :no_content }
     end
   end
@@ -83,7 +83,7 @@ class MembershipRequestsController < ApplicationController
     if request.post?
       @membership_request.info = params[:info]
       @membership_request.startdate = params[:startdate]
-      @membership_request.save()
+      @membership_request.save!
 
       @membership_request.submit!
       redirect_to membership_request_path(@membership_request)
@@ -92,6 +92,9 @@ class MembershipRequestsController < ApplicationController
 
   def workflow_book_interview
     if request.post?
+      @membership_request.interview_book_info = params[:interview_book_info]
+      @membership_request.save!
+
       @membership_request.book!
       redirect_to membership_request_path(@membership_request)
     end

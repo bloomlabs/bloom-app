@@ -85,6 +85,8 @@ class MembershipRequest < ActiveRecord::Base
 
   def book
     MembershipRequestsMailer.delay.interview_booked(self.user)
+    MembershipRequestsMailer.delay.new_membership_application(self)
+
     puts 'TODO: Send pre-interview email'
   end
 

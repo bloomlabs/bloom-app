@@ -1,8 +1,13 @@
 <%= render 'workflow_header' %>
 
-<p>Amazing</p>
 <%= form_tag do %>
-    <%= submit_tag("Book") %>
+    <div class="field">
+      <p>Please specify some times in the two weeks before your nominated start date you'll be available for an interview</p>
+      <p>We will be in touch to confirm your interview time</p>
+      <%= text_area_tag(:interview_book_info) %>
+    </div>
+
+    <%= submit_tag('Submit') %>
 <% end %>
 
 <%= render 'workflow_footer' %>

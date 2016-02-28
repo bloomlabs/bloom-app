@@ -1,6 +1,10 @@
-<h2>Log in</h2>
+<h1>Log in</h1>
 
-<%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
+<h2><%= link_to "Log in with Google", user_omniauth_authorize_path(:google_oauth2) %></h2>
+
+<p>or</p>
+
+<h2>Sign in manually</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">

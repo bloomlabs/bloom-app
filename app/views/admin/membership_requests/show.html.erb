@@ -4,6 +4,11 @@
 </p>
 
 <p>
+  <strong>Email:</strong>
+  <%= @membership_request.user.email %>
+</p>
+
+<p>
   <strong>Membership:</strong>
   <%= @membership_request.membership_type.name %>
 </p>
@@ -21,6 +26,11 @@
 <p>
   <strong>Startup info:</strong>
   <%= @membership_request.info %>
+</p>
+
+<p>
+  <strong>Interview information:</strong>
+  <%= @membership_request.interview_book_info %>
 </p>
 
 <p>

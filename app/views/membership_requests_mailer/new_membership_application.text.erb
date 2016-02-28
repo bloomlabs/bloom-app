@@ -1,0 +1,5 @@
+<%= @request.user.firstname %> <%= @request.user.lastname %> has submitted a new <%= @request.membership_type.name %> membership request and is ready for an interview.
+
+You can review the specifics of their application / interview times here; <%= admin_membership_request_url(@request) %>
+
+Please get in touch with them to organize an interview time and use the above link to accept/reject their application when necessary.
