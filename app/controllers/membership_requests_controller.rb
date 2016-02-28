@@ -134,7 +134,7 @@ class MembershipRequestsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def membership_request_params
-    params.require(:membership_request).permit(:membership_type_id, :startdate)
+    params.require(:membership_request).permit(:membership_type_id)
   end
 
   # Make sure user can only go to the stage of the workflow that they're on

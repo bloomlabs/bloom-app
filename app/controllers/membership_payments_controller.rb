@@ -10,6 +10,7 @@ class MembershipPaymentsController < ApplicationController
     begin
       Stripe::Event.retrieve(:id => event.id)
     rescue => e
+      puts e
       status 500 and return
     end
     if params[:type] == 'customer.subscription.deleted'
@@ -82,7 +83,7 @@ class MembershipPaymentsController < ApplicationController
     @membership_request.pay!
     @membership_request.save
 
-    redirect_to membership_request_path(membership_request)
+    redirect_to membership_request_path(@membership_request)
   end
 
   def cancel_subscription
