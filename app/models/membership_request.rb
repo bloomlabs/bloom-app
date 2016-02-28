@@ -8,7 +8,6 @@ class MembershipRequest < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :membership_type_id, presence: true
-  validates :startdate, presence: true
   validate :only_one_open_application
 
   def only_one_open_application
@@ -85,6 +84,7 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def book
+    MembershipRequestsMailer.delay.interview_booked(self.user)
     puts 'TODO: Send pre-interview email'
   end
 

@@ -17,11 +17,8 @@
       <%= f.select(:membership_type_id, MembershipType.all.collect { |a| [a.name, a.id] }) %>
     </div>
 
-    <div class="field">
-      <%= f.label :startdate, "Membership start date" %><br>
-      <%= f.date_select :startdate, :with_css_classes => true %>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
 <% end %>

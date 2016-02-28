@@ -1,9 +1,19 @@
 <%= render 'workflow_header' %>
 
-<p>Can you tell us a bit more about your startup?</p>
 <%= form_tag do %>
+    _
+  <div class="field">
+    <p>Can you tell us a bit more about your startup?</p>
     <%= text_area_tag(:info) %>
-    <%= submit_tag("Continue") %>
+  </div>
+
+  <div class="field">
+    <p>When would you start using Bloom's services?</p>
+    <%= date_field_tag(:startdate, Date.today, with_css_classes: true) %>
+  </div>
+
+  <%= submit_tag("Continue") %>
+
 <% end %>
 
 <%= render 'workflow_footer' %>

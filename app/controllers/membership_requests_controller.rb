@@ -82,6 +82,7 @@ class MembershipRequestsController < ApplicationController
   def workflow_new
     if request.post?
       @membership_request.info = params[:info]
+      @membership_request.startdate = params[:startdate]
       @membership_request.save()
 
       @membership_request.submit!
@@ -91,7 +92,6 @@ class MembershipRequestsController < ApplicationController
 
   def workflow_book_interview
     if request.post?
-      MembershipRequestsMailer.delay.interview_booked(current_user)
       @membership_request.book!
       redirect_to membership_request_path(@membership_request)
     end
