@@ -19,6 +19,8 @@ class MembershipType < ActiveRecord::Base
 
   def recurrence_validation
     if recurring
+      price = self.read_attribute(:price)
+
       if stripe_id.blank?
         errors.add(:stripe_id, "stripe_id must be set on a recurring model")
       end
