@@ -82,7 +82,7 @@ class MembershipPaymentsController < ApplicationController
     @membership_request.pay!
     @membership_request.save
 
-    redirect_to dashboard_users_path(user)
+    redirect_to dashboard_user_path(user)
   end
 
   def cancel_subscription
@@ -95,7 +95,7 @@ class MembershipPaymentsController < ApplicationController
       membership_request.cancel!
       membership_request.save
     end
-    redirect_to dashboard_users_path(membership_request.user)
+    redirect_to dashboard_user_path(membership_request.user)
   end
 
   private
