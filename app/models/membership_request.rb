@@ -79,6 +79,10 @@ class MembershipRequest < ActiveRecord::Base
     state :expired
   end
 
+  def can_cancel?
+    self.current_state.events.include?(:cancel)
+  end
+
   def autoapprove
     puts 'TODO: Autoapprove yay!'
   end
