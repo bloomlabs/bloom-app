@@ -82,9 +82,8 @@ class MembershipRequestsController < ApplicationController
   def workflow_new
     if request.post?
       @membership_request.info = params[:info]
-      @membership_request.startdate = params[:startdate]
-      if @membership_request.startdate < Date.today
-        @bad_start_date = true
+      if !params[:info].chomp
+        @bad_startup_info = true
       else
         @membership_request.save!
         @membership_request.submit!

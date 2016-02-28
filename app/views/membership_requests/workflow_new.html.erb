@@ -3,17 +3,12 @@
 <%= form_tag do %>
     <div class="field">
       <p>Can you tell us a bit more about your startup?</p>
-      <%= text_area_tag(:info) %>
-    </div>
-
-    <div class="field">
-      <p>When would you start using Bloom's services?</p>
-      <% if @bad_start_date %>
+      <% if @bad_startup_info %>
           <div class="flash-error">
-            Invalid date
+            Please include some info about your startup.
           </div>
       <% end %>
-      <%= date_select(:startdate, Date.today, with_css_classes: true) %>
+      <%= text_area_tag(:info) %>
     </div>
 
     <%= submit_tag("Continue") %>
