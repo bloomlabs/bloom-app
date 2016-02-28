@@ -83,10 +83,13 @@ class MembershipRequestsController < ApplicationController
     if request.post?
       @membership_request.info = params[:info]
       @membership_request.startdate = params[:startdate]
-      @membership_request.save!
-
-      @membership_request.submit!
-      redirect_to membership_request_path(@membership_request)
+      if @membership_request.startdate < Date.today
+        @bad_start_date = true
+      else
+        @membership_request.save!
+        @membership_request.submit!
+        redirect_to membership_request_path(@membership_request)
+      end
     end
   end
 
@@ -125,26 +128,26 @@ class MembershipRequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_membership_request
-      @membership_request = MembershipRequest.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_membership_request
+    @membership_request = MembershipRequest.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def membership_request_params
-      params.require(:membership_request).permit(:membership_type_id, :startdate)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def membership_request_params
+    params.require(:membership_request).permit(:membership_type_id, :startdate)
+  end
 
-    # Make sure user can only go to the stage of the workflow that they're on
-    def workflow_redirect
-      if action_name.starts_with?('workflow_')
-        state = @membership_request.workflow_state
+  # Make sure user can only go to the stage of the workflow that they're on
+  def workflow_redirect
+    if action_name.starts_with?('workflow_')
+      state = @membership_request.workflow_state
 
-        if action_name != 'workflow_' + state
-          redirect_to url_for(controller: 'membership_requests',
-                              action: "workflow_#{@membership_request.workflow_state}",
-                              id: @membership_request.id)
-        end
+      if action_name != 'workflow_' + state
+        redirect_to url_for(controller: 'membership_requests',
+                            action: "workflow_#{@membership_request.workflow_state}",
+                            id: @membership_request.id)
       end
     end
+  end
 end

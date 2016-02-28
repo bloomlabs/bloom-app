@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :membership_requests, only: [:index, :show, :update]
+    post 'membership_requests/reset_community_members'
   end
 
   get 'welcome/index'

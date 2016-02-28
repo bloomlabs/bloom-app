@@ -33,6 +33,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #03a9f4;
 }
 
+.button-danger {
+  background-color: #cc0000;
+}
+
 .field {
   .year {
     @include span-columns(3);
@@ -85,7 +89,6 @@ $success-color: #e6efc2 !default;
 .flash-success {
   @include flash($success-color);
 }
-
 
 header.navigation {
   $base-border-color: gainsboro !default;

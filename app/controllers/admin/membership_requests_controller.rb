@@ -6,7 +6,16 @@ class Admin::MembershipRequestsController < AdminController
   end
 
   def show
+  end
 
+  def reset_community_members
+    c = 0
+    MembershipRequest.where(membership_type: MembershipType.find_by!(name: 'Community Member'), workflow_state: 'active_membership').find_each do |e|
+      e.expire!
+      c += 1
+    end
+    flash[:info] = "Expired #{c} community members."
+    redirect_to action: 'index'
   end
 
   def update
@@ -31,8 +40,8 @@ class Admin::MembershipRequestsController < AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_membership_request
-      @membership_request = MembershipRequest.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_membership_request
+    @membership_request = MembershipRequest.find(params[:id])
+  end
 end
