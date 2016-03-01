@@ -15,4 +15,4 @@ MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurrin
 MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', recurring: true, autoapprove: false)
 
 # Once-off memberships have a price but no stripe ID
-MembershipType.create(name: 'Community Member', price: 1000, recurring: false, autoapprove: true)
+MembershipType.create(name: 'Community Member', price: 2500, recurring: false, autoapprove: true)
