@@ -1,3 +1,5 @@
 <% if @membership_request.can_cancel? %>
-<td><%= link_to 'Cancel Request', @membership_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <br><br>
+
+    <p><%= link_to 'Cancel Request', @membership_request, method: :delete, data: { confirm: 'Are you sure?' } %></p>
 <% end %>

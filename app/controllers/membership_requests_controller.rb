@@ -27,6 +27,10 @@ class MembershipRequestsController < ApplicationController
   # GET /membership_requests/new
   def new
     @membership_request = MembershipRequest.new
+
+    @community_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Community Member'))
+    @parttime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Part-Time Member'))
+    @fulltime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Full-Time Member'))
   end
 
   # GET /membership_requests/1/edit
@@ -43,7 +47,7 @@ class MembershipRequestsController < ApplicationController
 
     respond_to do |format|
       if @membership_request.save
-        format.html { redirect_to membership_request_path(@membership_request.id), notice: 'Membership request was successfully submitted.' }
+        format.html { redirect_to membership_request_path(@membership_request.id) }
         # Email bloom admin - or account notification or something...
         format.json { render :show, status: :created, location: @membership_request }
       else
@@ -81,14 +85,26 @@ class MembershipRequestsController < ApplicationController
 
   def workflow_new
     if request.post?
-      @membership_request.info = params[:info].chomp!
-      if @membership_request.info.blank? # TODO: Parse date information
-        @bad_startup_info = true
-      else
-        @membership_request.save!
-        @membership_request.submit!
-        redirect_to membership_request_path(@membership_request)
+      @membership_request.info = params[:info]
+      @membership_request.startdate = Date.new(*params['startdate'].values.map(&:to_i))
+
+
+      if @membership_request.info.blank?
+        redirect_to membership_request_path(@membership_request), flash: {error: 'Please include some info about your startup'}
+        return
       end
+
+      if @membership_request.startdate.mon < Date.today.mon
+        @membership_request.startdate = nil
+        @membership_request.save!
+        redirect_to membership_request_path(@membership_request), flash: {error: 'Please choose a date in the future'}
+        return
+      end
+
+      @membership_request.save!
+      @membership_request.submit!
+      redirect_to membership_request_path(@membership_request)
+
     end
   end
 

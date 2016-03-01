@@ -1,15 +1,9 @@
 <%= render 'workflow_header' %>
 
 <%= form_tag do %>
-    <% if @bad_startup_info %>
-        <div class="flash-error">
-          Please include some info about your startup or ensure your start date is not in the past.
-        </div>
-    <% end %>
-
     <div class="field">
       <p>Can you tell us a bit about your venture?</p>
-      <%= text_area_tag(:info) %>
+      <%= text_area_tag(:info, @membership_request.info) %>
     </div>
 
     <div class="field">

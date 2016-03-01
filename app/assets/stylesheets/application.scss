@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #03a9f4;
 }
 
-.button-danger {
+.button-danger input[type='submit'] {
   background-color: #cc0000;
 }
 
@@ -82,7 +82,7 @@ $success-color: #e6efc2 !default;
   @include flash($error-color);
 }
 
-.flash-info {
+.flash-info, .flash-notice {
   @include flash($notice-color);
 }
 

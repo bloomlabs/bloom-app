@@ -1,6 +1,9 @@
 <h1>Log in</h1>
 
-<h2><%= link_to "Log in with Google", user_omniauth_authorize_path(:google_oauth2) %></h2>
+<button style="background-color:#D50F25;" onclick="location.href='<%= user_omniauth_authorize_path(:google_oauth2) %>'">Log in with Google</button>
+<p>(recommended)</p>
+
+<br><br><br>
 
 <p>or</p>
 
