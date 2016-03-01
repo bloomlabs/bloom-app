@@ -6,9 +6,25 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Create example users
-User.create(firstname: 'Staff', lastname: 'User', email: 'staff@example.com', staff: true, password: '12345678', password_confirmation: '12345678')
-User.create(firstname: 'Normal', lastname: 'User', email: 'user@example.com', staff: false, password: '12345678', password_confirmation: '12345678')
+def create_staff(firstname, lastname, email)
+  User.create(
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    staff: true,
+    password: Devise.friendly_token[0, 20]
+  )
+end
+
+create_staff('Ash', 'Tyndall', 'ash@bloom.org.au')
+create_staff('Harry', 'Smallbone', 'harry@bloom.org.au')
+create_staff('Mark', 'Shelton', 'mark@bloom.org.au')
+create_staff('Julian', 'Coleman', 'julian@bloom.org.au')
+create_staff('Lucy', 'Sharp', 'lucy.sharp@bloom.org.au')
+create_staff('Alexandra', 'O\'Brien', 'alexandra@bloom.org.au')
+create_staff('Shannon', 'Ziegelaar', 'shannon@bloom.org.au')
+
+# WARNING: Don't change membership names, currently hard-coded in some places
 
 # Recurring memberships have a stripe ID but no price (pricing is stored in the stripe subscription information)
 MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurring: true, autoapprove: false)
