@@ -12,7 +12,7 @@ class MembershipRequest < ActiveRecord::Base
 
   def only_one_open_application
     if MembershipRequest.where(user_id: user_id, closed: false, membership_type_id: membership_type_id).where.not(id: id).count != 0
-      errors.add(:base, "you may only have one application per membership type open at a time")
+      errors.add(:base, "Sorry, it looks like you have already applied to become that type of Bloom member. If you think this is a mistake, please email Julian at julian@bloom.org.au")
     end
   end
 
@@ -88,18 +88,20 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def book
-    MembershipRequestsMailer.delay.interview_booked(self.user)
-    MembershipRequestsMailer.delay.new_membership_application(self)
-
-    puts 'TODO: Send pre-interview email'
+    MembershipRequestsMailer.delay.new_membership_request(self)
   end
 
   def accept
-    puts 'TODO: Acceptance email, ask for payment'
+    MembershipRequestsMailer.delay.request_accepted(self)
   end
 
   def pay
-    puts 'TODO: Yay you\'re a member!'
+    case self.membership_type.name
+      when 'Community Member'
+        MembershipRequestsMailer.delay.community_confirmation(self)
+      when 'Part-Time Member', 'Full-Time Member'
+        MembershipRequestsMailer.delay.coworking_confirmation(self)
+    end
   end
 
   def payment_fail
@@ -121,7 +123,7 @@ class MembershipRequest < ActiveRecord::Base
   def reject
     update_attribute(:closed, true)
 
-    puts 'TODO: Send reject email'
+    MembershipRequestsMailer.delay.request_rejected(self)
   end
 
 end

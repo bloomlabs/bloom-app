@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'memberships@bloom.org.au'
+  default from: 'Julian Coleman (Bloom) <julian@bloom.org.au>'
   layout 'mailer'
 end

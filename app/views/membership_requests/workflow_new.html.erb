@@ -1,14 +1,20 @@
 <%= render 'workflow_header' %>
 
 <%= form_tag do %>
+    <% if @bad_startup_info %>
+        <div class="flash-error">
+          Please include some info about your startup or ensure your start date is not in the past.
+        </div>
+    <% end %>
+
     <div class="field">
-      <p>Can you tell us a bit more about your startup?</p>
-      <% if @bad_startup_info %>
-          <div class="flash-error">
-            Please include some info about your startup.
-          </div>
-      <% end %>
+      <p>Can you tell us a bit about your venture?</p>
       <%= text_area_tag(:info) %>
+    </div>
+
+    <div class="field">
+      <p>When would you like to start your membership?</p>
+      <%= date_select(:startdate, :startdate, default: Date.today, with_css_classes: true, discard_day: true) %>
     </div>
 
     <%= submit_tag("Continue") %>

@@ -1,5 +1,11 @@
 <%= render 'workflow_header' %>
 
+<% if @membership_type.autoapprove %>
+    <p>Thank you for applying to become a Bloom <%= @membership_request.membership_type.name %>! Please click below to arrange payment.</p>
+<% else %>
+    <p>Thank you for applying to become a Bloom <%= @membership_request.membership_type.name %>! We’re happy to inform you that your application has been accepted. Please click below to arrange payment.</p>
+<% end %>
+
 <% if @membership_type.recurring %>
   <%= form_tag(controller: 'membership_payments', action: 'capture_subscription', method: 'post') do %>
       <input type="hidden" value="<%= @membership_request.id %>" name="membership_request_id">
@@ -31,5 +37,7 @@
       </script>
   <% end %>
 <% end %>
+
+<br><br>
 
 <%= render 'workflow_footer' %>
