@@ -82,7 +82,7 @@ class MembershipRequestsController < ApplicationController
   def workflow_new
     if request.post?
       @membership_request.info = params[:info].chomp!
-      if !@membership_request.info
+      if @membership_request.info.blank? # TODO: Parse date information
         @bad_startup_info = true
       else
         @membership_request.save!
