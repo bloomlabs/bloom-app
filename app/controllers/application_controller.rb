@@ -10,13 +10,19 @@ class ApplicationController < ActionController::Base
   # Track users who made changes to models
   before_filter :set_paper_trail_whodunnit
 
+  # Handle access denied
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to welcome_index_path, flash: {error: "The app thinks you shouldn't be able do to that. If you think this is a mistake, please <a href='mailto:julian@bloom.org.au'>email Julian</a>. (specifics: #{exception.message})"}
+  end
+
   # Devise 
   def redirect_back_or(path)
     redirect_to request.referer || path
   end
 
+  # Redirect back to same location if user is caught by authenticate_user!
   def after_sign_in_path_for(resource)
-    dashboard_user_path(current_user)
+    session["user_return_to"] || dashboard_user_path(current_user)
   end
 
   protected

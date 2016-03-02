@@ -1,8 +1,8 @@
 class MembershipRequestsController < ApplicationController
+  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_membership_request, only: [:show, :edit, :update, :destroy]
   before_action :workflow_redirect
-  before_action :authenticate_user!
 
   # GET /membership_requests
   # GET /membership_requests.json
