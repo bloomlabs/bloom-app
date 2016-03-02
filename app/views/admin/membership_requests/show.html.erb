@@ -33,6 +33,13 @@
   <%= @membership_request.interview_book_info %>
 </p>
 
+<% if @membership_request.current_state == :cancelled %>
+    <p>
+      <strong>Cancel reason</strong>
+      <%= @membership_request.cancel_reason %>
+    </p>
+<% end %>
+
 <% if @membership_request.current_state == :pending_decision %>
     <p>
     <%= form_tag({controller: 'admin/membership_requests', action: :update}, :method => 'patch') do %>

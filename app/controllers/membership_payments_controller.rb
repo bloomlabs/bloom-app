@@ -92,6 +92,7 @@ class MembershipPaymentsController < ApplicationController
   def process_cancel_subscription
     membership_request = MembershipRequest.find_by!(id: params[:application_id])
     if not membership_request.closed?
+      membership_request.cancel_reason = params[:feedback]
       membership_request.delete_subscription
       membership_request.cancel!
       membership_request.save
