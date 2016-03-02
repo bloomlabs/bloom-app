@@ -9,6 +9,15 @@ class MembershipRequestsMailer < ApplicationMailer
     ).deliver!
   end
 
+  def cancelled_membership(request)
+    @request = request
+
+    mail(
+        to: 'memberships@bloom.org.au',
+        subject: "Cancelled #{@request.membership_type.name} membership: #{@request.user.firstname} #{@request.user.lastname}"
+    ).deliver!
+  end
+
   def request_accepted(request)
     @request = request
 

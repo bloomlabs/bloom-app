@@ -1,0 +1,3 @@
+<%= @request.user.firstname %> <%= @request.user.lastname %> has cancelled their active <%= @request.membership_type.name %> membership.
+
+You can review the specifics of their cancellation here; <%= admin_membership_request_url(@request) %>

@@ -80,7 +80,7 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def can_cancel?
-    self.current_state.events.include?(:cancel)
+    self.current_state.events.include?(:cancel) and self.current_state != :active_membership
   end
 
   def autoapprove
@@ -111,7 +111,9 @@ class MembershipRequest < ActiveRecord::Base
   def cancel
     update_attribute(:closed, true)
 
-    puts 'TODO: Sorry to see you go email'
+    if self.current_state == :active_membership
+      MembershipRequestsMailer.delay.cancelled_membership(self)
+    end
   end
 
   def expire

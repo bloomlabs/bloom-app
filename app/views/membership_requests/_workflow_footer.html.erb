@@ -2,4 +2,8 @@
     <br><br>
 
     <p><%= link_to 'Cancel Request', @membership_request, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+<% elsif @membership_request.current_state == :active_membership %>
+    <br><br>
+
+    <p><%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments', :membership_request_id => @membership_request.id %></p>
 <% end %>
