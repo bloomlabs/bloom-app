@@ -4,6 +4,7 @@ class Admin::MembershipRequestsController < AdminController
   def index
     @membership_requests_pending = MembershipRequest.where(workflow_state: 'pending_decision')
     @membership_requests_active = MembershipRequest.where(workflow_state: 'active_membership')
+    @membership_requests_closed = MembershipRequest.where(closed: true)
     @membership_types = MembershipType.all
   end
 

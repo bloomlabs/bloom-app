@@ -56,4 +56,38 @@
     <% end %>
 <% end %>
 
+<br><br>
+
+<h1>Historical Memberships</h1>
+
+<% @membership_types.each do |membership_type| %>
+    <% memberships = @membership_requests_closed.where(membership_type: membership_type) %>
+
+    <h2><%= membership_type.name %></h2>
+
+    <% if memberships.any? %>
+        <table>
+          <thead>
+          <tr>
+            <th>User</th>
+            <th></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% memberships.each do |membership_request| %>
+              <tr>
+                <td><%= membership_request.user.display_name %></td>
+                <td><%= link_to 'View', admin_membership_request_path(membership_request) %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    <% else %>
+        <p>None</p>
+    <% end %>
+<% end %>
+
+<br><br>
+
 <%= button_to 'Expire all community members', {action: 'reset_community_members'}, data: { confirm: 'WARNING: Very irreversible, click Cancel if you don\'t understand it' }, form_class: "button-danger" %>
