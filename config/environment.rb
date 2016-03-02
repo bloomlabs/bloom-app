@@ -11,7 +11,7 @@ ActionMailer::Base.smtp_settings = {
     authentication:   :plain,
     user_name:        ENV['SENDGRID_USERNAME'],
     password:         ENV['SENDGRID_PASSWORD'],
-    domain:           'memberships.bloom.org.au',
+    domain:           'apply.bloom.org.au',
     enable_starttls_auto: true
 }
 
