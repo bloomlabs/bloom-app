@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   # Handle access denied
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to welcome_index_path, flash: {error: "The app thinks you shouldn't be able do to that. If you think this is a mistake, please <a href='mailto:julian@bloom.org.au'>email Julian</a>. (specifics: #{exception.message})"}
+    redirect_to welcome_index_path, flash: {error: "Whoops, the app doesn't think you're allowed to do that.<br>If you think this is a mistake, please <a href='mailto:julian@bloom.org.au'>email Julian</a>."}
   end
 
   # Devise 
