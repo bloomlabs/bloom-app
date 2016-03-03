@@ -14,11 +14,6 @@
 </p>
 
 <p>
-  <strong>Start date:</strong>
-  <%= @membership_request.startdate.mon %> <%= @membership_request.startdate.year %>
-</p>
-
-<p>
   <strong>Application status:</strong>
   <%= @membership_request.workflow_state %>
 </p>
@@ -27,6 +22,13 @@
   <strong>Startup info:</strong>
   <%= @membership_request.info %>
 </p>
+
+<% if @membership_request.startdate %>
+  <p>
+    <strong>Start date:</strong>
+    <%= @membership_request.startdate.mon %> / <%= @membership_request.startdate.year %>
+  </p>
+<% end %>
 
 <p>
   <strong>Interview information:</strong>
