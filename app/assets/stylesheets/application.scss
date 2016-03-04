@@ -41,6 +41,25 @@ h1 {
   background-color: #cc0000;
 }
 
+.other_field {
+  display: inline !important;
+  width: 70% !important;
+}
+
+.pricing-column {
+  @include span-columns(4);
+
+  ul > li:first-child {
+    border-top: 1px solid #cbcbcb;
+  }
+  ul > li {
+    border-bottom: 1px solid #cbcbcb;
+    border-left: 1px solid #cbcbcb;
+    border-right: 1px solid #cbcbcb;
+    padding: 8px 16px 8px 16px;
+  }
+}
+
 .field {
   .year {
     @include span-columns(3);

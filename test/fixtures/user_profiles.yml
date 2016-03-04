@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  signup_reason: MyString
+  date_of_birth: 2016-03-04
+  gender: MyString
+  student_type: MyString
+  education_status: MyString
+  current_degree: MyString
+  user_id_id: 
+
+two:
+  signup_reason: MyString
+  date_of_birth: 2016-03-04
+  gender: MyString
+  student_type: MyString
+  education_status: MyString
+  current_degree: MyString
+  user_id_id: 

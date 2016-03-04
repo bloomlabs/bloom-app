@@ -1,0 +1,78 @@
+<%= form_for(@user_profile) do |f| %>
+    <% if @user_profile.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user_profile.errors.count, "error") %> prohibited this user_profile from being saved:</h2>
+
+          <ul>
+            <% @user_profile.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :signup_reason, "Why did you sign up to Bloom?" %>
+      <% ['Working space', 'Wifi', 'Meeting rooms', 'Mentors', 'Members', 'Events'].each do |opt| %>
+          <label>
+            <%= f.radio_button :signup_reason, opt.downcase, class: 'radio' %>
+            <%= opt %>
+          </label>
+      <% end %>
+      <label>
+        <%= f.radio_button :signup_reason, nil, :id => :signup_reason_other, class: 'radio' %>
+        Other:
+        <input type="text" id="signup_reason_other_field" class="other_field">
+      </label>
+    </div>
+
+    <div class="field">
+      <%= f.label :date_of_birth %>
+      <%= f.date_select :date_of_birth, with_css_classes: true, start_year: 1980, end_year: Date.today.year - 5 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :gender %>
+      <% ['Female', 'Male', 'Other'].each do |opt| %>
+          <label>
+            <%= f.radio_button :gender, opt.downcase, class: 'radio' %>
+            <%= opt %>
+          </label>
+      <% end %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.label :nationality, "What nationality are you?" %>
+      <%= f.text_field :nationality %>
+    </div>
+    <br>
+
+    <div class="field">
+      <%= f.label :education_status %>
+      <% [['High School Student', 'high_school'],
+          ['University Student', 'university'],
+          ['Graduate (employed)', 'graduate_employed'],
+          ['Graduate (part-time work)', 'graduate_parttime'],
+          ['Graduate (full-time work)', 'graduate_fulltime']].each do |opt| %>
+          <label>
+            <%= f.radio_button :education_status, opt[1], class: 'radio education_status' %>
+            <%= opt[0] %>
+          </label>
+      <% end %>
+      <label>
+        <%= f.radio_button :education_status, nil, :id => :education_status_other, class: 'radio' %>
+        Other:
+        <input type="text" id="education_status_other_field" class="other_field">
+      </label>
+    </div>
+
+    <div class="field" style="display:none">
+      <%= f.label :university_degree %>
+      <%= f.text_field :university_degree %>
+    </div>
+    <br>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

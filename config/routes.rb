@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  resources :user_profiles
+  get 'registration/new'
+  post 'registration/info'
+
+  devise_for :users, controllers: {registrations: "registrations", omniauth_callbacks: 'omniauth_callbacks'}
 
   post 'membership_payments/stripe_webhook'
   authenticate :user do
@@ -25,7 +29,7 @@ Rails.application.routes.draw do
   end
 
 
-  resources :users do 
+  resources :users do
     member do
       get :dashboard
     end

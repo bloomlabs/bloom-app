@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   # confirmable - confirm account through emails?
 
   has_many :membership_requests
+  has_many :user_profiles
 
   def self.from_omniauth(access_token)
     data = access_token.info
