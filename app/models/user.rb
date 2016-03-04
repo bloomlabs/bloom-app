@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first
-
+    newly_created = false
     unless user
       user = User.create(
           firstname: data['first_name'],
@@ -20,9 +20,10 @@ class User < ActiveRecord::Base
           email: data['email'],
           password: Devise.friendly_token[0, 20]
       )
+      newly_created = true
     end
 
-    user
+    [user, newly_created]
   end
 
   validates :firstname, presence: true, length: {in: 2..35}
