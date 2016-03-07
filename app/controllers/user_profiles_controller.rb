@@ -24,13 +24,14 @@ class UserProfilesController < ApplicationController
   # POST /user_profiles
   # POST /user_profiles.json
   def create
-    @user_profile = current_user.user_profiles.build(user_profile_params)
+    @user_profile = UserProfile.new(user_profile_params)
+    @user_profile.user = current_user
 
     respond_to do |format|
       if @user_profile.save
-        format.html { redirect_to @user_profile, notice: 'User profile was successfully created.' }
+        redirect_path = session.delete(:user_profile_return_to) || dashboard_user_path(current_user)
+        format.html { redirect_to redirect_path, notice: 'Thanks for telling us about yourself!' }
         format.json { render :show, status: :created, location: @user_profile }
-        redirect_to users_path(current_user)
       else
         format.html { render :new }
         format.json { render json: @user_profile.errors, status: :unprocessable_entity }

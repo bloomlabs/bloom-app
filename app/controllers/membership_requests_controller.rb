@@ -3,6 +3,7 @@ class MembershipRequestsController < ApplicationController
   load_and_authorize_resource
   before_action :set_membership_request, only: [:show, :edit, :update, :destroy]
   before_action :workflow_redirect
+  before_action :ensure_user_profile
 
   # GET /membership_requests
   # GET /membership_requests.json
@@ -163,6 +164,14 @@ class MembershipRequestsController < ApplicationController
                             action: "workflow_#{@membership_request.workflow_state}",
                             id: @membership_request.id)
       end
+    end
+  end
+
+  # Make sure user has filled out user_profile before continuing
+  def ensure_user_profile
+    if not current_user.user_profiles.any?
+      session[:user_profile_return_to] ||= request.original_fullpath
+      redirect_to new_user_profile_path, notice: 'Before continuing, can you tell us a bit more about yourself?'
     end
   end
 end

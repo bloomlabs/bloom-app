@@ -2,9 +2,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     @user, newly_created = User.from_omniauth(request.env['omniauth.auth'])
 
-    if newly_created
-      redirect_to '/user_profiles/new'
-    elsif @user.persisted?
+    if @user.persisted?
       flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', :kind => 'Google'
       sign_in_and_redirect @user, :event => :authentication
     else
