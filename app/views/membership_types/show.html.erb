@@ -20,5 +20,20 @@
   <%= @membership_type.autoapprove %>
 </p>
 
+<p>
+  <strong>Stripe ID</strong>:</strong>
+  <%= @membership_type.stripe_id %>
+</p>
+
+<p>
+  <strong>Status email:</strong>
+  <%= @membership_type.status_email %>
+</p>
+
+<p>
+  <strong>Sucess email:</strong>
+  <%= @membership_type.success_email %>
+</p>
+
 <%= link_to 'Edit', edit_membership_type_path(@membership_type) %> |
 <%= link_to 'Back', membership_types_path %>
