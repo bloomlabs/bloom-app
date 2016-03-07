@@ -6,17 +6,26 @@ class MembershipType < ActiveRecord::Base
   validate :recurrence_validation
   validates :status_email, email: true, presence: true
   validates :success_email, email: true, presence: true
+  validate :stripe_plan_exists
 
   def stripe_plan
-    Stripe::Plan.retrieve(self.stripe_id)
+    begin
+      Stripe::Plan.retrieve(self.stripe_id) if not self.stripe_id.nil?
+    rescue Stripe::InvalidRequestError
+      nil
+    end
   end
 
   def price
-    attr = self.read_attribute(:price)
-    if not attr and Stripe.api_key
-      return self.stripe_plan.amount
+    if self.recurring
+      if Stripe.api_key and self.stripe_plan
+        self.stripe_plan.amount
+      else
+        nil
+      end
+    else
+      self.read_attribute(:price)
     end
-    attr
   end
 
   def recurrence_validation
@@ -42,6 +51,15 @@ class MembershipType < ActiveRecord::Base
     end
   end
 
+  def stripe_plan_exists
+    if recurring and not stripe_id.blank?
+      begin
+        Stripe::Plan.retrieve(stripe_id)
+      rescue Stripe::InvalidRequestError => e
+        errors.add(:stripe_id, "stripe ID does not correspond to existing plan, create the stripe plan before continuing")
+      end
+    end
+  end
 end
 
 

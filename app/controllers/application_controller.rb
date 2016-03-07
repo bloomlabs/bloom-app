@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   # Handle access denied
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to welcome_index_path, flash: {error: "Whoops, the app doesn't think you're allowed to do that.<br>If you think this is a mistake, please <a href='mailto:#{Rails.configuration.x.help_contact.email}'>email #{Rails.configuration.x.help_contact.name}</a>."}
+    redirect_to root_path, flash: {error: "Whoops, the app doesn't think you're allowed to do that.<br>If you think this is a mistake, please <a href='mailto:#{Rails.configuration.x.help_contact.email}'>email #{Rails.configuration.x.help_contact.name}</a>."}
   end
 
   # Devise 
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   # Redirect back to same location if user is caught by authenticate_user!
   def after_sign_in_path_for(resource)
-    session["user_return_to"] || dashboard_user_path(current_user)
+    session["user_return_to"] || dashboard_path
   end
 
   protected

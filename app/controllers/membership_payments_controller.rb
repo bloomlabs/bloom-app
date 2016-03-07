@@ -1,7 +1,7 @@
 class MembershipPaymentsController < ApplicationController
-  protect_from_forgery :except => :stripe_webhook
+  protect_from_forgery except: [:stripe_webhook]
   before_action :set_membership_request, except: [:stripe_webhook, :process_cancel_subscription]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:stripe_webhook]
 
   require 'json'
 

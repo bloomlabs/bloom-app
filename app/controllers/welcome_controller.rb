@@ -3,7 +3,16 @@ class WelcomeController < ApplicationController
 
   def index
     if current_user
-      redirect_to dashboard_user_path(current_user)
+      redirect_to dashboard_path
     end
+  end
+
+  def dashboard
+    if current_user.staff?
+      redirect_to admin_dashboard_path
+    end
+
+    @current_request = current_user.latest_request
+    @active_applications = current_user.membership_requests.where.not(closed: true)
   end
 end

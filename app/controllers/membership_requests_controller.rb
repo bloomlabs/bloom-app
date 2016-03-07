@@ -77,7 +77,7 @@ class MembershipRequestsController < ApplicationController
   def destroy
     @membership_request.cancel!
     respond_to do |format|
-      format.html { redirect_to dashboard_user_path(@membership_request.user), notice: 'Membership request was successfully cancelled' }
+      format.html { redirect_to dashboard_path, notice: 'Membership request was successfully cancelled' }
       format.json { head :no_content }
     end
   end

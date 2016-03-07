@@ -20,9 +20,9 @@
         <td><%= membership_type.price %></td>
         <td><%= membership_type.recurring %></td>
         <td><%= membership_type.autoapprove %></td>
-        <td><%= link_to 'Show', membership_type %></td>
-        <td><%= link_to 'Edit', edit_membership_type_path(membership_type) %></td>
-        <td><%= link_to 'Destroy', membership_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [:admin, membership_type] %></td>
+        <td><%= link_to 'Edit', edit_admin_membership_type_path(membership_type) %></td>
+        <td><%= link_to 'Destroy', [:admin, membership_type], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Membership type', new_membership_type_path %>
+<%= link_to 'New Membership type', new_admin_membership_type_path %>

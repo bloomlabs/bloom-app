@@ -1,23 +1,18 @@
 Rails.application.routes.draw do
-  resources :user_profiles
-  get 'registration/new'
-  post 'registration/info'
+  devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
 
-  devise_for :users, controllers: {registrations: "registrations", omniauth_callbacks: 'omniauth_callbacks'}
 
-  post 'membership_payments/stripe_webhook'
-  authenticate :user do
-    get 'dashboard/dashboard'
+  resources :user_profiles, only: [:new, :create]
 
-    post 'membership_payments/capture_single'
-    post 'membership_payments/capture_subscription'
-    post 'membership_payments/process_cancel_subscription'
-    get 'membership_payments/payment_confirmation'
-    get 'membership_payments/pay_single'
-    get 'membership_payments/cancel_subscription'
+  scope 'membership_payments', controller: :membership_payments do
+    post 'stripe_webhook'
+    post 'capture_single'
+    post 'capture_subscription'
+    post 'process_cancel_subscription'
+    get 'payment_confirmation'
+    get 'pay_single'
+    get 'cancel_subscription'
   end
-
-  resources :membership_types
 
   resources :membership_requests do
     member do
@@ -29,71 +24,15 @@ Rails.application.routes.draw do
   end
 
 
-  resources :users do
-    member do
-      get :dashboard
-    end
-  end
-
+  get 'admin/dashboard' => 'admin#dashboard'
   namespace :admin do
     resources :membership_requests, only: [:index, :show, :update]
-    post 'membership_requests/reset_community_members'
+    post 'reset_community_members' => 'membership_requests#reset_community_members'
+
+    resources :membership_types
   end
 
-  get 'welcome/index'
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
+  get 'dashboard' => 'welcome#dashboard'
   root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
