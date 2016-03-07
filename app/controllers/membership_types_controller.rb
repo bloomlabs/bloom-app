@@ -71,6 +71,6 @@ class MembershipTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def membership_type_params
-      params.require(:membership_type).permit(:name, :price, :recurring, :autoapprove, :status_email, :success_email)
+      params.require(:membership_type).permit(:name, :price, :recurring, :stripe_id, :autoapprove, :status_email, :success_email)
     end
 end
