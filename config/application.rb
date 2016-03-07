@@ -22,5 +22,9 @@ module BloomApp
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Person app mentions to email when something goes wrong
+    config.x.help_contact.name = 'Alexandra'
+    config.x.help_contact.email = 'alexandra@bloom.org.au'
   end
 end

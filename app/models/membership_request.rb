@@ -12,7 +12,7 @@ class MembershipRequest < ActiveRecord::Base
 
   def only_one_open_application
     if MembershipRequest.where(user_id: user_id, closed: false, membership_type_id: membership_type_id).where.not(id: id).count != 0
-      errors.add(:base, "Sorry, it looks like you have already applied to become that type of Bloom member. If you think this is a mistake, please <a href='mailto:alexandra@bloom.org.au'>email Alexandra</a>.")
+      errors.add(:base, "Sorry, it looks like you have already applied to become that type of Bloom member. If you think this is a mistake, please <a href='mailto:#{Rails.configuration.x.help_contact.email}'>email #{Rails.configuration.x.help_contact.name}</a>.")
     end
   end
 
