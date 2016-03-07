@@ -53,6 +53,9 @@ class Ability
       can :read, User, :id => user.id
       can :update, User, :id => user.id
       can :dashboard, User, :id => user.id
+
+      can :create, UserProfile
+      can :read, UserProfile, :id => user.id
     end
   end
 end
