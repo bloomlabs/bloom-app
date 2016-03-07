@@ -33,7 +33,7 @@ class Ability
     if user.staff?
       can :manage, :all
 
-      cannot :create, MembershipRequest
+      cannot :manage, MembershipRequest # This is management of the user-facing membership stuff
     else
       can :create, MembershipRequest
 
