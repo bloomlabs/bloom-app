@@ -36,6 +36,7 @@ gem 'normalize-rails'
 gem 'stripe'
 gem 'cancancan'
 gem 'delayed_job_active_record'
+gem 'email_validator'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -4,7 +4,7 @@ class MembershipRequestsMailer < ApplicationMailer
     @request = request
 
     mail(
-        to: 'memberships@bloom.org.au',
+        to: @request.membership_type.status_email,
         subject: "New Membership Application: #{@request.user.firstname} #{@request.user.lastname}"
     ).deliver!
   end
@@ -13,7 +13,7 @@ class MembershipRequestsMailer < ApplicationMailer
     @request = request
 
     mail(
-        to: 'memberships@bloom.org.au',
+        to: @request.membership_type.status_email,
         subject: "Cancelled #{@request.membership_type.name} membership: #{@request.user.firstname} #{@request.user.lastname}"
     ).deliver!
   end
@@ -23,6 +23,7 @@ class MembershipRequestsMailer < ApplicationMailer
 
     mail(
         to: "#{@request.user.firstname} #{request.user.lastname} <#{@request.user.email}>",
+        bcc: @request.membership_type.status_email,
         subject: "[Important] Bloom Membership Application"
     ).deliver!
   end
@@ -32,6 +33,7 @@ class MembershipRequestsMailer < ApplicationMailer
 
     mail(
         to: "#{@request.user.firstname} #{request.user.lastname} <#{@request.user.email}>",
+        bcc: @request.membership_type.status_email,
         subject: "[Important] Bloom Membership Application"
     ).deliver!
   end
@@ -41,6 +43,7 @@ class MembershipRequestsMailer < ApplicationMailer
 
     mail(
         to: "#{@request.user.firstname} #{request.user.lastname} <#{@request.user.email}>",
+        bcc: @request.membership_type.success_email,
         subject: "[Important] Bloom Membership Confirmation"
     ).deliver!
   end
@@ -50,7 +53,7 @@ class MembershipRequestsMailer < ApplicationMailer
 
     mail(
         to: "#{@request.user.firstname} #{request.user.lastname} <#{@request.user.email}>",
-        bcc: 'memberships@bloom.org.au',
+        bcc: @request.membership_type.success_email,
         subject: "[Important] Bloom Membership Confirmation"
     ).deliver!
   end

@@ -4,6 +4,8 @@ class MembershipType < ActiveRecord::Base
   validates_presence_of :name
   validates_inclusion_of :recurring, :autoapprove, in: [true, false]
   validate :recurrence_validation
+  validates :status_email, email: true, presence: true
+  validates :success_email, email: true, presence: true
 
   def stripe_plan
     Stripe::Plan.retrieve(self.stripe_id)
