@@ -52,7 +52,7 @@ class MembershipType < ActiveRecord::Base
   end
 
   def stripe_plan_exists
-    if recurring and not stripe_id.blank?
+    if Stripe.api_key and recurring and not stripe_id.blank?
       begin
         Stripe::Plan.retrieve(stripe_id)
       rescue Stripe::InvalidRequestError => e
