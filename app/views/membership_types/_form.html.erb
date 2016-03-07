@@ -15,10 +15,17 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.number_field :price %>
-  </div>
+  <% if @membership_type.recurring %>
+    <div class="field">
+      <%= f.label :price %><br>
+      <%= @membership_type.price %> per period (configured in stripe)
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.label :price %><br>
+      <%= f.number_field :price %>
+    </div>
+  <% end %>
     <div class="field">
       <%= f.label :stripe_id %><br>
       <%= f.text_field :stripe_id %>
