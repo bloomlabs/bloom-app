@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160304045803) do
   create_table "membership_requests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "membership_type_id"
+    t.date     "startdate"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "workflow_state"
