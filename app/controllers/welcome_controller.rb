@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   skip_authorization_check
+  before_action :authenticate_user!, except: [:index]
 
   def index
     if current_user
