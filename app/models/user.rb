@@ -87,7 +87,9 @@ class User < ActiveRecord::Base
       field :email
       field :firstname
       field :lastname
-      field :access_level
+      field :access_level do
+        queryable false
+      end
     end
     show do
       field :email
