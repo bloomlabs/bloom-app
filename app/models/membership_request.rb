@@ -1,7 +1,7 @@
 class MembershipRequest < ActiveRecord::Base
   include Workflow
-  scope :by_type, -> { includes(:membership_type).includes(:user).order('membership_types.name, users.firstname, users.lastname') }
-  scope :by_name, -> { includes(:membership_type).includes(:user).order('users.firstname, users.lastname, membership_types.name') }
+  scope :by_type, -> { joins(:membership_type).joins(:user).order('membership_types.name, users.firstname, users.lastname') }
+  scope :by_name, -> { joins(:membership_type).joins(:user).order('users.firstname, users.lastname, membership_types.name') }
   scope :pending_decision, -> { where(workflow_state: 'pending_decision') }
 
   has_paper_trail
