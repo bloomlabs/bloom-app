@@ -138,12 +138,8 @@ class MembershipRequest < ActiveRecord::Base
   rails_admin do
     list do
       scopes [:by_type, :by_name, :pending_decision]
-      field :user do
-        sortable :firstname, :lastname
-      end
-      field :membership_type do
-        sortable :name
-      end
+      field :user
+      field :membership_type
       field :workflow_state
     end
     show do
