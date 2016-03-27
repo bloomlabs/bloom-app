@@ -5,17 +5,6 @@ class MembershipRequestsController < ApplicationController
   before_action :workflow_redirect
   before_action :ensure_user_profile, except: [:new, :create]
 
-  # GET /membership_requests
-  # GET /membership_requests.json
-  def index
-    if current_user.staff?
-      @membership_requests = MembershipRequest.all
-    else
-      @membership_requests = MembershipRequest.where(user_id: current_user.id)
-    end
-
-  end
-
   # GET /membership_requests/1
   # GET /membership_requests/1.json
   def show
@@ -32,10 +21,6 @@ class MembershipRequestsController < ApplicationController
     @community_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Community Member'))
     @parttime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Part-Time Member'))
     @fulltime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Full-Time Member'))
-  end
-
-  # GET /membership_requests/1/edit
-  def edit
   end
 
   # POST /membership_requests
@@ -55,30 +40,6 @@ class MembershipRequestsController < ApplicationController
         format.html { render :new }
         format.json { render json: @membership_request.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PATCH/PUT /membership_requests/1
-  # PATCH/PUT /membership_requests/1.json
-  def update
-    respond_to do |format|
-      if @membership_request.update(membership_request_params)
-        format.html { redirect_to @membership_request, notice: 'Membership request was successfully updated.' }
-        format.json { render :show, status: :ok, location: @membership_request }
-      else
-        format.html { render :edit }
-        format.json { render json: @membership_request.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /membership_requests/1
-  # DELETE /membership_requests/1.json
-  def destroy
-    @membership_request.cancel!
-    respond_to do |format|
-      format.html { redirect_to dashboard_path, notice: 'Membership request was successfully cancelled' }
-      format.json { head :no_content }
     end
   end
 
