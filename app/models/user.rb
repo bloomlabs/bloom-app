@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
 
   rails_admin do
     list do
-      sort_by :firstname, :lastname, :email
+      sort_by 'firstname asc, users.lastname asc, users.email'
       field :firstname
       field :lastname
       field :email

@@ -64,7 +64,7 @@ class MembershipType < ActiveRecord::Base
 
   rails_admin do
     list do
-      sort_by :name, :price
+      sort_by :name
       field :name
       field :price
       field :stripe_id
