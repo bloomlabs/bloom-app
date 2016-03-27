@@ -1,11 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 
-  membership_id: 
-  startdate: 2016-02-07
-
-two:
-  user_id: 
-  membership_id: 
-  startdate: 2016-02-07
+<% MembershipRequest.workflow_spec.states.keys.each do |state| %>
+  david_request_<%= state %>:
+    user: david
+    membership_type: nonrecurring_approval
+    workflow_state: <%= state %>
+<% end %>

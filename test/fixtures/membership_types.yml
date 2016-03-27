@@ -1,13 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  price: 1
+nonrecurring_approval:
+  name: Non-Recurring Approval
+  price: 50
   recurring: false
   autoapprove: false
 
-two:
-  name: MyString
-  price: 1
+nonrecurring_autoapprove:
+  name: Non-Recurring Auto-Approval
+  price: 100
   recurring: false
+  autoapprove: true
+
+recurring_approval:
+  name: Recurring Approval
+  stripe_id: recurring-approval
+  recurring: true
+  autoapprove: false
+
+recurring_autoapprove:
+  name: Recurring Auto-Approval
+  stripe_id: recurring-autoapproval
+  recurring: true
   autoapprove: false
