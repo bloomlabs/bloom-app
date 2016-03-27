@@ -37,6 +37,8 @@ gem 'stripe'
 gem 'cancancan'
 gem 'delayed_job_active_record'
 gem 'email_validator'
+gem 'rails_admin'
+gem 'rails_admin_history_rollback'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -21,3 +21,9 @@
 
 en:
   hello: "Hello world"
+  admin:
+    actions:
+      accept:
+        menu: 'Accept Application'
+      reject:
+        menu: 'Reject Application'

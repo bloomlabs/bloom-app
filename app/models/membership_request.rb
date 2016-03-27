@@ -128,4 +128,13 @@ class MembershipRequest < ActiveRecord::Base
     MembershipRequestsMailer.delay.request_rejected(self)
   end
 
+  def workflow_state_enum
+    self.class.workflow_spec.state_names
+  end
+
+  # rails_admin do
+  #   configure :workflow_state do
+  #     read_only true
+  #   end
+  # end
 end

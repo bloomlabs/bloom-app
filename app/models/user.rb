@@ -55,8 +55,24 @@ class User < ActiveRecord::Base
     end
   end
 
-  def display_name
-    "#{self.firstname} #{self.lastname}".titleize
+  def name
+    self.email
+  end
+
+  def staff?
+    self.access_level >= 100
+  end
+
+  def superuser?
+    self.access_level >= 255
+  end
+
+  def access_level_enum
+    [
+        ['Normal User', 0],
+        ['Staff Member', 100],
+        ['Superuser', 255],
+    ]
   end
 
   # Use front-end helpers in the model for certain formatting
