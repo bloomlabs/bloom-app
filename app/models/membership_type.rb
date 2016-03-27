@@ -62,6 +62,16 @@ class MembershipType < ActiveRecord::Base
     end
   end
 
+  rails_admin do
+    list do
+      sort_by :name, :price
+      field :name
+      field :price
+      field :stripe_id
+      field :recurring
+      field :autoapprove
+    end
+  end
 end
 
 

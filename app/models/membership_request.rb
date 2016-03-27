@@ -137,7 +137,9 @@ class MembershipRequest < ActiveRecord::Base
       field :user do
         sortable :firstname, :lastname
       end
-      field :membership_type
+      field :membership_type do
+        sortable :name
+      end
       field :workflow_state
     end
     show do
