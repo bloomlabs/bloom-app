@@ -40,6 +40,8 @@ gem 'email_validator'
 gem 'rails_admin'
 gem 'rails_admin_history_rollback'
 
+gem 'simplecov', require: false, group: :test
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
