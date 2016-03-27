@@ -18,6 +18,7 @@ class AdminAbility
     if user.superuser?
       can :access, :rails_admin
       can :manage, :all
+      cannot :show_in_app, :all
     end
   end
 end
