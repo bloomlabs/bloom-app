@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/admin/membership_requests/:id', to: redirect('/admin/membership_request/%{id}') # Backwards compatibility
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   get 'dashboard' => 'welcome#dashboard'
