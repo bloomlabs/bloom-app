@@ -1,7 +1,5 @@
 class MembershipRequest < ActiveRecord::Base
   include Workflow
-  scope :by_type, -> { joins(:membership_type).joins(:user).order('membership_types.name, users.firstname, users.lastname') }
-  scope :by_name, -> { joins(:membership_type).joins(:user).order('users.firstname, users.lastname, membership_types.name') }
   scope :pending_decision, -> { where(workflow_state: 'pending_decision') }
 
   has_paper_trail
@@ -137,8 +135,11 @@ class MembershipRequest < ActiveRecord::Base
 
   rails_admin do
     list do
-      scopes [:by_type, :by_name, :pending_decision]
-      field :user
+      scopes [nil, :pending_decision]
+      sort_by :user
+      field :user do
+        sortable 'firstname, lastname'
+      end
       field :membership_type
       field :workflow_state
     end
