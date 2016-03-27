@@ -133,7 +133,10 @@ class MembershipRequest < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :user
+      sort_by :membership_type, :workflow_state, :user
+      field :user do
+        sortable :firstname, :lastname
+      end
       field :membership_type
       field :workflow_state
     end

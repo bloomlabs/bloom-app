@@ -85,9 +85,10 @@ class User < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :email
+      sort_by :firstname, :lastname, :email
       field :firstname
       field :lastname
+      field :email
       field :access_level do
         queryable false
       end

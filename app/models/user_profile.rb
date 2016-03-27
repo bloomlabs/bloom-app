@@ -8,7 +8,10 @@ class UserProfile < ActiveRecord::Base
 
   rails_admin do
     list do
-      field :user
+      sort_by :user, :created_at
+      field :user do
+        sortable :firstname, :lastname
+      end
       field :created_at
     end
     show do
