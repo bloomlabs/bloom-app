@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
-
 
   resources :user_profiles, only: [:new, :create]
 
@@ -25,15 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-
-  # get 'admin/dashboard' => 'admin#dashboard'
-  # namespace :admin do
-  #   resources :membership_requests, only: [:index, :show, :update]
-  #   post 'reset_community_members' => 'membership_requests#reset_community_members'
-  #
-  #   resources :membership_types
-  # end
-
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   get 'dashboard' => 'welcome#dashboard'
   root 'welcome#index'

@@ -15,7 +15,7 @@
     <div class="navigation-tools">
       <ul id="js-navigation-menu" class="navigation-menu show">
         <% if user_signed_in? %>
-            <% if current_user.staff %>
+            <% if current_user.staff? %>
                 <li class="nav-link"><%= link_to "Admin", admin_dashboard_path %></li>
             <% end %>
             <li class="nav-link"><%= link_to current_user.firstname.titleize, dashboard_path %></li>

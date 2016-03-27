@@ -11,8 +11,6 @@ class AdminAbility
       can :history, :all
       can :show, :all
 
-      can :edit, User
-      can :edit, MembershipType
       can :accept, MembershipRequest
       can :reject, MembershipRequest
     end

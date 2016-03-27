@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
+  has_paper_trail
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:google_oauth2]
-  # confirmable - confirm account through emails?
+  # confirmable - confirm account through emails
 
   has_many :membership_requests
   has_many :user_profiles
@@ -56,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    self.email
+    "#{firstname} #{lastname} (#{email})"
   end
 
   def staff?
@@ -78,5 +80,26 @@ class User < ActiveRecord::Base
   # Use front-end helpers in the model for certain formatting
   def helper
     ActionController::Base.helpers
+  end
+
+  rails_admin do
+    list do
+      field :email
+      field :firstname
+      field :lastname
+      field :access_level
+    end
+    show do
+      field :email
+      field :firstname
+      field :lastname
+      field :user_profiles
+      field :access_level
+      field :stripe_customer_id
+      field :sign_in_count
+      field :last_sign_in_at
+      field :created_at
+      field :updated_at
+    end
   end
 end

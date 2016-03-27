@@ -10,7 +10,7 @@ class WelcomeController < ApplicationController
 
   def dashboard
     if current_user.staff?
-      redirect_to admin_dashboard_path
+      redirect_to rails_admin_path
     end
 
     @current_request = current_user.latest_request

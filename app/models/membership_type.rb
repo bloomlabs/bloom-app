@@ -1,4 +1,5 @@
 class MembershipType < ActiveRecord::Base
+  has_paper_trail
   has_many :membership_requests
 
   validates_presence_of :name
@@ -60,6 +61,7 @@ class MembershipType < ActiveRecord::Base
       end
     end
   end
+
 end
 
 

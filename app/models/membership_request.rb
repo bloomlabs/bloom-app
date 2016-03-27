@@ -1,6 +1,5 @@
 class MembershipRequest < ActiveRecord::Base
   include Workflow
-
   has_paper_trail
 
   belongs_to :user
@@ -132,9 +131,21 @@ class MembershipRequest < ActiveRecord::Base
     self.class.workflow_spec.state_names
   end
 
-  # rails_admin do
-  #   configure :workflow_state do
-  #     read_only true
-  #   end
-  # end
+  rails_admin do
+    list do
+      field :user
+      field :membership_type
+      field :workflow_state
+    end
+    show do
+      field :user
+      field :membership_type
+      field :workflow_state
+      field :info
+      field :startdate
+      field :interview_book_info
+      field :cancel_reason
+      field :created_at
+    end
+  end
 end
