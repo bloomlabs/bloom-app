@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 
   validates :firstname, presence: true, length: {in: 2..35}
   validates :lastname, presence: true, length: {in: 2..35}
+  validates :access_level, presence: true
 
   def has_subscription?
     !self.stripe_customer_id.nil? and latest_request.has_subscription
