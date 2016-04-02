@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    resources :users, only: [:index]
+  end
+
   get '/admin/membership_requests/:id', to: redirect('/admin/membership_request/%{id}') # Backwards compatibility
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 

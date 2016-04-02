@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def has_subscription?
-    !self.stripe_customer_id.nil? and latest_request.has_subscription
+    !self.stripe_customer_id.nil? and (latest_request and latest_request.has_subscription)
   end
 
   def latest_request
@@ -94,8 +94,12 @@ class User < ActiveRecord::Base
     self.access_level >= 255
   end
 
+  def wifi_username
+    email
+  end
+
   def wifi_access?
-    staff? || superuser? || has_subscription?
+    self.staff? || self.superuser? || self.has_subscription?
   end
 
   def access_level_enum
@@ -138,7 +142,7 @@ class User < ActiveRecord::Base
       field :lastname
 
       # We restrict editing advanced user attributes to superusers due to potential for breakages
-      fields :email, :user_profiles, :access_level, :stripe_customer_id do
+      fields :email, :user_profiles, :access_level, :stripe_customer_id, :password, :wifi_password do
         visible do
           bindings[:view]._current_user.superuser?
         end

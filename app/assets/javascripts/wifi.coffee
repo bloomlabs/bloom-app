@@ -15,7 +15,7 @@ calc_strength = (pw) ->
   $('#strength').html(strength_str[pwstrength.score])
   $('#strength').attr('class', 'strength-level-' + pwstrength.score)
 
-$(document).ready ->
+$(document).on 'page:change', ->
   $('#wifi_password').bind 'propertychange change click keyup input paste', ->
     console.log($(this).val())
     calc_strength $(this).val()

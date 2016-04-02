@@ -1,3 +1,5 @@
+<% unless current_user.staff? %>
+
 <h1>Your Dashboard</h1>
 
 <p>Hi, I'm your dashboard. Am I full? Am I empty? I don't know, my coders haven't implemented that level of self-awareness yet. For now, I can give you the general advice - start a new application or continue an existing application here.</p>
@@ -30,4 +32,9 @@
 
 <% if @current_request.nil? or not @current_request.has_subscription %>
     <%= button_to "Apply to be a member", new_membership_request_path, :method => "get" %>
+<% end %>
+
+<% else %>
+    <p>Nothing here for admins.</p>
+
 <% end %>
