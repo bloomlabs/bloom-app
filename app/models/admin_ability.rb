@@ -13,6 +13,7 @@ class AdminAbility
 
       can :accept, MembershipRequest
       can :reject, MembershipRequest
+      can :edit, User
     end
 
     if user.superuser?

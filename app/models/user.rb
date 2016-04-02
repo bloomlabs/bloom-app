@@ -105,5 +105,16 @@ class User < ActiveRecord::Base
       field :created_at
       field :updated_at
     end
+    edit do
+      field :firstname
+      field :lastname
+
+      # We restrict editing advanced user attributes to superusers due to potential for breakages
+      fields :email, :user_profiles, :access_level, :stripe_customer_id do
+        visible do
+          bindings[:view]._current_user.superuser?
+        end
+      end
+    end
   end
 end
