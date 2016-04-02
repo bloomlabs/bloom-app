@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
 
   resources :user_profiles, only: [:new, :create]
+  resource :wifi, only: [:show, :update], controller: 'wifi'
 
   scope 'membership_payments', controller: :membership_payments do
     post 'stripe_webhook'

@@ -1,0 +1,27 @@
+// Place all the styles related to the wifi controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#wifi_password {
+  font-family: monospace;
+}
+
+.strength-level-0 {
+  color: darkred;
+}
+
+.strength-level-1 {
+  color: red;
+}
+
+.strength-level-2 {
+  color: lightgreen;
+}
+
+.strength-level-3 {
+  color: darkgreen;
+}
+
+.strength-level-4 {
+  font-weight: bold;
+  color: darkgreen;
+}

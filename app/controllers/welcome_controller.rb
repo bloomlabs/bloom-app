@@ -9,9 +9,9 @@ class WelcomeController < ApplicationController
   end
 
   def dashboard
-    if current_user.staff?
-      redirect_to rails_admin_path
-    end
+    # if current_user.staff?
+    #   redirect_to rails_admin_path
+    # end
 
     @current_request = current_user.latest_request
     @active_applications = current_user.membership_requests.where.not(closed: true)

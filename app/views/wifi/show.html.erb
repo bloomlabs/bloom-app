@@ -1,0 +1,54 @@
+<h1>Wifi Management</h1>
+<% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this wifi password from being saved:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <br>
+    <br>
+<% end %>
+
+<% if @user.wifi_access? %>
+    <% if @user.wifi_password.blank? || @user.errors.any? %>
+        <p>Currently, your BloomLab Members wifi account is <b>temporarily inactive</b>, as you have yet to set a wifi password.</p>
+        <p>You will need to set a wifi password for your account to be activated.</p>
+    <% else %>
+        <p>Currently, your BloomLab Members wifi account is <b>enabled</b>.</p>
+    <% end %>
+
+    <%= form_tag wifi_path, method: :put do %>
+        <div class="field">
+          <p><b>Username</b></p>
+          <p><%= @user.email %></p>
+        </div>
+
+        <br>
+
+        <div class="field">
+          <p><b>Password</b></p>
+          <%= text_field_tag(:wifi_password, @user.wifi_password, maxlength: 35) %>
+          <p>Password Strength: <span id="strength">Calculating...</span></p>
+        </div>
+
+        <br>
+
+        <p>Password Requirements: Must be less than 35 characters long, must be at least an <span class="strength-level-2">Okay</span> in password security.</p>
+        <p><b>Important Note:</b> Your password is stored unencrypted so make sure you don't use a password you use anywhere else.</p>
+
+        <br>
+
+        <%= submit_tag('Change Password') %>
+    <% end %>
+<% else %>
+    <p>Currently, your BloomLab Members wifi account is <b>disabled</b>.</p>
+    <p>This may be due to an issue with your membership status, check your <%= link_to 'dashboard', dashboard_path %> for more details.</p>
+<% end %>
+
+<script>
+  var zxcvbn_user_inputs = ['<%= @user.firstname.gsub("'", "\'") %>', '<%= @user.lastname.gsub("'", "\'") %>', '<%= @user.email.gsub("'", "\'") %>'];
+</script>
