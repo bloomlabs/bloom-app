@@ -1,0 +1,1 @@
+json.users @users, :firstname, :lastname, :wifi_username, :wifi_password, :wifi_access?

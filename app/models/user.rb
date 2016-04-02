@@ -1,3 +1,5 @@
+require 'zxcvbn'
+
 class User < ActiveRecord::Base
   has_paper_trail
 
@@ -31,9 +33,31 @@ class User < ActiveRecord::Base
   validates :firstname, presence: true, length: {in: 2..35}
   validates :lastname, presence: true, length: {in: 2..35}
   validates :access_level, presence: true
+  validates :wifi_password, length: {maximum: 35}
+  validate :wifi_password_strength
+
+  def strength_str
+    [
+    'Very Weak',
+    'Weak',
+    'Okay',
+    'Strong',
+    'Very Strong',
+    ]
+  end
+
+
+  def wifi_password_strength
+    unless wifi_password.blank?
+      pwstrength = Zxcvbn.test(wifi_password, ['bloom', firstname, lastname, email])
+      unless pwstrength.score >= 2
+        errors.add(:wifi_password, "wifi password must have a strength score of #{strength_str[2]} or above (current score: #{strength_str[pwstrength.score]})")
+      end
+    end
+  end
 
   def has_subscription?
-    !self.stripe_customer_id.nil? and latest_request.has_subscription
+    !self.stripe_customer_id.nil? and (latest_request and latest_request.has_subscription)
   end
 
   def latest_request
@@ -68,6 +92,14 @@ class User < ActiveRecord::Base
 
   def superuser?
     self.access_level >= 255
+  end
+
+  def wifi_username
+    email
+  end
+
+  def wifi_access?
+    self.staff? || self.superuser? || self.has_subscription?
   end
 
   def access_level_enum
@@ -110,7 +142,7 @@ class User < ActiveRecord::Base
       field :lastname
 
       # We restrict editing advanced user attributes to superusers due to potential for breakages
-      fields :email, :user_profiles, :access_level, :stripe_customer_id do
+      fields :email, :user_profiles, :access_level, :stripe_customer_id, :password, :wifi_password do
         visible do
           bindings[:view]._current_user.superuser?
         end

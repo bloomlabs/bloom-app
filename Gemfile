@@ -40,6 +40,8 @@ gem 'email_validator'
 gem 'rails_admin'
 gem 'rails_admin_history_rollback'
 
+gem 'zxcvbn-js', require: 'zxcvbn'
+
 gem 'simplecov', require: false, group: :test
 
 # Use ActiveModel has_secure_password
@@ -68,6 +70,3 @@ end
 gem 'rails_12factor', group: :production
 
 gem 'puma'
-
-# Explicit Ruby version
-ruby '2.2.1'

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
 
   resources :user_profiles, only: [:new, :create]
+  resource :wifi, only: [:show, :update], controller: 'wifi'
 
   scope 'membership_payments', controller: :membership_payments do
     post 'stripe_webhook'
@@ -20,6 +21,10 @@ Rails.application.routes.draw do
         post "stage/#{state}" => "membership_requests#workflow_#{state}", as: "workflow_submit_#{state}"
       end
     end
+  end
+
+  namespace :api do
+    resources :users, only: [:index]
   end
 
   get '/admin/membership_requests/:id', to: redirect('/admin/membership_request/%{id}') # Backwards compatibility
