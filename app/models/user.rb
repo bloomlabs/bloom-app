@@ -33,7 +33,8 @@ class User < ActiveRecord::Base
   validates :firstname, presence: true, length: {in: 2..35}
   validates :lastname, presence: true, length: {in: 2..35}
   validates :access_level, presence: true
-  validates :wifi_password, length: {maximum: 35}
+  validates :wifi_password, length: {maximum: 253}
+  validates :email, length: {maximum: 200}
   validate :wifi_password_strength
 
   def strength_str
@@ -95,7 +96,7 @@ class User < ActiveRecord::Base
   end
 
   def wifi_username
-    email
+    email[0..64] # TODO: Potential for collisions
   end
 
   def wifi_access?

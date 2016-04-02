@@ -37,13 +37,13 @@
 
     <div class="field">
       <p><b>Password</b></p>
-      <%= text_field_tag(:wifi_password, @user.wifi_password, maxlength: 35) %>
+      <%= text_field_tag(:wifi_password, @user.wifi_password, maxlength: 253) %>
       <p>Password Strength: <span id="strength">Calculating...</span></p>
     </div>
 
     <br>
 
-    <p>Password Requirements: Must be less than 35 characters long, must be at least an <span class="strength-level-2">Okay</span> in password security.</p>
+    <p>Password Requirements: Must be at least an <span class="strength-level-2">Okay</span> in password security.</p>
     <p><b>Important Note:</b> Your password is stored unencrypted so make sure you don't use a password you use anywhere else.</p>
 
     <br>
