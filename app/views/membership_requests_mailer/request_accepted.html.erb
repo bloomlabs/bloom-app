@@ -4,6 +4,6 @@
 
 <p>We're happy to inform you that your application has been accepted.</p>
 
-<p>Please <a href="<%= membership_request_url(@request) %>">click here</a> to confirm your place and make your payment.</p>
+<p>Please <%= link_to 'click here', membership_request_url(@request) %> to confirm your place and make your payment.</p>
 
 <%= render 'signature' %>
