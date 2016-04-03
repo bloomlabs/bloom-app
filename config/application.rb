@@ -26,5 +26,8 @@ module BloomApp
     # Person app mentions to email when something goes wrong
     config.x.help_contact.name = 'Alexandra'
     config.x.help_contact.email = 'alexandra@bloom.org.au'
+
+    # ActiveJob
+    config.active_job.queue_adapter = :delayed_job
   end
 end
