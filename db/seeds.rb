@@ -6,33 +6,37 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-def create_staff(firstname, lastname, email)
-  User.create(
+def create_managers(firstname, lastname, email)
+  u = User.new(
     firstname: firstname,
     lastname: lastname,
     email: email,
     access_level: 100,
     password: Devise.friendly_token[0, 20]
   )
+  u.skip_confirmation!
+  u.save
 end
 
 def create_superuser(firstname, lastname, email)
-  User.create(
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      access_level: 255,
-  password: Devise.friendly_token[0, 20]
+  u = User.new(
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    access_level: 255,
+    password: Devise.friendly_token[0, 20]
   )
+  u.skip_confirmation!
+  u.save
 end
 
 create_superuser('Ash', 'Tyndall', 'ash@bloom.org.au')
 create_superuser('Harry', 'Smallbone', 'harry@bloom.org.au')
 create_superuser('Mark', 'Shelton', 'mark@bloom.org.au')
-create_staff('Julian', 'Coleman', 'julian@bloom.org.au')
-create_staff('Lucy', 'Sharp', 'lucy.sharp@bloom.org.au')
-create_staff('Alexandra', 'O\'Brien', 'alexandra@bloom.org.au')
-create_staff('Shannon', 'Ziegelaar', 'shannon@bloom.org.au')
+create_managers('Julian', 'Coleman', 'julian@bloom.org.au')
+create_managers('Lucy', 'Sharp', 'lucy.sharp@bloom.org.au')
+create_managers('Alexandra', 'O\'Brien', 'alexandra@bloom.org.au')
+create_managers('Shannon', 'Ziegelaar', 'shannon@bloom.org.au')
 
 # WARNING: Don't change membership names, currently hard-coded in some places
 
