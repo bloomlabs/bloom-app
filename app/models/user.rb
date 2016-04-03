@@ -58,11 +58,11 @@ class User < ActiveRecord::Base
   end
 
   def has_subscription?
-    !self.stripe_customer_id.nil? and (latest_request and latest_request.has_subscription)
+    !self.stripe_customer_id.nil? and membership_requests.any? {|r| r.has_subscription?}
   end
 
-  def latest_request
-    membership_requests.order(created_at: :desc).first
+  def active_memberships
+    membership_requests.where(workflow_state: 'active_membership')
   end
 
   def stripe_customer

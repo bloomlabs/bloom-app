@@ -4,37 +4,23 @@
 
 <p>Hi, I'm your dashboard. Am I full? Am I empty? I don't know, my coders haven't implemented that level of self-awareness yet. For now, I can give you the general advice - start a new application or continue an existing application here.</p>
 
-<% if !@current_request.nil? %>
-    <% if @current_request.active_membership? %>
-        <% if @current_request.has_subscription %>
-            Current subscription: <%= @current_request.stripe_subscription.plan.name %><br>
-            <%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments', :membership_request_id => @current_request.id %>
-        <% else %>
-            You are currently a community member.
-        <% end %>
-    <% else %>
-        <% if @current_request.expired? %>
-            Your membership has expired! Please reapply.
-        <% end %>
-    <% end %>
-    <br><br>
-<% end %>
-
 <% if @active_applications.any? %>
-  <h2>Active Applications</h2>
+  <h2>Active Applications / Memberships</h2>
   <% @active_applications.each do |request| %>
       <% if not request.cancelled? and not request.expired? %>
           <%= link_to "#{request.membership_type.name}", request %> <br>
+          <% if request.active_membership? and request.has_subscription? %>
+            (<%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments', :membership_request_id => request.id %>) <br>
+          <% end %>
       <% end %>
   <% end %>
   <br><br>
 <% end %>
 
-<% if @current_request.nil? or not @current_request.has_subscription %>
+<% unless @active_memberships.any? %>
     <%= button_to "Apply to be a member", new_membership_request_path, :method => "get" %>
 <% end %>
 
 <% else %>
-    <p>Nothing here for admins.</p>
-
+    <p>This is a staff account, you can't apply for anything :(</p>
 <% end %>

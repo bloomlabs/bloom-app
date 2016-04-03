@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
   end
 
   def dashboard
-    @current_request = current_user.latest_request
+    @active_memberships = current_user.active_memberships
     @active_applications = current_user.membership_requests.where.not(closed: true)
   end
 end
