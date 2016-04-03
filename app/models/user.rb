@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def wifi_access?
-    self.staff? || self.superuser? || self.has_subscription?
+    self.staff? || self.active_memberships.any? {|r| r.membership_type.wifi_access?}
   end
 
   def access_level_enum

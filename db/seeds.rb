@@ -37,8 +37,8 @@ create_staff('Shannon', 'Ziegelaar', 'shannon@bloom.org.au')
 # WARNING: Don't change membership names, currently hard-coded in some places
 
 # Recurring memberships have a stripe ID but no price (pricing is stored in the stripe subscription information)
-MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au')
-MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au')
+MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
 
 # Once-off memberships have a price but no stripe ID
-MembershipType.create(name: 'Community Member', price: 2500, recurring: false, autoapprove: true, status_email: 'status.community@bloom.org.au', success_email: 'new.community@bloom.org.au')
+MembershipType.create(name: 'Community Member', price: 2500, recurring: false, autoapprove: true, status_email: 'status.community@bloom.org.au', success_email: 'new.community@bloom.org.au', wifi_access: false)
