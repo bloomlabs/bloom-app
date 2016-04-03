@@ -70,6 +70,7 @@ class MembershipType < ActiveRecord::Base
       field :stripe_id
       field :recurring
       field :autoapprove
+      field :wifi_access
     end
   end
 end
