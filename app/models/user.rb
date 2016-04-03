@@ -15,17 +15,24 @@ class User < ActiveRecord::Base
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first
+
     newly_created = false
     unless user
-      user = User.create(
+      user = User.new(
           firstname: data['first_name'],
           lastname: data['last_name'],
           email: data['email'],
           password: Devise.friendly_token[0, 20]
       )
+      user.skip_confirmation!
+      user.save
       newly_created = true
     end
-    user.skip_confirmation!
+
+    unless user.confirmed?
+      user.skip_confirmation!
+      user.save
+    end
 
     [user, newly_created]
   end
