@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402085107) do
+ActiveRecord::Schema.define(version: 20160403074757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160402085107) do
     t.datetime "updated_at",                                         null: false
     t.string   "status_email",  default: "memberships@bloom.org.au", null: false
     t.string   "success_email", default: "memberships@bloom.org.au", null: false
+    t.boolean  "wifi_access",   default: false
   end
 
   create_table "user_profiles", force: :cascade do |t|
@@ -95,8 +96,13 @@ ActiveRecord::Schema.define(version: 20160402085107) do
     t.string   "uid"
     t.integer  "access_level",           default: 0
     t.string   "wifi_password"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
