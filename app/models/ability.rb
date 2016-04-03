@@ -31,10 +31,14 @@ class Ability
 
     user ||= User.new # guest user (not logged in)
     if user.staff?
-      can :manage, :all
-
       cannot :manage, MembershipRequest # This is management of the user-facing membership stuff
-    else
+    end
+
+    if user.manager?
+      can :manage, :all
+    end
+
+    unless user.staff?
       can :create, MembershipRequest
 
       can :read, MembershipRequest, :user_id => user.id

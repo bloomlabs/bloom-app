@@ -3,7 +3,7 @@ class AdminAbility
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    if user.staff?
+    if user.manager?
       can :access, :rails_admin
       can :dashboard
 

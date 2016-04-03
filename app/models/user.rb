@@ -88,6 +88,10 @@ class User < ActiveRecord::Base
   end
 
   def staff?
+    self.access_level >= 50 || (self.email.ends_with?('@bloom.org.au') && self.access_level >= 0)
+  end
+
+  def manager?
     self.access_level >= 100
   end
 
@@ -105,8 +109,10 @@ class User < ActiveRecord::Base
 
   def access_level_enum
     [
+        ['Not Staff Member (Explicit)', -100],
         ['Normal User', 0],
-        ['Staff Member', 100],
+        ['Staff Member (Explicit)', 50],
+        ['Manager', 100],
         ['Superuser', 255],
     ]
   end

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   # Handle access denied
   rescue_from CanCan::AccessDenied do |exception|
-    if not current_user.nil? and current_user.staff?
+    if not current_user.nil? and current_user.manager?
       redirect_to rails_admin.dashboard_path, flash: {error: 'Your account doesn\'t have sufficient permissions to do that, please contact Ash if you think this is an error.'}
     else
       redirect_to main_app.root_path, flash: {error: "Whoops, the app doesn't think you're allowed to do that.<br>If you think this is a mistake, please <a href='mailto:#{Rails.configuration.x.help_contact.email}'>email #{Rails.configuration.x.help_contact.name}</a>."}

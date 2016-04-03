@@ -16,7 +16,7 @@
       <ul id="js-navigation-menu" class="navigation-menu show">
         <% if user_signed_in? %>
             <li class="nav-link"><%= link_to current_user.firstname.titleize, dashboard_path %></li>
-            <% if current_user.staff? %>
+            <% if current_user.manager? %>
                 <li class="nav-link"><%= link_to "Admin", rails_admin.dashboard_path %></li>
             <% end %>
             <li class="nav-link"><%= link_to "WiFi", wifi_path %></li>
