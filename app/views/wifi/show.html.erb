@@ -21,8 +21,9 @@
         <p>Currently, your BloomLab Members wifi account is <b>enabled</b>.</p>
     <% end %>
 <% else %>
-    <p>Currently, your BloomLab Members wifi account is <b>disabled</b>.</p>
-    <p>This may be due to an issue with your membership status, check your <%= link_to 'dashboard', dashboard_path %> for more details.</p>
+    <p>Currently, you do not have a BloomLab Members wifi account.</p>
+    <p>This may be due to an issue with your membership status, or because your membership type doesn't give you access to it.</p>
+    <p>Check your <%= link_to 'dashboard', dashboard_path %> for more details.</p>
 <% end %>
 
 <br><br>
