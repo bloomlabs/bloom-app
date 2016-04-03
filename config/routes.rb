@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
+  devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations'}
 
   resources :user_profiles, only: [:new, :create]
   resource :wifi, only: [:show, :update], controller: 'wifi'
