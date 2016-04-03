@@ -7,8 +7,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:google_oauth2]
-  # confirmable - confirm account through emails
+         :omniauthable, :confirmable, :omniauth_providers => [:google_oauth2]
 
   has_many :membership_requests
   has_many :user_profiles
@@ -26,6 +25,7 @@ class User < ActiveRecord::Base
       )
       newly_created = true
     end
+    user.skip_confirmation!
 
     [user, newly_created]
   end
