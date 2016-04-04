@@ -11,7 +11,7 @@ strength_str = [
 
 calc_strength = (pw) ->
   $('#strength').html('Calculating...')
-  pwstrength = zxcvbn pw, ['bloom'].concat(zxcvbn_user_inputs)
+  pwstrength = zxcvbn pw, ['bloom', 'innovation', 'hub'].concat(zxcvbn_user_inputs)
   $('#strength').html(strength_str[pwstrength.score])
   $('#strength').attr('class', 'strength-level-' + pwstrength.score)
 
