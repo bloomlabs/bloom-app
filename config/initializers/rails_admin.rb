@@ -48,6 +48,8 @@ end
 
 RailsAdmin.config do |config|
 
+  config.compact_show_view = false
+
   ### Popular gems integration
 
   ## == Devise ==
