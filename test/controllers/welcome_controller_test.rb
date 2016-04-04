@@ -37,21 +37,9 @@ class WelcomeControllerTest < ActionController::TestCase
     assert_redirected_to controller: 'welcome', action: 'dashboard'
   end
 
-  test "get dashboard staff user" do
-    sign_in @staff_user
-    get :dashboard
-    assert_redirected_to '/admin'
-  end
-
   test "get index super user" do
     sign_in @super_user
     get :index
     assert_redirected_to controller: 'welcome', action: 'dashboard'
-  end
-
-  test "get dashboard super user" do
-    sign_in @super_user
-    get :dashboard
-    assert_redirected_to '/admin'
   end
 end

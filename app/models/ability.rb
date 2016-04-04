@@ -30,12 +30,12 @@ class Ability
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
     user ||= User.new # guest user (not logged in)
-    if user.staff?
-      cannot :manage, MembershipRequest # This is management of the user-facing membership stuff
-    end
-
     if user.manager?
       can :manage, :all
+    end
+
+    if user.staff?
+      cannot :manage, MembershipRequest # This is management of the user-facing membership stuff
     end
 
     unless user.staff?

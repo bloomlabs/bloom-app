@@ -7,13 +7,19 @@ nonrecurring_approval:
   autoapprove: false
 
 nonrecurring_autoapprove:
-  name: Non-Recurring Auto-Approval
+  name: Community Member
   price: 100
   recurring: false
   autoapprove: true
 
-recurring_approval:
-  name: Recurring Approval
+recurring_approval1:
+  name: Part-Time Member
+  stripe_id: recurring-approval
+  recurring: true
+  autoapprove: false
+
+recurring_approval2:
+  name: Full-Time Member
   stripe_id: recurring-approval
   recurring: true
   autoapprove: false

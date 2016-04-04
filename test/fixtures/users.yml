@@ -9,21 +9,25 @@ david:
   lastname: Smith
   email: david@example.com
   access_level: 0
+  confirmed_at: <%= Time.now %>
 
 sam:
   firstname: Sam
   lastname: Smith
   email: sam@example.com
   access_level: 0
+  confirmed_at: <%= Time.now %>
 
 john:
   firstname: John
   lastname: Jones
   email: john@example.com
   access_level: 100
+  confirmed_at: <%= Time.now %>
 
 bill:
   firstname: Bill
   lastname: Banes
   email: bill@example.com
   access_level: 255
+  confirmed_at: <%= Time.now %>
