@@ -157,7 +157,7 @@ class User < ActiveRecord::Base
       field :lastname
 
       # We restrict editing advanced user attributes to superusers due to potential for breakages
-      fields :email, :user_profiles, :membership_requests, :access_level, :stripe_customer_id, :password, :wifi_password do
+      fields :email, :user_profiles, :access_level, :stripe_customer_id, :password, :wifi_password do
         visible do
           bindings[:view]._current_user.superuser?
         end
