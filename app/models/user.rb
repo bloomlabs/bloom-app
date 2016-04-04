@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
     unless wifi_password.blank?
       pwstrength = Zxcvbn.test(wifi_password, ['bloom', 'innovation', 'hub', firstname, lastname, email])
       unless pwstrength.score >= 2
-        errors.add(:wifi_password, "wifi password must have a strength score of #{strength_str[2]} or above (current score: #{strength_str[pwstrength.score]})")
+        errors.add(:wifi_password, "must have a strength score of #{strength_str[2]} or above (current score: #{strength_str[pwstrength.score]})")
       end
     end
   end

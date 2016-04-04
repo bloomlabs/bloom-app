@@ -1,4 +1,4 @@
-<h1>Wifi Management</h1>
+<h1>BloomLab Members Wifi Account Management</h1>
 <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this wifi password from being saved:</h2>
@@ -19,6 +19,7 @@
         <p>You will need to set a wifi password for your account to be activated.</p>
     <% else %>
         <p>Currently, your BloomLab Members wifi account is <b>enabled</b>.</p>
+        <p>Please use the details below to login to the BloomLab Members wifi network.</p>
     <% end %>
 <% else %>
     <p>Currently, you do not have a BloomLab Members wifi account.</p>
@@ -49,7 +50,11 @@
 
     <br>
 
-    <%= submit_tag('Change Password') %>
+    <% if @user.wifi_password.blank? || @user.errors.any? %>
+      <%= submit_tag('Set Password & Activate WiFi') %>
+    <% else %>
+      <%= submit_tag('Change Password') %>
+    <% end %>
 <% end %>
 
 <script>
