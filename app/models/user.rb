@@ -2,6 +2,7 @@ require 'zxcvbn'
 
 class User < ActiveRecord::Base
   has_paper_trail
+  has_secure_token
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

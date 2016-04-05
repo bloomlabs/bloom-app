@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/Nerian/google-id-token.git
+  revision: 5f92faa6b9737ef9bbc49cb6ad5190147f280569
+  specs:
+    google-id-token (1.2.0)
+      jwt
+      multi_json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -266,6 +274,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   email_validator
+  google-id-token!
   jbuilder (~> 2.0)
   jquery-rails
   neat

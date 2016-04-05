@@ -1,9 +1,9 @@
 class APIController < ActionController::Base
   before_filter :set_format
   before_action :authenticate
+  before_action :authenticate_user_token, only: [:get_profile_info]
 
   def get_profile_info
-
   end
 
   def user_auth_token
@@ -12,13 +12,21 @@ class APIController < ActionController::Base
     if jwt
       email = jwt['email']
       user = User.find_by!(email)
-      render :json => {token: "fake_token"}
+      if !user.token
+        user.regenerate_token
+        user.save
+      end
+      render :json => {token: user.token}
     else
       render :json => {error: "Invalid authentication"}
     end
   end
 
   private
+  def authenticate_user_token
+    User.find_by!(token: params["token"])
+  end
+
   def authenticate
     authenticate_or_request_with_http_token do |token, options|
       token == ENV['API_TOKEN']
@@ -28,5 +36,4 @@ class APIController < ActionController::Base
   def set_format
     request.format = 'json'
   end
-
 end
