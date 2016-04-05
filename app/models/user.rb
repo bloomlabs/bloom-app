@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
           firstname: data['first_name'],
           lastname: data['last_name'],
           email: data['email'],
+          provider: access_token.provider,
+          uid: access_token.uid,
           password: Devise.friendly_token[0, 20]
       )
       user.skip_confirmation!
