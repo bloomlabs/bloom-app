@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 WebFontConfig = {
     google: {families: ['Muli::latin', 'Arvo::latin']}
