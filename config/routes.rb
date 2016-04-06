@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [:index]
     post 'user_auth_token'
-    post 'profiles/:id', to: 'get_profile_info'
+    post 'profiles/:id' => 'api#get_profile_info'
   end
 
   get '/admin/membership_requests/:id', to: redirect('/admin/membership_request/%{id}') # Backwards compatibility

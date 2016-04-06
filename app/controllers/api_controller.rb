@@ -4,6 +4,21 @@ class APIController < ActionController::Base
   before_action :authenticate_user_token, only: [:get_profile_info]
 
   def get_profile_info
+    user = User.find_by(id: params["id"])
+    if user.nil?
+      render :json => {error: "Invalid user id"}
+    else
+      profile = UserProfile.find_by_user_id(user.id)
+      render :json => {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        profile: {
+            description: profile.user_description,
+            startup_name: profile.primary_startup_name,
+            startup_description: profile.primary_startup_description
+        }
+      }
+    end
   end
 
   def user_auth_token
@@ -16,7 +31,7 @@ class APIController < ActionController::Base
         user.regenerate_token
         user.save
       end
-      render :json => {token: user.token}
+      render :json => {token: user.token, id: user.id}
     else
       render :json => {error: "Invalid authentication"}
     end
