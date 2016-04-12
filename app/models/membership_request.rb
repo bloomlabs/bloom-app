@@ -97,12 +97,7 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def pay
-    case self.membership_type.name
-      when 'Community Member'
-        MembershipRequestsMailer.delay.community_confirmation(self)
-      when 'Part-Time Member', 'Full-Time Member'
-        MembershipRequestsMailer.delay.coworking_confirmation(self)
-    end
+    MembershipRequestsMailer.delay.coworking_confirmation(self)
   end
 
   def payment_fail

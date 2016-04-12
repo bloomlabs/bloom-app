@@ -38,16 +38,6 @@ class MembershipRequestsMailer < ApplicationMailer
     ).deliver!
   end
 
-  def community_confirmation(request)
-    @request = request
-
-    mail(
-        to: "#{@request.user.firstname} #{request.user.lastname} <#{@request.user.email}>",
-        bcc: @request.membership_type.success_email,
-        subject: "[Important] Bloom Membership Confirmation"
-    ).deliver!
-  end
-
   def coworking_confirmation(request)
     @request = request
 

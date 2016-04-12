@@ -48,7 +48,7 @@ h1 {
 }
 
 .pricing-column {
-  @include span-columns(4);
+  @include span-columns(6);
 
   ul > li:first-child {
     border-top: 1px solid #cbcbcb;

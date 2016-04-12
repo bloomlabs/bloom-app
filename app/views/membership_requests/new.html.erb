@@ -18,28 +18,14 @@
       journeys.</p>
 
     <div class="pricing-column">
-      <h3>Community Member ($25/semester)</h3>
-      <p>Community membership is for people that may or may not have an idea yet but are keen to develop their skills
-        more by attending Bloom events and meeting with Bloom advisors.</p>
-      <ul>
-        <li>Access to all Bloom Events (~25) - normally $5/event</li>
-        <li>Access to selected early-stage Bloom Advisors</li>
-        <li>50% off meeting room and venue hire</li>
-      </ul>
-      <br>
-      <% if @community_request %>
-          <a class='btn' href='<%= membership_request_path(@community_request) %>'>Go to open application</a>
-      <% else %>
-          <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name('Community Member').id %>' type='submit'>Payment</button>
-      <% end %>
-    </div>
-    <div class="pricing-column">
       <h3>Part-Time Co-working Member ($20/month)</h3>
       <p>Part-time co-working membership is for people that have got an idea and want to start working on it or are
         balancing a venture with other work commitments. Part-time co-workers receive part-time access to the BloomLab
         facilities and access to all of Bloom's advisors to help accelerate their ventures.</p>
       <ul>
-        <li><b>Community Member +</b></li>
+        <li>Access to all Bloom Events (~25)</li>
+        <li>Access to selected early-stage Bloom Advisors</li>
+        <li>50% off meeting room and venue hire</li>
         <li>Up to 10 hours per week co-working time (with 24/7 key card access)</li>
         <li>2 hours of free meeting room use per week</li>
         <li>Unlimited WiFi access and tea & coffee facilities</li>

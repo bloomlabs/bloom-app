@@ -18,7 +18,6 @@ class MembershipRequestsController < ApplicationController
   def new
     @membership_request = MembershipRequest.new
 
-    @community_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Community Member'))
     @parttime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Part-Time Member'))
     @fulltime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Full-Time Member'))
   end
