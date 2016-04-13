@@ -4,4 +4,4 @@
 $(document).ready ->
   $("#signup_reason_other_field").change -> $("#signup_reason_other").val(this.value)
   $("#education_status_other_field").change -> $("#education_status_other").val(this.value)
-  $(".education_status").change -> if $(this).val() == "university" || $(this).val().indexOf('graduate') != -1 then $("#user_profile_university_degree").parents('.field').show() else $("#user_profile_university_degree").val('').parents('.field').hide()
+  $(".education_status").change -> if $(this).val() == "university" || $(this).val().indexOf('graduate') != -1 then $("#user_profile_university_degree,#user_profile_university").parents('.field').show() else $("#user_profile_university_degree,#user_profile_university").val('').parents('.field').hide()
