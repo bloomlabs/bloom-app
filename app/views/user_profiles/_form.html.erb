@@ -27,6 +27,11 @@
     </div>
 
     <div class="field">
+      <%= f.label :telephone_number %>
+      <%= f.text_field :telephone_number %>
+    </div>
+
+    <div class="field">
       <%= f.label :date_of_birth %>
       <%= f.date_select :date_of_birth, with_css_classes: true, start_year: 1980, end_year: Date.today.year - 5 %>
     </div>
@@ -65,6 +70,11 @@
         Other:
         <input type="text" id="education_status_other_field" class="other_field">
       </label>
+    </div>
+
+    <div class="field" style="display:none">
+      <%= f.label :university %>
+      <%= f.text_field :university %>
     </div>
 
     <div class="field" style="display:none">

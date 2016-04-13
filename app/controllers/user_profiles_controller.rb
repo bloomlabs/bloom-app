@@ -32,6 +32,6 @@ class UserProfilesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_profile_params
-    params.require(:user_profile).permit(:signup_reason, :date_of_birth, :gender, :student_type, :education_status, :current_degree, :user_id_id)
+    params.require(:user_profile).permit(:signup_reason, :date_of_birth, :gender, :student_type, :education_status, :university_degree, :nationality, :telephone_number, :university, :user_id_id)
   end
 end
