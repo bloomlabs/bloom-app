@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160403074757) do
+ActiveRecord::Schema.define(version: 20160413083650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 20160403074757) do
     t.boolean  "wifi_access",   default: false
   end
 
+  create_table "user_interests", force: :cascade do |t|
+    t.integer  "user_profile_id"
+    t.string   "interest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "user_interests", ["user_profile_id"], name: "index_user_interests_on_user_profile_id", using: :btree
+
   create_table "user_profiles", force: :cascade do |t|
     t.string   "signup_reason"
     t.date     "date_of_birth"
@@ -69,12 +78,26 @@ ActiveRecord::Schema.define(version: 20160403074757) do
     t.string   "education_status"
     t.string   "university_degree"
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "nationality"
+    t.string   "user_description"
+    t.string   "primary_startup_name"
+    t.string   "primary_startup_description"
+    t.string   "telephone_number"
+    t.string   "university"
   end
 
   add_index "user_profiles", ["user_id"], name: "index_user_profiles_on_user_id", using: :btree
+
+  create_table "user_skills", force: :cascade do |t|
+    t.integer  "user_profile_id"
+    t.string   "skill"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "user_skills", ["user_profile_id"], name: "index_user_skills_on_user_profile_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -100,6 +123,7 @@ ActiveRecord::Schema.define(version: 20160403074757) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "token"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -131,5 +155,7 @@ ActiveRecord::Schema.define(version: 20160403074757) do
 
   add_foreign_key "membership_requests", "membership_types"
   add_foreign_key "membership_requests", "users"
+  add_foreign_key "user_interests", "user_profiles"
   add_foreign_key "user_profiles", "users"
+  add_foreign_key "user_skills", "user_profiles"
 end
