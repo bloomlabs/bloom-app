@@ -10,14 +10,16 @@ class APIController < ActionController::Base
     else
       profile = UserProfile.find_by_user_id(user.id)
       skills = UserSkill.where(profile: profile).select(:skill)
-      skills = UserInterest.where(profile: profile).select(:interest)
+      interests = UserInterest.where(profile: profile).select(:interest)
       render :json => {
         firstname: user.firstname,
         lastname: user.lastname,
         profile: {
             description: profile.user_description,
             startup_name: profile.primary_startup_name,
-            startup_description: profile.primary_startup_description
+            startup_description: profile.primary_startup_description,
+            interests: interests,
+            skills: skills
         }
       }
     end
