@@ -10,6 +10,7 @@ class AdminAbility
       can :index, :all
       can :history, :all
       can :show, :all
+      cab :export, :all
 
       can :accept, MembershipRequest
       can :reject, MembershipRequest
