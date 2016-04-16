@@ -29,8 +29,6 @@ Rails.application.routes.draw do
 
   scope 'api', controller: :api do
     post 'user_auth_token'
-    get 'user_auth_token'
-    get 'profiles/:id' => 'api#get_profile_info'
     post 'profiles/:id' => 'api#get_profile_info'
   end
 
