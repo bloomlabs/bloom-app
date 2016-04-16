@@ -25,6 +25,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :users, only: [:index]
+  end
+
+  scope 'api', controller: :api do
     post 'user_auth_token'
     post 'profiles/:id' => 'api#get_profile_info'
   end

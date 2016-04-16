@@ -1,10 +1,10 @@
-class APIController < ActionController::Base
+class ApiController < ActionController::Base
   before_filter :set_format
   before_action :authenticate
   before_action :authenticate_user_token, only: [:get_profile_info]
 
   def get_profile_info
-    user = User.find_by(id: params["id"])
+    user = User.find_by(id: params[:id])
     if user.nil?
       render :json => {error: "Invalid user id"}
     else

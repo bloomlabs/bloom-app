@@ -1,4 +1,4 @@
-class Api::UsersController < APIController
+class Api::UsersController < ApiController
   def index
     @users = User.all
   end
