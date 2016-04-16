@@ -37,7 +37,7 @@ class ApiController < ActionController::Base
       end
       render :json => {token: user.token, id: user.id}
     else
-      render :json => {error: "Invalid authentication"}
+      render :json => {error: "Invalid authentication", problem: validator.problem}
     end
   end
 
