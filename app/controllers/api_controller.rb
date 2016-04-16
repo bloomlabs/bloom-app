@@ -30,7 +30,7 @@ class ApiController < ActionController::Base
     jwt = validator.check(params['id_token'], params['audience'])
     if jwt
       email = jwt['email']
-      user = User.find_by!(email)
+      user = User.find_by_email!(email)
       if !user.token
         user.regenerate_token
         user.save
