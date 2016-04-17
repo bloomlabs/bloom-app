@@ -9,8 +9,8 @@ class ApiController < ActionController::Base
       render :json => {error: "Invalid/unknown user id"}
     else
       profile = UserProfile.find_by_user_id(user.id)
-      skills = UserSkill.where(profile: profile).select(:skill)
-      interests = UserInterest.where(profile: profile).select(:interest)
+      skills = UserSkill.where(user_profile_id: profile.id).select(:skill)
+      interests = UserInterest.where(user_profile_id: profile.id).select(:interest)
       render :json => {
         firstname: user.firstname,
         lastname: user.lastname,
