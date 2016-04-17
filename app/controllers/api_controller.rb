@@ -12,12 +12,12 @@ class ApiController < ActionController::Base
       skills = UserSkill.where(user_profile_id: profile.id).select(:skill)
       interests = UserInterest.where(user_profile_id: profile.id).select(:interest)
       render :json => {
-        firstname: user.firstname,
-        lastname: user.lastname,
+        firstname: user.firstname || "",
+        lastname: user.lastname || "",
         profile: {
-            description: profile.user_description,
-            startup_name: profile.primary_startup_name,
-            startup_description: profile.primary_startup_description,
+            description: profile.user_description || "",
+            startup_name: profile.primary_startup_name || "",
+            startup_description: profile.primary_startup_description || "",
             interests: interests,
             skills: skills
         }
