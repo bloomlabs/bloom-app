@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   scope 'api', controller: :api do
     post 'user_auth_token'
     post 'profiles/:id' => 'api#get_profile_info'
+    post 'profiles/:id/update' => 'api#update_profile_info'
   end
 
   get '/admin/membership_requests/:id', to: redirect('/admin/membership_request/%{id}') # Backwards compatibility

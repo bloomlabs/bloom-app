@@ -3,6 +3,37 @@ class ApiController < ActionController::Base
   before_action :authenticate
   before_action :authenticate_user_token, only: [:get_profile_info]
 
+  def update_profile_info
+    user = User.find(params[:id])
+    token_user = User.find_by!(token: params[:user_token])
+    if !user.nil? and user.id == token_user.id
+      profile = UserProfile.find_by_user_id(user.id)
+      user.firstname = params[:firstname]
+      user.lastname = params[:lastname]
+      profile.user_description = params[:profile][:description]
+      profile.primary_startup_name = params[:profile][:startup_name]
+      profile.primary_startup_description = params[:profile][:startup_description]
+      UserSkill.where(user_profile_id: profile.id).delete
+      UserInterest.where(user_profile_id: profile.id).delete
+      if params[:profile][:skills]
+        params[:profile][:skills].each do |skill|
+          UserSkill.create(skill: skill, user_profile_id: profile.id)
+        end
+      end  
+      if params[:profile][:interests]
+        params[:profile][:interests].each do |skill|
+          UserInterest.create(interest: interest, user_profile_id: profile.id)
+        end
+      end
+      user.save!
+      profile.save!
+    else 
+      render :json => {
+        "error": "Unknown user"
+      }
+    end
+  end
+
   def get_profile_info
     user = User.find(params[:id])
     if user.nil?
@@ -43,7 +74,7 @@ class ApiController < ActionController::Base
 
   private
   def authenticate_user_token
-    User.find_by!(token: params["token"])
+    User.find_by!(token: params[:user_token])
   end
 
   def authenticate
