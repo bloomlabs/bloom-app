@@ -13,8 +13,8 @@ class ApiController < ActionController::Base
       profile.user_description = params[:profile][:description]
       profile.primary_startup_name = params[:profile][:startup_name]
       profile.primary_startup_description = params[:profile][:startup_description]
-      UserSkill.where(user_profile_id: profile.id).delete
-      UserInterest.where(user_profile_id: profile.id).delete
+      UserSkill.where(user_profile_id: profile.id).delete_all
+      UserInterest.where(user_profile_id: profile.id).delete_all
       if params[:profile][:skills]
         params[:profile][:skills].each do |skill|
           UserSkill.create(skill: skill, user_profile_id: profile.id)
@@ -29,7 +29,7 @@ class ApiController < ActionController::Base
       profile.save!
     else 
       render :json => {
-        "error": "Unknown user"
+        error: "Unknown user"
       }
     end
   end
