@@ -27,6 +27,8 @@ class ApiController < ActionController::Base
       end
       user.save!
       profile.save!
+      render :json => {
+      }
     else 
       render :json => {
         error: "Unknown user"
