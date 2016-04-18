@@ -15,13 +15,13 @@ class ApiController < ActionController::Base
       profile.primary_startup_description = params[:profile][:startup_description]
       UserSkill.where(user_profile_id: profile.id).delete_all
       UserInterest.where(user_profile_id: profile.id).delete_all
-      if params[:profile][:skills]
+      if !params[:profile][:skills].nil?
         params[:profile][:skills].each do |skill|
           UserSkill.create(skill: skill, user_profile_id: profile.id)
         end
       end  
-      if params[:profile][:interests]
-        params[:profile][:interests].each do |skill|
+      if !params[:profile][:interests].nil?
+        params[:profile][:interests].each do |interest|
           UserInterest.create(interest: interest, user_profile_id: profile.id)
         end
       end
