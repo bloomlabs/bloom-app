@@ -42,8 +42,10 @@ class ApiController < ActionController::Base
       render :json => {error: "Invalid/unknown user id"}
     else
       profile = UserProfile.find_by_user_id(user.id)
-      skills = UserSkill.where(user_profile_id: profile.id).select(:skill).map(&:skill)
-      interests = UserInterest.where(user_profile_id: profile.id).select(:interest).map(&:interest)
+      if !profile.nil?
+	      skills = UserSkill.where(user_profile_id: profile.id).select(:skill).map(&:skill)
+	      interests = UserInterest.where(user_profile_id: profile.id).select(:interest).map(&:interest)
+	  end
       render :json => {
         firstname: user.firstname || "",
         lastname: user.lastname || "",
@@ -51,8 +53,8 @@ class ApiController < ActionController::Base
             description: profile.user_description || "",
             startup_name: profile.primary_startup_name || "",
             startup_description: profile.primary_startup_description || "",
-            interests: interests,
-            skills: skills
+            interests: interests || [],
+            skills: skills || []
         }
       }
     end
