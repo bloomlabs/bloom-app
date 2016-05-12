@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413083650) do
+ActiveRecord::Schema.define(version: 20160512073905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer  "resource_id"
+    t.integer  "user_id"
+    t.integer  "day"
+    t.time     "time_from"
+    t.time     "time_to"
+    t.string   "stripe_payment_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "bookings", ["resource_id"], name: "index_bookings_on_resource_id", using: :btree
+  add_index "bookings", ["user_id"], name: "index_bookings_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -31,6 +45,17 @@ ActiveRecord::Schema.define(version: 20160413083650) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "interviewer_schedules", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "day"
+    t.time     "available_time_from"
+    t.time     "available_time_to"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "interviewer_schedules", ["user_id"], name: "index_interviewer_schedules_on_user_id", using: :btree
 
   create_table "membership_requests", force: :cascade do |t|
     t.integer  "user_id"
@@ -60,6 +85,14 @@ ActiveRecord::Schema.define(version: 20160413083650) do
     t.string   "status_email",  default: "memberships@bloom.org.au", null: false
     t.string   "success_email", default: "memberships@bloom.org.au", null: false
     t.boolean  "wifi_access",   default: false
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "pricing_cents"
+    t.string   "google_calendar_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "user_interests", force: :cascade do |t|
@@ -153,6 +186,9 @@ ActiveRecord::Schema.define(version: 20160413083650) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "bookings", "resources"
+  add_foreign_key "bookings", "users"
+  add_foreign_key "interviewer_schedules", "users"
   add_foreign_key "membership_requests", "membership_types"
   add_foreign_key "membership_requests", "users"
   add_foreign_key "user_interests", "user_profiles"

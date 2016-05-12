@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id_id: 
+  day: 
+  available_time_from: 2016-05-12 15:39:05
+  available_time_to: 2016-05-12 15:39:05
+
+two:
+  user_id_id: 
+  day: 
+  available_time_from: 2016-05-12 15:39:05
+  available_time_to: 2016-05-12 15:39:05
