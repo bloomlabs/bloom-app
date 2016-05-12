@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :users, only: [:index]
   end
 
+  get 'booking' => 'booking#new'
+
   scope 'api', controller: :api do
     post 'user_auth_token'
     post 'profiles/:id' => 'api#get_profile_info'
