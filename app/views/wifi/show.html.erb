@@ -39,7 +39,13 @@
 
     <div class="field">
       <p><b>Password</b></p>
-      <%= text_field_tag(:wifi_password, @user.wifi_password, maxlength: 253) %>
+      <%= password_field_tag(:wifi_password, @user.wifi_password, maxlength: 253) %>
+      <button onclick="togglePassword(document.getElementById('wifi_password'))">Show password</button>
+      <script>
+        function togglePassword(elm) {
+          $("<input type='"+(elm.type==="text"?"password":"text")+"'/>").attr({ name: elm.name, value: elm.value, maxlength: 253 }).insertBefore(elm);
+        }
+      </script>
       <p>Password Strength: <span id="strength">Calculating...</span></p>
     </div>
 
