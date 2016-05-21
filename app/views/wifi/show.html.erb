@@ -49,7 +49,7 @@
           var a = $("<input type='"+(elm.type==="text"?"password":"text")+"'/>").attr({ name: elm.name, value: elm.value, maxlength: 253 }).insertBefore(elm);
           a.click(function(e) {
             e.preventDefault();
-            togglePassword(a);
+            togglePassword(this);
             return false;
           });
           $(elm).remove();
