@@ -45,8 +45,9 @@
         function togglePassword(elm) {
           var a = $("<input type='"+(elm.type==="text"?"password":"text")+"'/>").attr({ name: elm.name, value: elm.value, maxlength: 253 }).insertBefore(elm);
           a.click(function(e) {
-            togglePassword(a[0]);
             e.preventDefault();
+            togglePassword(a[0]);
+            return false;
           });
           $(elm).remove();
         }
