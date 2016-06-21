@@ -20,6 +20,7 @@ class MembershipRequestsController < ApplicationController
 
     @parttime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Part-Time Member'))
     @fulltime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Full-Time Member'))
+	@cats_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name("St Catherine's Member"))
   end
 
   # POST /membership_requests
