@@ -93,7 +93,12 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def accept
-    MembershipRequestsMailer.delay.request_accepted(self)
+    # If the membership is free, we skip the payment required phase
+    if self.membership_type.price > 0
+      MembershipRequestsMailer.delay.request_accepted(self)
+    else
+      self.pay!
+    end
   end
 
   def pay
