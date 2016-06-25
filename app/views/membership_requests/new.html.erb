@@ -17,49 +17,51 @@
     <p>At Bloom, we have two levels of membership catered to young people at different stages of their startup
       journeys.</p>
 
-    <div class="pricing-column">
-      <h3>Part-Time Co-working Member ($20/month)</h3>
-      <p>Part-time co-working membership is for people that have got an idea and want to start working on it or are
-        balancing a venture with other work commitments. Part-time co-workers receive part-time access to the BloomLab
-        facilities and access to all of Bloom's advisors to help accelerate their ventures.</p>
-      <ul>
-        <li>Access to all Bloom Events (~25)</li>
-        <li>Access to selected early-stage Bloom Advisors</li>
-        <li>50% off meeting room and venue hire</li>
-        <li>Up to 10 hours per week co-working time (with 24/7 key card access)</li>
-        <li>2 hours of free meeting room use per week</li>
-        <li>Unlimited WiFi access and tea & coffee facilities</li>
-        <li>Access to all Bloom Advisors - marketing, finance, legal, technical etc.</li>
-      </ul>
-      <br>
-      <% if @parttime_request %>
-          <a class='btn' href='<%= membership_request_path(@parttime_request) %>'>Go to open application</a>
-      <% else %>
-          <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name('Part-Time Member').id %>' type='submit'>Apply</button>
-      <% end %>
-    </div>
-    <div class="pricing-column">
-      <h3>Full-Time Co-working Member ($50/month)</h3>
-      <p>Full-time co-working membership is for people that take their ventures seriously. Full-time co-workers can work
-        as many hours as they wish in the BloomLab, and get all the extra perks (like a postal service and storage
-        space) that more developed entrepreneurs need.</p>
-      <ul>
-        <li><b>Part-Time Co-working Member +</b></li>
-        <li>Unlimited co-working time (with 24/7 key card access)</li>
-        <li>3 hours of free meeting room use per week</li>
-        <li>2 hours of free event space hire per week</li>
-        <li>Bloom as registered place of business &amp; postal address</li>
-        <li>Storage space to leave belongings</li>
-        <li>Opportunity to put an A2 poster up in the BloomLab</li>
-        <li>Member profile promoted on our website</li>
-        <li>Bloom t-shirt</li>
-      </ul>
-      <br>
-      <% if @fulltime_request %>
-          <a class='btn' href='<%= membership_request_path(@fulltime_request) %>'>Go to open application</a>
-      <% else %>
-          <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name('Full-Time Member').id %>' type='submit'>Apply</button>
-      <% end %>
+    <div class="main-pricing">
+      <div class="pricing-column">
+        <h3>Part-Time Co-working Member ($20/month)</h3>
+        <p>Part-time co-working membership is for people that have got an idea and want to start working on it or are
+          balancing a venture with other work commitments. Part-time co-workers receive part-time access to the BloomLab
+          facilities and access to all of Bloom's advisors to help accelerate their ventures.</p>
+        <ul>
+          <li>Access to all Bloom Events (~25)</li>
+          <li>Access to selected early-stage Bloom Advisors</li>
+          <li>50% off meeting room and venue hire</li>
+          <li>Up to 10 hours per week co-working time (with 24/7 key card access)</li>
+          <li>2 hours of free meeting room use per week</li>
+          <li>Unlimited WiFi access and tea & coffee facilities</li>
+          <li>Access to all Bloom Advisors - marketing, finance, legal, technical etc.</li>
+        </ul>
+        <br>
+        <% if @parttime_request %>
+            <a class='btn' href='<%= membership_request_path(@parttime_request) %>'>Go to open application</a>
+        <% else %>
+            <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name('Part-Time Member').id %>' type='submit'>Apply</button>
+        <% end %>
+      </div>
+      <div class="pricing-column">
+        <h3>Full-Time Co-working Member ($50/month)</h3>
+        <p>Full-time co-working membership is for people that take their ventures seriously. Full-time co-workers can work
+          as many hours as they wish in the BloomLab, and get all the extra perks (like a postal service and storage
+          space) that more developed entrepreneurs need.</p>
+        <ul>
+          <li><b>Part-Time Co-working Member +</b></li>
+          <li>Unlimited co-working time (with 24/7 key card access)</li>
+          <li>3 hours of free meeting room use per week</li>
+          <li>2 hours of free event space hire per week</li>
+          <li>Bloom as registered place of business &amp; postal address</li>
+          <li>Storage space to leave belongings</li>
+          <li>Opportunity to put an A2 poster up in the BloomLab</li>
+          <li>Member profile promoted on our website</li>
+          <li>Bloom t-shirt</li>
+        </ul>
+        <br>
+        <% if @fulltime_request %>
+            <a class='btn' href='<%= membership_request_path(@fulltime_request) %>'>Go to open application</a>
+        <% else %>
+            <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name('Full-Time Member').id %>' type='submit'>Apply</button>
+        <% end %>
+      </div>
     </div>
 	
 	<br><br>
@@ -70,9 +72,9 @@
 	  <% if @cats_request %>
         <a class='btn' href='<%= membership_request_path(@cats_request) %>'>Go to open application</a>
 	  <% else %>
-		  <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name("St Catherine's Member").id %>' type='submit'>Apply</button>
+		  <button name='membership_request[membership_type_id]' value='<%= MembershipType.find_by_name("St Catherine's Resident Member").id %>' type='submit'>Apply</button>
 	  <% end %>
-    </div>
+  </div>
 
 <% end %>
 
