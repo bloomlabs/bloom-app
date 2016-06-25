@@ -97,7 +97,8 @@ class MembershipRequest < ActiveRecord::Base
     if self.membership_type.price > 0
       MembershipRequestsMailer.delay.request_accepted(self)
     else
-      self.pay!
+      # Hack to run second state transition 10 seconds layer
+      self.delay(run_at: Time.now + 10.seconds).pay!
     end
   end
 
