@@ -93,13 +93,7 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def accept
-    # If the membership is free, we skip the payment required phase
-    if self.membership_type.price > 0
-      MembershipRequestsMailer.delay.request_accepted(self)
-    else
-      # Hack to run second state transition 10 seconds layer
-      self.delay(run_at: Time.now + 10.seconds).pay!
-    end
+    
   end
 
   def pay
@@ -132,6 +126,14 @@ class MembershipRequest < ActiveRecord::Base
 
   def workflow_state_enum
     self.class.workflow_spec.state_names
+  end
+
+  def on_payment_required_entry(*args)
+    if self.membership_type.price > 0
+      MembershipRequestsMailer.delay.request_accepted(self) # Send payment required email
+    else
+      self.pay! # If the membership is free, we skip the payment required phase
+    end
   end
 
   rails_admin do
