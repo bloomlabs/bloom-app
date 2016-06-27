@@ -45,16 +45,20 @@ class ApiController < ActionController::Base
       if !profile.nil?
 	      skills = UserSkill.where(user_profile_id: profile.id).select(:skill).map(&:skill)
 	      interests = UserInterest.where(user_profile_id: profile.id).select(:interest).map(&:interest)
+	  else
+	  	  profile = {user_description: "", primary_startup_name: "", primary_startup_description: ""}
+	  	  skills = []
+	  	  interests = []
 	  end
       render :json => {
-        firstname: user.firstname || "",
-        lastname: user.lastname || "",
+        firstname: user[:firstname] || "",
+        lastname: user[:lastname] || "",
         profile: {
-            description: profile.user_description || "",
-            startup_name: profile.primary_startup_name || "",
-            startup_description: profile.primary_startup_description || "",
-            interests: interests || [],
-            skills: skills || []
+            description: profile[:user_description],
+            startup_name: profile[:primary_startup_name],
+            startup_description: profile[:primary_startup_description],
+            interests: interests,
+            skills: skills
         }
       }
     end
