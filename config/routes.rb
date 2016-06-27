@@ -27,7 +27,10 @@ Rails.application.routes.draw do
     resources :users, only: [:index]
   end
 
-  get 'booking' => 'booking#new'
+  get 'booking/:name/new' => 'booking#new'
+  post 'booking/:name/pay' => 'booking#pay'
+  get 'booking/:id/confirmation' => 'booking#confirmation'
+  get 'booking/oauth' => 'booking#oauth'
 
   scope 'api', controller: :api do
     post 'user_auth_token'

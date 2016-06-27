@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :membership_requests
   has_many :user_profiles
+  has_many :bookings
 
   def self.from_omniauth(access_token)
     data = access_token.info

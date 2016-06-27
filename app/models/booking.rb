@@ -1,4 +1,4 @@
 class Booking < ActiveRecord::Base
-  belongs_to :resource_id
-  belongs_to :user_id
+  belongs_to :resource
+  belongs_to :user
 end

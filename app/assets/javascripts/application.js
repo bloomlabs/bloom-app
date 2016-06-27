@@ -12,7 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require zxcvbn.js
+//= require_self
 WebFontConfig = {
     google: {families: ['Muli::latin', 'Arvo::latin']}
 };

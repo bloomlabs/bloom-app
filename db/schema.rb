@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512073905) do
+ActiveRecord::Schema.define(version: 20160616092222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20160512073905) do
   create_table "bookings", force: :cascade do |t|
     t.integer  "resource_id"
     t.integer  "user_id"
-    t.integer  "day"
     t.time     "time_from"
     t.time     "time_to"
     t.string   "stripe_payment_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.date     "book_date"
+    t.string   "title"
   end
 
   add_index "bookings", ["resource_id"], name: "index_bookings_on_resource_id", using: :btree
@@ -93,6 +94,8 @@ ActiveRecord::Schema.define(version: 20160512073905) do
     t.string   "google_calendar_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "full_name"
+    t.string   "group"
   end
 
   create_table "user_interests", force: :cascade do |t|

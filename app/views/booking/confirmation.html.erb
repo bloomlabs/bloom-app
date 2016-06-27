@@ -1,0 +1,20 @@
+<h1>Booking confirmed for the <%= @booking.resource.full_name %></h1>
+<p>
+  Date: <%= @booking.book_date.strftime("%d/%m/%Y") %>
+</p>
+<p>
+  From: <%= @booking.time_from.to_s(:time) %>
+</p>
+<p>
+  To: <%= @booking.time_to.to_s(:time) %>
+</p>
+<p>
+<% if @remainingFreeTime > 0%>
+    You have <%= @remainingFreeTime %> free booking hours left this week for <%= @booking.resource.group %>.
+<% else %>
+    You have no free booking hours left this week for <%= @booking.resource.group %>.
+<% end %>
+</p>
+<p>
+  <%= link_to raw("<button>Book again</button>"), controller: "booking", action: "new", name: @booking.resource.name %>
+</p>
