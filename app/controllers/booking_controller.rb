@@ -69,6 +69,7 @@ class BookingController < ApplicationController
         :approval_prompt => 'force',
         :redirect_uri => 'http://localhost:3000/booking/oauth'
     )
+    
     auth_client.refresh_token = Rails.configuration.google_calendar[:refresh_token]
     auth_client.fetch_access_token!
 

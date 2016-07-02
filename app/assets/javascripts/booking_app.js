@@ -7,7 +7,7 @@ $(document).ready(function () {
     var startTime = null, endTime = null;
     var $payBtn = $("#pay");
     $('#calendar').fullCalendar({
-        googleCalendarApiKey: 'AIzaSyCEJ9hePhettsr2lukYJcY56o6snmq3L6A',
+        googleCalendarApiKey: 'AIzaSyARPG8GaKq6eJ7I6nu-oLV6IurQSu6K-js',
         events: {
             googleCalendarId: $("#calendar").data('calendar-id')
         },
