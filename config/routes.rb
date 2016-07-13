@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'interviewers/edit_schedule'
+  post 'interviewers/save_schedule'
+
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations'}
 
   resources :user_profiles, only: [:new, :create]

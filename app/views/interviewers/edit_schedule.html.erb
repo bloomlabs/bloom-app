@@ -1,0 +1,21 @@
+<h1>Schedule editor</h1>
+<p>
+  Select all of the times that you are available in the week to do interviews. Click an existing availability time
+  period to delete it.
+</p>
+<div id="calendar"></div>
+<%= form_tag action: 'save_schedule', 'data-type' => :json do %>
+    <%= hidden_field_tag 'availability' %>
+    <%= submit_tag 'Save', id: 'save' %>
+<% end %>
+<script>
+  window.current_availability = [];
+  <% @current_availability.each do |availability| %>
+  window.current_availability.push({
+    day: <%= availability.day %>,
+    startTime: "<%= availability.available_time_from.to_s(:time) %>",
+    endTime: "<%= availability.available_time_to.to_s(:time) %>"
+  });
+  <% end %>
+</script>
+<%= javascript_include_tag 'interviewers_app.js' %>

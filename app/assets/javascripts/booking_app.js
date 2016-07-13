@@ -16,7 +16,7 @@ $(document).ready(function () {
         unselectAuto: false,
         selectOverlap: false,
         selectHelper: true,
-        editable: true,
+        editable: false,
         eventLimit: true,
         minTime: "08:00:00",
         maxTime: "20:00:00",

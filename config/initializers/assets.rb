@@ -11,6 +11,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( logo.png )
 Rails.application.config.assets.precompile += %w( booking_app.js )
-%w( booking ).each do |controller|
+Rails.application.config.assets.precompile += %w( interviewers_app.js )
+%w( booking interviewers ).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js", "#{controller}.css"]
 end
