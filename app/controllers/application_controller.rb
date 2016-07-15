@@ -19,6 +19,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def oauth_apply_callback_generator
+    if not params[:plan] or (params[:plan] != 'community' and params[:plan] != 'coworking' and params[:plan] != 'dedicated')
+      return
+    end
+    redirect_to user_omniauth_authorize_path(:google_oauth2,
+                                             redirect_uri: user_omniauth_callback_url(action: 'google_oauth2'),
+                                             state: "{\"start_application\":\"#{params[:plan]}\"}")
+  end
+
   # Devise 
   def redirect_back_or(path)
     redirect_to request.referer || path

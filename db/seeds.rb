@@ -30,7 +30,7 @@ def create_superuser(firstname, lastname, email)
   u.save
 end
 
-def create_resource(name, full_name, google_calendar_id, pricing_dollars, resource_group)
+def create_resource(name, full_name, google_calendar_id, pricing_dollars, pricing_member_dollars, resource_group)
   Resource.create(name: name, full_name: full_name, google_calendar_id: google_calendar_id, pricing_cents: pricing_dollars * 100,
                   group: resource_group)
 end
@@ -43,9 +43,9 @@ create_managers('Lucy', 'Sharp', 'lucy.sharp@bloom.org.au')
 create_managers('Alexandra', 'O\'Brien', 'alexandra@bloom.org.au')
 create_managers('Shannon', 'Ziegelaar', 'shannon@bloom.org.au')
 
-create_resource("fun", "Fun Room", "bloom.org.au_2d34323031373634322d373530@resource.calendar.google.com", 30, 'meeting_room')
-create_resource("serious", "Serious Room", "bloom.org.au_3931313239303239343537@resource.calendar.google.com", 30, 'meeting_room')
-create_resource("main", "Main Room", "bloom.org.au_39343634313833322d383137@resource.calendar.google.com", 50, 'main_room')
+create_resource("fun", "Fun Room", "bloom.org.au_2d34323031373634322d373530@resource.calendar.google.com", 30, 10, 'meeting_room')
+create_resource("serious", "Serious Room", "bloom.org.au_3931313239303239343537@resource.calendar.google.com", 30, 10, 'meeting_room')
+create_resource("main", "Main Room", "bloom.org.au_39343634313833322d383137@resource.calendar.google.com", 50, 30, 'main_room')
 
 # WARNING: Don't change membership names, currently hard-coded in some places
 

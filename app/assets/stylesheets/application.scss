@@ -114,6 +114,11 @@ $success-color: #e6efc2 !default;
   @include flash($success-color);
 }
 
+.booking-button {
+  float: left;
+  padding-right: 1em;
+}
+
 header.navigation {
   $base-border-color: gainsboro !default;
   $base-border-radius: 3px !default;

@@ -17,7 +17,4 @@ class InterviewersController < ApplicationController
     end
     redirect_to 'edit_schedule'
   end
-
-  def schedule_interview
-  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616092222) do
+ActiveRecord::Schema.define(version: 20160715032518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,10 +92,11 @@ ActiveRecord::Schema.define(version: 20160616092222) do
     t.string   "name"
     t.integer  "pricing_cents"
     t.string   "google_calendar_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "full_name"
     t.string   "group"
+    t.integer  "pricing_cents_member"
   end
 
   create_table "user_interests", force: :cascade do |t|

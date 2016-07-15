@@ -14,6 +14,7 @@ $(document).ready(function () {
         eventOverlap: false,
         selectHelper: true,
         editable: true,
+        height: "auto",
         minTime: "08:00:00",
         maxTime: "20:00:00",
         scrollTime: "00:00:00",

@@ -1,4 +1,13 @@
 <h1>Please select the booking time slot for the <%= @resource.full_name %></h1>
+<div style="width: 100%; overflow: auto; padding-bottom: 1em">
+  <% Resource.all.each do |res| %>
+      <% if res.name != @resource.name %>
+          <div class="booking-button">
+            <%= button_to res.full_name, "/booking/#{res.name}/new", method: 'get' %>
+          </div>
+      <% end %>
+  <% end %>
+</div>
 <% if @remainingFreeTime == 1 %>
     You have <%= @remainingFreeTime %> free booking hour left for this week.
 <% elsif @remainingFreeTime > 0 %>
@@ -21,7 +30,7 @@
   <% end %>
   window.roomName = "<%= @resource.full_name %>";
   window.stripeKey = "<%= Rails.configuration.stripe[:publishable_key] %>";
-  window.roomPricing = <%= @resource.pricing_cents %>;
+  window.roomPricing = <%= current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents %>;
   window.remainingFreeTime = <%= @remainingFreeTime %>;
 </script>
 <script src="https://checkout.stripe.com/checkout.js"></script>

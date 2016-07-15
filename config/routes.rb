@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'interviewers/edit_schedule'
-  post 'interviewers/save_schedule'
+  get '/oauth_apply' => 'application#oauth_apply_callback_generator'
 
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations'}
 
@@ -33,7 +32,6 @@ Rails.application.routes.draw do
   get 'booking/:name/new' => 'booking#new'
   post 'booking/:name/pay' => 'booking#pay'
   get 'booking/:id/confirmation' => 'booking#confirmation'
-  get 'booking/oauth' => 'booking#oauth'
 
   scope 'api', controller: :api do
     post 'user_auth_token'

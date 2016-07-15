@@ -98,6 +98,12 @@ class User < ActiveRecord::Base
     "#{firstname} #{lastname} (#{email})"
   end
 
+  INTERVIEWER_MASK = 0b000000001
+
+  def interviewer?
+    self.access_level & INTERVIEWER_MASK or self.access_level >= 255
+  end
+
   def staff?
     self.access_level >= 50 || (self.email.ends_with?('@bloom.org.au') && self.access_level >= 0)
   end
@@ -121,10 +127,14 @@ class User < ActiveRecord::Base
   def access_level_enum
     [
         ['Not Staff Member (Explicit)', -100],
+        ['Not Staff Member (interviewer)', -100 | INTERVIEWER_MASK],
         ['Normal User', 0],
+        ['Normal User (interviewer)', 0 | INTERVIEWER_MASK],
         ['Staff Member (Explicit)', 50],
+        ['Staff Member (interviewer)', 50 | INTERVIEWER_MASK],
         ['Manager', 100],
-        ['Superuser', 255],
+        ['Manager (interviewer)', 100 | INTERVIEWER_MASK],
+        ['Superuser', 255]
     ]
   end
 

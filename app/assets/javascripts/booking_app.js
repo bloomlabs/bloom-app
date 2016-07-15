@@ -20,6 +20,7 @@ $(document).ready(function () {
         eventLimit: true,
         minTime: "08:00:00",
         maxTime: "20:00:00",
+        height: "auto",
         scrollTime: "00:00:00",
         selectConstraint: {
             start: '00:01',
