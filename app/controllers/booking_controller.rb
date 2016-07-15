@@ -79,7 +79,7 @@ class BookingController < ApplicationController
     new_event = cal.events.insert.request_schema.new
     new_event.start = {dateTime: @start_time.change(:year => @date.year, :month => @date.month, :day => @date.day).to_formatted_s(:iso8601) }
     new_event.end = {dateTime: @end_time.change(:year => @date.year, :month => @date.month, :day => @date.day).to_formatted_s(:iso8601) }
-    new_event.summary = @title
+    new_event.summary = @title + " - #{current_user.firstname} #{current_user.lastname}"
     result = api_client.execute(:api_method => cal.events.insert,
                                 :authorization => auth_client,
                                 :parameters => {calendarId: @resource.google_calendar_id},
