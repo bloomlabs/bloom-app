@@ -3,20 +3,23 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user, newly_created = User.from_omniauth(request.env['omniauth.auth'])
 
     if params[:state]
-      state_json = ActiveSupport::JSON.decode(params[:state])
-      if state_json['start_application']
-        plan = state_json['start_application']
-        stripe_id = 'full-time'
-        if plan == 'coworking'
-          stripe_id = 'part-time'
+        begin
+          state_json = ActiveSupport::JSON.decode(params[:state])
+          if state_json['start_application']
+            plan = state_json['start_application']
+            stripe_id = 'full-time'
+            if plan == 'coworking'
+              stripe_id = 'part-time'
+            end
+            req = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_stripe_id(stripe_id))
+            if not req
+              req = MembershipRequest.new(user: current_user, membership_type: MembershipType.find_by_stripe_id(stripe_id))
+              req.save!
+            end
+            session['user_return_to'] = membership_request_path(req)
+          end
+        rescue ActiveSupport::JSON.parse_error
         end
-        req = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_stripe_id(stripe_id))
-        if not req
-          req = MembershipRequest.new(user: current_user, membership_type: MembershipType.find_by_stripe_id(stripe_id))
-          req.save!
-        end
-        session['user_return_to'] = membership_request_path(req)
-      end
     end
 
     if @user.persisted?
