@@ -11,9 +11,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
             if plan == 'coworking'
               stripe_id = 'part-time'
             end
-            req = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_stripe_id(stripe_id))
+            req = MembershipRequest.find_by(user: @user, closed: false, membership_type: MembershipType.find_by_stripe_id(stripe_id))
             if not req
-              req = MembershipRequest.new(user: current_user, membership_type: MembershipType.find_by_stripe_id(stripe_id))
+              authorize! :new, @user
+              req = MembershipRequest.new(user: @user, membership_type: MembershipType.find_by_stripe_id(stripe_id))
               req.save!
             end
             session['user_return_to'] = membership_request_path(req)
