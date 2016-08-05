@@ -144,8 +144,11 @@ class User < ActiveRecord::Base
   end
 
   def total_booked_hours
-    week_bookings = Booking.where("user_id = ?", [self.id])
+    week_bookings = Booking.where('user_id = ?', [self.id])
     nhours = 0
+    if !week_bookings.any?
+      return
+    end
     for booking in week_bookings
       nhours += (((booking.time_to - booking.time_from) / 1.hour) * 2).round / 2.0
     end
