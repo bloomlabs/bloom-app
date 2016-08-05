@@ -143,6 +143,15 @@ class User < ActiveRecord::Base
     ActionController::Base.helpers
   end
 
+  def total_booked_hours
+    week_bookings = Booking.where("user_id = ?", [self.id])
+    nhours = 0
+    for booking in week_bookings
+      nhours += (((booking.time_to - booking.time_from) / 1.hour) * 2).round / 2.0
+    end
+    nhours
+  end
+
   rails_admin do
     list do
       sort_by 'firstname asc, users.lastname asc, users.email'
@@ -165,6 +174,7 @@ class User < ActiveRecord::Base
       field :last_sign_in_at
       field :created_at
       field :updated_at
+      field :total_booked_hours
     end
     edit do
       field :firstname

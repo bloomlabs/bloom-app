@@ -6,10 +6,12 @@
 $(document).ready(function () {
     var startTime = null, endTime = null;
     var $payBtn = $("#pay");
-    $('#calendar').fullCalendar({
+    var $payBtns = $("#pay,#superuser_book");
+    var $calendar = $("#calendar");
+    $calendar.fullCalendar({
         googleCalendarApiKey: 'AIzaSyARPG8GaKq6eJ7I6nu-oLV6IurQSu6K-js',
         events: {
-            googleCalendarId: $("#calendar").data('calendar-id')
+            googleCalendarId: $calendar.data('calendar-id')
         },
         defaultView: 'agendaWeek',
         selectable: true,
@@ -35,7 +37,7 @@ $(document).ready(function () {
                 }
                 return span;
             };
-            $(".fc-button").hover(function() {
+            $(".fc-button").hover(function () {
                 $(this).removeClass('fc-state-default')
             }, function () {
                 $(this).addClass('fc-state-default');
@@ -53,12 +55,12 @@ $(document).ready(function () {
             } else {
                 $payBtn.html("Pay");
             }
-            $payBtn.attr('disabled', $("#title").val() ? false : true);
+            $payBtns.attr('disabled', $("#title").val() ? false : true);
         },
         unselect: function (view, jsEvent) {
             startTime = null;
             endTime = null;
-            $payBtn.attr('disabled', true);
+            $payBtns.attr('disabled', true);
         },
         allDaySlot: false,
         header: {left: 'agendaWeek,month', center: 'title', right: 'prev,next'}
@@ -76,9 +78,9 @@ $(document).ready(function () {
     });
     $('#title').change(function () {
         if (this.value) {
-            $payBtn.attr('disabled', startTime ? false : true);
+            $payBtns.attr('disabled', startTime ? false : true);
         } else {
-            $payBtn.attr('disabled', true);
+            $payBtns.attr('disabled', true);
         }
     });
 
@@ -99,14 +101,20 @@ $(document).ready(function () {
             alert("An error occurred. Your card has not been charged.");
             console.log(data);
         }).always(function () {
-            $payBtn.attr('disabled', false);
+            $payBtns.attr('disabled', false);
             $payBtn.text('Pay')
         });
     }
 
+    $("#superuser_book").on('click', function (e) {
+        e.preventDefault();
+        $("#superuser").val('true');
+        submitForm();
+    });
+
     $payBtn.on('click', function (e) {
         e.preventDefault();
-        $payBtn.attr('disabled', true);
+        $payBtns.attr('disabled', true);
         var duration = ((endTime - startTime) / (60 * 60 * 1000)) - remainingFreeTime;
         if (duration < 0) {
             submitForm();

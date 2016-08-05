@@ -2,6 +2,7 @@ class BookingController < ApplicationController
   def new
     @resource = Resource.find_by_name!(params[:name])
     @remainingFreeTime = get_remaining_free_time(@resource)
+    @pricing_cents = !current_user.nil? && current_user.has_subscription? ? @resource.pricing_cents_member/100 : @resource.pricing_cents/100
   end
 
   require 'google/api_client'
@@ -29,8 +30,17 @@ class BookingController < ApplicationController
     @remainingFreeTime = get_remaining_free_time(@resource)
     @duration = ((((@end_time - @start_time) / 1.hour) * 2).round / 2.0 - @remainingFreeTime).to_i
 
+    @should_pay = true
+    if params.has_key?(:superuser) and params[:superuser] == 'true'
+      if current_user.nil? or !current_user.superuser?
+        render :json => {error: 'Not a superuser'}
+        return
+      end
+      @should_pay = false
+    end
+
     @stripe_payment_id = ''
-    if @duration > 0
+    if @duration > 0 and @should_pay
       begin
         @stripe_payment = Stripe::Charge.create(
             amount: @duration * current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents,
@@ -52,12 +62,14 @@ class BookingController < ApplicationController
                                            time_from: Time.zone.local_to_utc(@start_time),
                                            time_to: Time.zone.local_to_utc(@end_time),
                                            stripe_payment_id: @stripe_payment_id,
+                                           charge_cents: !@stripe_payment.nil? ? @stripe_payment.amount : 0,
                                            book_date: @date)
     else
       @booking = @resource.bookings.create(title: @title,
                                            time_from: Time.zone.local_to_utc(@start_time),
                                            time_to: Time.zone.local_to_utc(@end_time),
                                            stripe_payment_id: @stripe_payment_id,
+                                           charge_cents: !@stripe_payment.nil? ? @stripe_payment.amount : 0,
                                            book_date: @date)
     end
 

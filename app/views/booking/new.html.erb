@@ -8,6 +8,13 @@
       <% end %>
   <% end %>
 </div>
+<p>
+  Booking this resource will cost you
+  $<%= @pricing_cents %>.00 per hour.
+  <% if current_user.nil? or !current_user.has_subscription? %>
+      Members can book this resource for $<%= @resource.pricing_cents_member/100 %>.00 per hour.
+  <% end %>
+</p>
 <% if @remainingFreeTime == 1 %>
     You have <%= @remainingFreeTime %> free booking hour left for this week.
 <% elsif @remainingFreeTime > 0 %>
@@ -23,14 +30,18 @@
     <label for="title">Event title (format: organisation name - event title)</label>
     <input type="text" id="title" name="title" class="field">
     <button id="pay" disabled="disabled">Pay</button>
+    <% if !current_user.nil? and current_user.superuser? %>
+        <input type="hidden" id="superuser" name="superuser">
+        <button id="superuser_book" disabled="disabled">Book free (as super user)</button>
+    <% end %>
 <% end -%>
 <script>
-  <% if current_user %>
+  <% if !current_user.nil? %>
   window.previousEmail = "<%= current_user.email %>";
   <% end %>
   window.roomName = "<%= @resource.full_name %>";
   window.stripeKey = "<%= Rails.configuration.stripe[:publishable_key] %>";
-  window.roomPricing = <%= current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents %>;
+  window.roomPricing = <%= @pricing_cents %>;
   window.remainingFreeTime = <%= @remainingFreeTime %>;
 </script>
 <script src="https://checkout.stripe.com/checkout.js"></script>
