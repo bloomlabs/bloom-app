@@ -176,7 +176,8 @@ class User < ActiveRecord::Base
       field :sign_in_count
       field :last_sign_in_at
       field :created_at
-      field :updated_at 
+      field :updated_at
+      field :total_booked_hours
     end
     edit do
       field :firstname
