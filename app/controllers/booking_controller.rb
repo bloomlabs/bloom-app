@@ -2,7 +2,7 @@ class BookingController < ApplicationController
   def new
     @resource = Resource.find_by_name!(params[:name])
     @remainingFreeTime = get_remaining_free_time(@resource)
-    @pricing_cents = !current_user.nil? && current_user.has_subscription? ? @resource.pricing_cents_member/100 : @resource.pricing_cents/100
+    @pricing_cents = !current_user.nil? && current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents
   end
 
   require 'google/api_client'

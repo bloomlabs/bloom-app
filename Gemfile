@@ -47,6 +47,8 @@ gem 'zxcvbn-js', require: 'zxcvbn'
 
 gem 'simplecov', require: false, group: :test
 
+gem 'aws-sdk'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

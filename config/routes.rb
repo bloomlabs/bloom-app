@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     post 'user_auth_token'
     post 'profiles/:id' => 'api#get_profile_info'
     post 'profiles/:id/update' => 'api#update_profile_info'
+    get 'profiles/:id/profile_image_upload_url' => 'api#profile_image_upload_url'
   end
 
   get '/admin/membership_requests/:id', to: redirect('/admin/membership_request/%{id}') # Backwards compatibility

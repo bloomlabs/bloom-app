@@ -1,7 +1,28 @@
 class ApiController < ActionController::Base
   before_filter :set_format
   before_action :authenticate
-  before_action :authenticate_user_token, only: [:get_profile_info]
+  before_action :authenticate_user_token, only: [:get_profile_info, :profile_image_upload_url]
+
+  s3 = Aws::S3::Client.new(
+      access_key_id: ENV['AWS_IOS_PHOTOS_ACCESS_KEY_ID'.freeze],
+      secret_access_key: ENV['AWS_IOS_PHOTOS_ACCESS_KEY_SECRET'.freeze]
+  )
+  signer = Aws::S3::Presigner.new(:client => s3)
+
+  def profile_image_upload_url
+    user = User.find(params[:id])
+    token_user = User.find_by!(token: params[:user_token])
+    if user.nil? or user.id != token_user.id
+      render :json => {
+          error: 'Unknown user'
+      }
+      return
+    end
+    url = signer.presigned_url(:put_object, bucket: 'bloom-ios-photos', key: id + '-profile-picture.png')
+    render :json => {
+        url: url
+    }
+  end
 
   def update_profile_info
     user = User.find(params[:id])
@@ -19,7 +40,7 @@ class ApiController < ActionController::Base
         params[:profile][:skills].each do |skill|
           UserSkill.create(skill: skill, user_profile_id: profile.id)
         end
-      end  
+      end
       if !params[:profile][:interests].nil?
         params[:profile][:interests].each do |interest|
           UserInterest.create(interest: interest, user_profile_id: profile.id)
@@ -29,9 +50,9 @@ class ApiController < ActionController::Base
       profile.save!
       render :json => {
       }
-    else 
+    else
       render :json => {
-        error: "Unknown user"
+          error: 'Unknown user'
       }
     end
   end
@@ -39,27 +60,27 @@ class ApiController < ActionController::Base
   def get_profile_info
     user = User.find(params[:id])
     if user.nil?
-      render :json => {error: "Invalid/unknown user id"}
+      render :json => {error: 'Invalid/unknown user id'}
     else
       profile = UserProfile.find_by_user_id(user.id)
       if !profile.nil?
-	      skills = UserSkill.where(user_profile_id: profile.id).select(:skill).map(&:skill)
-	      interests = UserInterest.where(user_profile_id: profile.id).select(:interest).map(&:interest)
-	  else
-	  	  profile = {user_description: "", primary_startup_name: "", primary_startup_description: ""}
-	  	  skills = []
-	  	  interests = []
-	  end
+        skills = UserSkill.where(user_profile_id: profile.id).select(:skill).map(&:skill)
+        interests = UserInterest.where(user_profile_id: profile.id).select(:interest).map(&:interest)
+      else
+        profile = {user_description: "", primary_startup_name: "", primary_startup_description: ""}
+        skills = []
+        interests = []
+      end
       render :json => {
-        firstname: user[:firstname] || "",
-        lastname: user[:lastname] || "",
-        profile: {
-            description: profile[:user_description],
-            startup_name: profile[:primary_startup_name],
-            startup_description: profile[:primary_startup_description],
-            interests: interests,
-            skills: skills
-        }
+          firstname: user[:firstname] || "",
+          lastname: user[:lastname] || "",
+          profile: {
+              description: profile[:user_description],
+              startup_name: profile[:primary_startup_name],
+              startup_description: profile[:primary_startup_description],
+              interests: interests,
+              skills: skills
+          }
       }
     end
   end

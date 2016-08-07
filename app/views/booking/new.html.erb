@@ -10,7 +10,7 @@
 </div>
 <p>
   Booking this resource will cost you
-  $<%= @pricing_cents %>.00 per hour.
+  $<%= @pricing_cents/100 %>.00 per hour.
   <% if current_user.nil? or !current_user.has_subscription? %>
       Members can book this resource for $<%= @resource.pricing_cents_member/100 %>.00 per hour.
   <% end %>
