@@ -12,7 +12,7 @@ class BookingController < ApplicationController
     @start_time = Time.strptime(params[:timeFrom], '%H:%M')
     @end_time = Time.strptime(params[:timeTo], '%H:%M')
     @title = params[:title].chomp
-    if !@date or !@start_time or !@end_time or !@title
+    if @date.nil? or @start_time.nil? or @end_time.nil? or @title.nil?
       render :json => {error: 'Error parsing date or time'}
       return
     end
@@ -50,6 +50,9 @@ class BookingController < ApplicationController
         )
         @stripe_payment_id = @stripe_payment.id
       rescue => e
+        puts @duration * current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents
+        puts params[:stripeToken]
+        puts @stripe_payment.id
         render :json => {error: 'Error charging supplied card.'}
         puts e
         return

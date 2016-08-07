@@ -1,8 +1,8 @@
 class ApiController < ActionController::Base
   before_filter :set_format
   before_action :authenticate
-  before_action :authenticate_user_token, only: [:get_profile_info, :profile_image_upload_url]
-
+  before_action :authenticate_user_token, only: [:get_profile_info]
+=begin
   s3 = Aws::S3::Client.new(
       access_key_id: ENV['AWS_IOS_PHOTOS_ACCESS_KEY_ID'.freeze],
       secret_access_key: ENV['AWS_IOS_PHOTOS_ACCESS_KEY_SECRET'.freeze]
@@ -23,6 +23,7 @@ class ApiController < ActionController::Base
         url: url
     }
   end
+=end
 
   def update_profile_info
     user = User.find(params[:id])
