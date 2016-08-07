@@ -2,7 +2,7 @@ class BookingController < ApplicationController
   def new
     @resource = Resource.find_by_name!(params[:name])
     @remainingFreeTime = get_remaining_free_time(@resource)
-    @pricing_cents = !current_user.nil? && current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents
+    @pricing_cents = ((!current_user.nil? && current_user.has_subscription?) ? @resource.pricing_cents_member : @resource.pricing_cents)
   end
 
   require 'google/api_client'
@@ -43,16 +43,13 @@ class BookingController < ApplicationController
     if @duration > 0 and @should_pay
       begin
         @stripe_payment = Stripe::Charge.create(
-            amount: @duration * current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents,
+            amount: @duration * (current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents),
             currency: 'aud',
             source: params[:stripeToken],
             description: 'Booking the ' + @resource.full_name
         )
         @stripe_payment_id = @stripe_payment.id
       rescue => e
-        puts @duration * current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents
-        puts params[:stripeToken]
-        puts @stripe_payment.id
         render :json => {error: 'Error charging supplied card.'}
         puts e
         return
