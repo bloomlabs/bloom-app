@@ -65,13 +65,13 @@ class MembershipPaymentsController < ApplicationController
 
     if !membership_type.recurring or
         @membership_request.current_state != :payment_required
-
       render json: nil, status: 500
       return
     end
 
+    stripe_customer = nil
     begin
-      user.ensure_customer!(token)
+      stripe_customer = user.ensure_customer!(token)
     rescue => e
       puts e
       flash[:error] = 'Error with your details. Please make sure they are correct.'.freeze
@@ -79,9 +79,20 @@ class MembershipPaymentsController < ApplicationController
       return
     end
 
-    @membership_request.set_subscription!(user.stripe_customer, membership_type.stripe_id)
-    @membership_request.pay!
-    @membership_request.save
+    begin
+      @membership_request.set_subscription!(stripe_customer, membership_type.stripe_id)
+      @membership_request.pay!
+      @membership_request.save
+    rescue => e
+      puts e
+      if @membership_request.has_subscription?
+        @membership_request.delete_subscription
+      end
+      if @membership_request.current_state == :active_membership
+        @membership_request.payment_fail!
+      end
+      flash[:error] = 'Error with subscription creation. ' + e.message
+    end
 
     redirect_to membership_request_path(@membership_request)
   end
