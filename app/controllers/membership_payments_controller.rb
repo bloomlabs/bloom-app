@@ -65,6 +65,7 @@ class MembershipPaymentsController < ApplicationController
 
     if !membership_type.recurring or
         @membership_request.current_state != :payment_required
+      flash[:error] = 'Invalid membership request state.'.freeze
       render json: nil, status: 500
       return
     end
