@@ -74,6 +74,11 @@ $(document).ready(function () {
             $("#stripeToken").val(token.id);
             $("#stripeEmail").val(token.email);
             submitForm();
+        },
+        closed: function () {
+            if (!$payBtn.data('processing')) {
+                $payBtns.attr('disabled', false);
+            }
         }
     });
     $('#title').change(function () {
@@ -86,7 +91,8 @@ $(document).ready(function () {
 
     function submitForm() {
         var $form = $("#form");
-        $payBtn.text("Processing...")
+        $payBtn.data('processing', true);
+        $payBtn.text("Processing...");
         $.post({
             url: $form.attr('action'),
             data: $form.serialize(),
@@ -102,7 +108,8 @@ $(document).ready(function () {
             console.log(data);
         }).always(function () {
             $payBtns.attr('disabled', false);
-            $payBtn.text('Pay')
+            $payBtn.text('Pay');
+            $payBtn.data('processing', false);
         });
     }
 

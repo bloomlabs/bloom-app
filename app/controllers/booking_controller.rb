@@ -2,17 +2,15 @@ class BookingController < ApplicationController
   def new
     @resource = Resource.find_by_name!(params[:name])
     @remainingFreeTime = get_remaining_free_time(@resource)
-    @pricing_cents = ((!current_user.nil? && current_user.has_subscription?) ? @resource.pricing_cents_member : @resource.pricing_cents)
+    @pricing_cents = (!current_user.nil? && current_user.has_subscription?) ? @resource.pricing_cents_member : @resource.pricing_cents
   end
-
-  require 'google/api_client'
 
   def pay
     @date = Date.strptime(params[:date], '%Y-%m-%d')
     @start_time = Time.strptime(params[:timeFrom], '%H:%M')
     @end_time = Time.strptime(params[:timeTo], '%H:%M')
     @title = params[:title].chomp
-    if @date.nil? or @start_time.nil? or @end_time.nil? or @title.nil?
+    if !@date or !@start_time or !@end_time or !@title
       render :json => {error: 'Error parsing date or time'}
       return
     end
@@ -73,31 +71,30 @@ class BookingController < ApplicationController
                                            book_date: @date)
     end
 
-    client_secrets = Google::APIClient::ClientSecrets.load
-    auth_client = client_secrets.to_authorization
-    auth_client.update!(
-        :scope => 'https://www.googleapis.com/auth/calendar',
-        :access_type => 'offline',
-        :approval_prompt => 'force',
-        :redirect_uri => 'http://localhost:3000/booking/oauth'
-    )
-    
-    auth_client.refresh_token = Rails.configuration.google_calendar[:refresh_token]
-    auth_client.fetch_access_token!
-
     api_client = Google::APIClient.new
     api_client.retries = 3
     cal = api_client.discovered_api('calendar', 'v3')
     new_event = cal.events.insert.request_schema.new
-    new_event.start = {dateTime: @start_time.change(:year => @date.year, :month => @date.month, :day => @date.day).to_formatted_s(:iso8601) }
-    new_event.end = {dateTime: @end_time.change(:year => @date.year, :month => @date.month, :day => @date.day).to_formatted_s(:iso8601) }
+    perth_tz = ActiveSupport::TimeZone.new('Australia/Perth').utc_offset
+    cal_start_time = @start_time.change(:year => @date.year, :month => @date.month, :day => @date.day).in_time_zone('Australia/Perth') + -perth_tz
+    cal_end_time = @end_time.change(:year => @date.year, :month => @date.month, :day => @date.day).in_time_zone('Australia/Perth') + -perth_tz
+    puts cal_start_time.to_formatted_s(:iso8601)
+    new_event.start = {
+        dateTime: cal_start_time.to_formatted_s(:iso8601),
+        timeZone: 'Australia/Perth'
+    }
+    new_event.end = {
+        dateTime: cal_end_time.in_time_zone('Australia/Perth').to_formatted_s(:iso8601),
+        timeZone: 'Australia/Perth'
+    }
     new_event.summary = @title + " - #{current_user.firstname} #{current_user.lastname}"
     result = api_client.execute(:api_method => cal.events.insert,
-                                :authorization => auth_client,
+                                :authorization => Rails.configuration.google_calendar[:auth_client],
                                 :parameters => {calendarId: @resource.google_calendar_id},
                                 :headers => {'Content-Type'.freeze => 'application/json'.freeze},
                                 :body_object => new_event)
     if result.data.try(:error)
+      puts 'error'
       @booking.delete
       @stripe_payment.refund
       puts result.data.inspect
