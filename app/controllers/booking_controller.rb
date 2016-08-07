@@ -78,13 +78,12 @@ class BookingController < ApplicationController
     perth_tz = ActiveSupport::TimeZone.new('Australia/Perth').utc_offset
     cal_start_time = @start_time.change(:year => @date.year, :month => @date.month, :day => @date.day).in_time_zone('Australia/Perth') + -perth_tz
     cal_end_time = @end_time.change(:year => @date.year, :month => @date.month, :day => @date.day).in_time_zone('Australia/Perth') + -perth_tz
-    puts cal_start_time.to_formatted_s(:iso8601)
     new_event.start = {
         dateTime: cal_start_time.to_formatted_s(:iso8601),
         timeZone: 'Australia/Perth'
     }
     new_event.end = {
-        dateTime: cal_end_time.in_time_zone('Australia/Perth').to_formatted_s(:iso8601),
+        dateTime: cal_end_time.to_formatted_s(:iso8601),
         timeZone: 'Australia/Perth'
     }
     new_event.summary = @title + " - #{current_user.firstname} #{current_user.lastname}"
