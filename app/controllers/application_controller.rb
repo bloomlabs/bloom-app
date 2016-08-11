@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def oauth_apply_callback_generator
-    if not params[:plan] or (params[:plan] != 'community' and params[:plan] != 'coworking' and params[:plan] != 'dedicated')
+    if not params[:plan] or (params[:plan] != 'community' and params[:plan] != 'coworking' and params[:plan] != 'dedicated' and params[:plan] != 'freelance')
       return
     end
     redirect_to user_omniauth_authorize_path(:google_oauth2,

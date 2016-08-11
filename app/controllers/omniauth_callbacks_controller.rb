@@ -6,11 +6,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         begin
           state_json = ActiveSupport::JSON.decode(params[:state])
           if state_json['start_application']
-            plan = state_json['start_application']
-            stripe_id = 'full-time'
-            if plan == 'coworking'
-              stripe_id = 'part-time'
-            end
+            stripe_id = state_json['start_application']
             req = MembershipRequest.find_by(user: @user, closed: false, membership_type: MembershipType.find_by_stripe_id(stripe_id))
             if not req
               authorize! :new, @user

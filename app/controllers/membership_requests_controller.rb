@@ -16,11 +16,7 @@ class MembershipRequestsController < ApplicationController
 
   # GET /membership_requests/new
   def new
-    @membership_request = MembershipRequest.new
-
-    @parttime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Part-Time Member'))
-    @fulltime_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name('Full-Time Member'))
-	  @cats_request = MembershipRequest.find_by(user: current_user, closed: false, membership_type: MembershipType.find_by_name("St Catherine's Resident Member"))
+    redirect_to 'http://www.bloom.org.au/apply/'
   end
 
   # POST /membership_requests

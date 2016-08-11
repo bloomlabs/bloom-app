@@ -31,7 +31,11 @@ def create_superuser(firstname, lastname, email)
 end
 
 def create_resource(name, full_name, google_calendar_id, pricing_dollars, pricing_member_dollars, resource_group)
-  Resource.create(name: name, full_name: full_name, google_calendar_id: google_calendar_id, pricing_cents: pricing_dollars * 100,
+  Resource.create(name: name,
+                  full_name: full_name,
+                  google_calendar_id: google_calendar_id,
+                  pricing_cents: pricing_dollars * 100,
+                  pricing_cents_member: pricing_member_dollars * 100,
                   group: resource_group)
 end
 
@@ -52,3 +56,9 @@ create_resource("main", "Main Room", "bloom.org.au_39343634313833322d383137@reso
 # Recurring memberships have a stripe ID but no price (pricing is stored in the stripe subscription information)
 MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
 MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Dedicated Workspace', stripe_id: 'dedicated', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Coworking Membership', stripe_id: 'coworking', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Freelancer Pass', stripe_id: 'freelancer', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Community Membership', stripe_id: 'community', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'St Cat\'s Community Membership', stripe_id: '', recurring: false, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+

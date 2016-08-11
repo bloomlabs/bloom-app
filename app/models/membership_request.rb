@@ -65,7 +65,6 @@ class MembershipRequest < ActiveRecord::Base
     end
 
     state :payment_required do
-      event :confirmation, transitions_to: :active_membership
       event :pay, transitions_to: :active_membership
       event :cancel, transitions_to: :cancelled
     end
