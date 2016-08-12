@@ -6,7 +6,7 @@ Rails.configuration.google_calendar = {
 }
 require 'google/api_client'
 require 'json'
-%w{
+
 hash = {:web => {
     :auth_uri => 'https://accounts.google.com/o/oauth2/auth',
     :token_uri => 'https://accounts.google.com/o/oauth2/token',
@@ -33,4 +33,4 @@ auth_client.update!(
 
 auth_client.refresh_token = Rails.configuration.google_calendar[:refresh_token]
 auth_client.fetch_access_token!
-Rails.configuration.google_calendar[:auth_client] = auth_client}
+Rails.configuration.google_calendar[:auth_client] = auth_client
