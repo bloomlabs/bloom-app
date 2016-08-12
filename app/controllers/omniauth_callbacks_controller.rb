@@ -12,7 +12,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
               authorize! :new, @user
               req = MembershipRequest.new(user: @user, membership_type: MembershipType.find_by_stripe_id(stripe_id))
               req.save!
-              Heap.track 'Membership Request Started', @user.id, application_membership_type: stripe_id
+              Heap.track 'Membership Request Started', @user.heap_identifier, application_membership_type: stripe_id
             end
             session['user_return_to'] = membership_request_path(req)
           end

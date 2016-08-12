@@ -17,7 +17,7 @@ class UserProfilesController < ApplicationController
         redirect_path = session.delete(:user_profile_return_to) || dashboard_path
         format.html { redirect_to redirect_path, notice: 'Thanks for telling us about yourself!' }
         format.json { render :show, status: :created, location: @user_profile }
-        Heap.add_user_properties current_user.id,
+        Heap.add_user_properties current_user.heap_identifier,
                                  full_name: current_user.firstname + ' ' + current_user.lastname,
                                  email: current_user.email,
                                  date_of_birth: @user_profile.date_of_birth.to_s,
