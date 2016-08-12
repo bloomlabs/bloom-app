@@ -93,11 +93,12 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def accept
-    
+    Heap.track 'Membership Request Approved', self.user.id, application_membership_type: self.membership_type.stripe_id
   end
 
   def pay
     MembershipRequestsMailer.delay.coworking_confirmation(self)
+    Heap.track 'Membership Request Paid', self.user.id, current_membership_type: self.membership_type.stripe_id
   end
 
   def payment_fail
@@ -105,9 +106,11 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def cancel
+    Heap.track 'Membership Request Cancelled', self.user.id
     update_attribute(:closed, true)
 
     if self.current_state == :active_membership
+      Heap.track 'Active Membership Cancelled', self.user.id, current_membership_type: ''
       MembershipRequestsMailer.delay.cancelled_membership(self)
     end
   end

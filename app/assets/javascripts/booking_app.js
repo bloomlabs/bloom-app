@@ -101,6 +101,7 @@ $(document).ready(function () {
             if (data.error) {
                 alert(data.error);
             } else {
+                heap.track('Booking made', {'Booking id': data.id});
                 window.location.href = "/booking/" + data.id + "/confirmation";
             }
         }).error(function (data) {

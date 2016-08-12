@@ -8,6 +8,9 @@
   <script type="text/javascript">
     window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
     heap.load("4070855641");
+    <% if current_user %>
+    heap.identify(<%= current_user.id %>);
+    <% end %>
   </script>
 </head>
 <body>
@@ -21,15 +24,15 @@
         <% if user_signed_in? %>
             <li class="nav-link"><%= link_to current_user.firstname.titleize, dashboard_path %></li>
             <% if current_user.manager? %>
-              <li class="nav-link"><%= link_to "Admin", rails_admin.dashboard_path %></li>
+                <li class="nav-link"><%= link_to "Admin", rails_admin.dashboard_path %></li>
             <% end %>
             <% if current_user.wifi_access? %>
-              <li class="nav-link"><%= link_to "WiFi", wifi_path %></li>
+                <li class="nav-link"><%= link_to "WiFi", wifi_path %></li>
             <% end %>
-            <li class="nav-link"><%= link_to "Book us", '/booking/serious/new'%></li>
+            <li class="nav-link"><%= link_to "Book us", '/booking/serious/new' %></li>
             <li class="nav-link"><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
         <% else %>
-            <li class="nav-link"><%= link_to "Book us", '/booking/serious/new'%></li>
+            <li class="nav-link"><%= link_to "Book us", '/booking/serious/new' %></li>
             <li class="nav-link"><%= link_to "Log in", new_user_session_path %></li>
         <% end %>
       </ul>

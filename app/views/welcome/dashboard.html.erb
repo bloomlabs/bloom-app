@@ -18,7 +18,7 @@
 <% end %>
 
 <% unless @active_memberships.any? %>
-    <%= button_to "Apply to be a member", new_membership_request_path, :method => "get" %>
+    <%= button_to 'Apply to be a member', new_membership_request_path, method: 'get', id: 'dashboard_apply_to_be_a_member' %>
 <% end %>
 
 <% else %>

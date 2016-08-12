@@ -21,7 +21,9 @@ class UserProfile < ActiveRecord::Base
       field :date_of_birth
       field :gender
       field :education_status
+      field :university
       field :university_degree
+      field :university_student_number
       field :nationality
       field :created_at
     end

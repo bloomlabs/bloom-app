@@ -81,8 +81,13 @@
       <%= f.label :university_degree %>
       <%= f.text_field :university_degree %>
     </div>
+
+    <div class="field" style="display:none">
+      <%= f.label :university_student_number %>
+      <%= f.text_field :university_student_number %>
+    </div>
     <br>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit id: 'user_profile_submit' %>
     </div>
 <% end %>

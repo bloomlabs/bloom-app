@@ -11,7 +11,7 @@
       <%= date_select(:startdate, :startdate, default: Date.today, with_css_classes: true, discard_day: true) %>
     </div>
 
-    <%= submit_tag("Continue") %>
+    <%= submit_tag('Continue', id: 'membership_request_info_submit') %>
 <% end %>
 
 <%= render 'workflow_footer' %>
