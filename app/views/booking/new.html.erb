@@ -30,9 +30,9 @@
     <label for="title">Event title (format: organisation name - event title)</label>
     <input type="text" id="title" name="title" class="field">
     <button id="pay" disabled="disabled">Pay</button>
-    <% if !current_user.nil? and current_user.superuser? %>
-        <input type="hidden" id="superuser" name="superuser">
-        <button id="superuser_book" disabled="disabled">Book free (as super user)</button>
+    <% if !current_user.nil? and current_user.manager? %>
+        <input type="hidden" id="manager" name="manager">
+        <button id="manager_book" disabled="disabled">Book free (as manager)</button>
     <% end %>
 <% end -%>
 <script>

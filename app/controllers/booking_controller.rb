@@ -29,9 +29,9 @@ class BookingController < ApplicationController
     @duration = ((((@end_time - @start_time) / 1.hour) * 2).round / 2.0 - @remainingFreeTime).to_i
 
     @should_pay = true
-    if params.has_key?(:superuser) and params[:superuser] == 'true'
-      if current_user.nil? or !current_user.superuser?
-        render :json => {error: 'Not a superuser'}
+    if params.has_key?(:manager) and params[:manager] == 'true'
+      if current_user.nil? or !current_user.manager?
+        render :json => {error: 'Not a manager'}
         return
       end
       @should_pay = false

@@ -6,7 +6,7 @@
 $(document).ready(function () {
     var startTime = null, endTime = null;
     var $payBtn = $("#pay");
-    var $payBtns = $("#pay,#superuser_book");
+    var $payBtns = $("#pay,#manager_book");
     var $calendar = $("#calendar");
     $calendar.fullCalendar({
         googleCalendarApiKey: 'AIzaSyARPG8GaKq6eJ7I6nu-oLV6IurQSu6K-js',
@@ -114,9 +114,9 @@ $(document).ready(function () {
         });
     }
 
-    $("#superuser_book").on('click', function (e) {
+    $("#manager_book").on('click', function (e) {
         e.preventDefault();
-        $("#superuser").val('true');
+        $("#manager").val('true');
         submitForm();
     });
 
