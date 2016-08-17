@@ -3,7 +3,7 @@ class UserProfile < ActiveRecord::Base
   belongs_to :user
 
   def name
-    "#{user.name} @ #{created_at}"
+    "#{user.firstname} #{user.lastname} @ #{created_at}"
   end
 
   rails_admin do
