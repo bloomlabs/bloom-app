@@ -8,11 +8,11 @@
 
 def create_managers(firstname, lastname, email)
   u = User.new(
-    firstname: firstname,
-    lastname: lastname,
-    email: email,
-    access_level: 100,
-    password: Devise.friendly_token[0, 20]
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      access_level: 100,
+      password: Devise.friendly_token[0, 20]
   )
   u.skip_confirmation!
   u.save
@@ -20,11 +20,11 @@ end
 
 def create_superuser(firstname, lastname, email)
   u = User.new(
-    firstname: firstname,
-    lastname: lastname,
-    email: email,
-    access_level: 255,
-    password: Devise.friendly_token[0, 20]
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      access_level: 255,
+      password: Devise.friendly_token[0, 20]
   )
   u.skip_confirmation!
   u.save
@@ -54,11 +54,18 @@ create_resource("main", "Main Room", "bloom.org.au_39343634313833322d383137@reso
 # WARNING: Don't change membership names, currently hard-coded in some places
 
 # Recurring memberships have a stripe ID but no price (pricing is stored in the stripe subscription information)
-MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
-MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
-MembershipType.create(name: 'Dedicated Workspace', stripe_id: 'dedicated', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
-MembershipType.create(name: 'Coworking Membership', stripe_id: 'coworking', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
-MembershipType.create(name: 'Freelancer Pass', stripe_id: 'freelancer', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
-MembershipType.create(name: 'Community Membership', stripe_id: 'community', recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
-MembershipType.create(name: 'St Cat\'s Community Membership', stripe_id: '', recurring: false, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Full-Time Member', stripe_id: 'full-time', free_booking_hours: 2,
+                      recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Part-Time Member', stripe_id: 'part-time', free_booking_hours: 2,
+                      recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Dedicated Workspace', stripe_id: 'dedicated', free_booking_hours: 8,
+                      recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Coworking Membership', stripe_id: 'coworking', free_booking_hours: 4,
+                      recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Freelancer Pass', stripe_id: 'freelancer', free_booking_hours: 2,
+                      recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'Community Membership', stripe_id: 'community', free_booking_hours: 2,
+                      recurring: true, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
+MembershipType.create(name: 'St Cat\'s Community Membership', stripe_id: '', free_booking_hours: 4,
+                      recurring: false, autoapprove: false, status_email: 'status.coworker@bloom.org.au', success_email: 'new.coworker@bloom.org.au', wifi_access: true)
 

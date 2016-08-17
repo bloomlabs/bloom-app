@@ -23,7 +23,9 @@ module RailsAdmin
         end
         register_instance_option :controller do
           Proc.new do
-            object.accept!
+            if object.current_state == :pending_decision
+              object.accept!
+            end
             flash[:notice] = 'Application accepted'
             redirect_to show_path
           end
@@ -36,7 +38,9 @@ module RailsAdmin
         end
         register_instance_option :controller do
           Proc.new do
-            object.reject!
+            if object.current_state == :pending_decision
+              object.reject!
+            end
             flash[:notice] = 'Application rejected'
             redirect_to show_path
           end
@@ -67,8 +71,8 @@ RailsAdmin.config do |config|
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
   config.actions do
-    dashboard                     # mandatory
-    index                         # mandatory
+    dashboard # mandatory
+    index # mandatory
     new
     export
     bulk_delete

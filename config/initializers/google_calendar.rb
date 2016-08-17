@@ -32,5 +32,8 @@ auth_client.update!(
 )
 
 auth_client.refresh_token = Rails.configuration.google_calendar[:refresh_token]
-auth_client.fetch_access_token!
+begin
+  auth_client.fetch_access_token!
+rescue
+end
 Rails.configuration.google_calendar[:auth_client] = auth_client

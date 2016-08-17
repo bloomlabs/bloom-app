@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812032436) do
+ActiveRecord::Schema.define(version: 20160817030019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,11 +71,12 @@ ActiveRecord::Schema.define(version: 20160812032436) do
     t.string   "stripe_id"
     t.boolean  "recurring"
     t.boolean  "autoapprove"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.string   "status_email",  default: "memberships@bloom.org.au", null: false
-    t.string   "success_email", default: "memberships@bloom.org.au", null: false
-    t.boolean  "wifi_access",   default: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.string   "status_email",       default: "memberships@bloom.org.au", null: false
+    t.string   "success_email",      default: "memberships@bloom.org.au", null: false
+    t.boolean  "wifi_access",        default: false
+    t.integer  "free_booking_hours"
   end
 
   create_table "resources", force: :cascade do |t|

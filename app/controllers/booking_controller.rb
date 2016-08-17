@@ -113,11 +113,14 @@ class BookingController < ApplicationController
   end
 
   private
+  def get_free_hours(user)
+    user.active_memberships.first.membership_type.free_booking_hours
+  end
 
   def get_remaining_free_time(resource)
     time = 0
     if current_user and current_user.has_subscription?
-      time = max(0, 2 - resource.calculate_booked_week_time(current_user))
+      time = max(0, get_free_hours(current_user.active_memberships) - resource.calculate_booked_week_time(current_user))
     end
     time
   end
