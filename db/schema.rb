@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817030019) do
+ActiveRecord::Schema.define(version: 20160817150342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "booking_access_token_resources", force: :cascade do |t|
+    t.integer  "resource_id"
+    t.integer  "booking_access_token_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "booking_access_token_resources", ["booking_access_token_id"], name: "index_booking_access_token_resources_on_booking_access_token_id", using: :btree
+  add_index "booking_access_token_resources", ["resource_id"], name: "index_booking_access_token_resources_on_resource_id", using: :btree
+
+  create_table "booking_access_tokens", force: :cascade do |t|
+    t.string   "token"
+    t.integer  "discount"
+    t.date     "expiry"
+    t.date     "signup_expiry"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "bookings", force: :cascade do |t|
     t.integer  "resource_id"
@@ -47,6 +66,19 @@ ActiveRecord::Schema.define(version: 20160817030019) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "job_postings", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "user_id"
+    t.string   "title"
+    t.date     "expiry"
+    t.string   "requirements"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.boolean  "closed"
+  end
+
+  add_index "job_postings", ["user_id"], name: "index_job_postings_on_user_id", using: :btree
 
   create_table "membership_requests", force: :cascade do |t|
     t.integer  "user_id"
@@ -89,6 +121,16 @@ ActiveRecord::Schema.define(version: 20160817030019) do
     t.string   "group"
     t.integer  "pricing_cents_member"
   end
+
+  create_table "user_booking_access_tokens", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "booking_access_token_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "user_booking_access_tokens", ["booking_access_token_id"], name: "index_user_booking_access_tokens_on_booking_access_token_id", using: :btree
+  add_index "user_booking_access_tokens", ["user_id"], name: "index_user_booking_access_tokens_on_user_id", using: :btree
 
   create_table "user_interests", force: :cascade do |t|
     t.integer  "user_profile_id"
@@ -182,10 +224,15 @@ ActiveRecord::Schema.define(version: 20160817030019) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
+  add_foreign_key "booking_access_token_resources", "booking_access_tokens"
+  add_foreign_key "booking_access_token_resources", "resources"
   add_foreign_key "bookings", "resources"
   add_foreign_key "bookings", "users"
+  add_foreign_key "job_postings", "users"
   add_foreign_key "membership_requests", "membership_types"
   add_foreign_key "membership_requests", "users"
+  add_foreign_key "user_booking_access_tokens", "booking_access_tokens"
+  add_foreign_key "user_booking_access_tokens", "users"
   add_foreign_key "user_interests", "user_profiles"
   add_foreign_key "user_profiles", "users"
   add_foreign_key "user_skills", "user_profiles"

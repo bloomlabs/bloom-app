@@ -12,7 +12,9 @@ class User < ActiveRecord::Base
 
   has_many :membership_requests
   has_many :user_profiles
+  has_many :job_postings
   has_many :bookings
+  has_many :user_booking_access_tokens
 
   def heap_identifier
     email

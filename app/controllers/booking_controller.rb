@@ -2,7 +2,7 @@ class BookingController < ApplicationController
   def new
     @resource = Resource.find_by_name!(params[:name])
     @remainingFreeTime = get_remaining_free_time(@resource)
-    @pricing_cents = (!current_user.nil? && current_user.has_subscription?) ? @resource.pricing_cents_member : @resource.pricing_cents
+    @pricing_cents = get_pricing_cents(current_user, @resource, 1)
   end
 
   def pay
@@ -38,10 +38,11 @@ class BookingController < ApplicationController
     end
 
     @stripe_payment_id = ''
-    if @duration > 0 and @should_pay
+    @pricing_cents = get_pricing_cents(current_user, @resource, @duration)
+    if @duration > 0 and @pricing_cents > 0 and @should_pay
       begin
         @stripe_payment = Stripe::Charge.create(
-            amount: @duration * (current_user.has_subscription? ? @resource.pricing_cents_member : @resource.pricing_cents),
+            amount: @pricing_cents,
             currency: 'aud',
             source: params[:stripeToken],
             description: 'Booking the ' + @resource.full_name
@@ -93,9 +94,9 @@ class BookingController < ApplicationController
                                 :headers => {'Content-Type'.freeze => 'application/json'.freeze},
                                 :body_object => new_event)
     if result.data.try(:error)
-      puts 'error'
       @booking.delete
       @stripe_payment.refund
+      puts 'Google calendar error'
       puts result.data.inspect
       render :json => {error: 'Google Calendar error.'}
     else
@@ -105,14 +106,34 @@ class BookingController < ApplicationController
 
   def confirmation
     @booking = Booking.find(params[:id])
-    if @booking.user_id and (!current_user or current_user.id != @booking.user_id)
-      render 500
+    if @booking.user_id and (current_user.nil? or current_user.id != @booking.user_id)
+      render :status => 404
       return
     end
     @remainingFreeTime = get_remaining_free_time(@booking.resource)
   end
 
   private
+  def get_pricing_cents(user, resource, duration)
+    discount = get_discount(user, resource)
+    pricing_cents = (!user.nil? && user.has_subscription?) ? resource.pricing_cents_member : resource.pricing_cents
+    pricing_cents = (pricing_cents * (discount / 100.0)).round
+    pricing_cents * duration
+  end
+
+  def get_discount(user, resource)
+    if user.nil?
+      return
+    end
+    result = BookingAccessToken
+                 .joins(:user_booking_access_tokens, :booking_access_token_resources)
+                 .where('user_booking_access_tokens.user_id' => user.id,
+                        'booking_access_token_resources.resource_id' => resource.id)
+                 .where('expiry <= ?', Date.today)
+                 .order(discount: :desc).first
+    result.nil? ? 0 : result.discount
+  end
+
   def get_free_hours(user)
     user.active_memberships.first.membership_type.free_booking_hours
   end

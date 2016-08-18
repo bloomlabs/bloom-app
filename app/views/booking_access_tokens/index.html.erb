@@ -1,0 +1,6 @@
+<h1 style="display: inline-block">Currently unexpired booking access tokens</h1> <%= link_to 'Create new token', booking_access_token_path(:new) %>
+<ul>
+  <% @tokens.each do |token| %>
+      <li><%= link_to token.token, booking_access_token_path(token) %></li>
+  <% end %>
+</ul>

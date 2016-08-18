@@ -1,0 +1,37 @@
+<h1>New booking token generator</h1>
+
+<%= form_for(@token) do |f| %>
+    <% if @token.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@token.errors.count, "error") %> prohibited this token from being saved:</h2>
+
+          <ul>
+            <% @token.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :discount %>
+      <%= f.text_field :discount, placeholder: 'Discount (%)' %>
+    </div>
+    <div class="field">
+      <%= f.label :signup_expiry %>
+      <p>The discount token cannot have new signups after this date</p>
+      <%= f.date_select :signup_expiry, with_css_classes: true, order: [:day, :month, :year] %>
+    </div>
+    <div class="field">
+      <%= f.label :expiry %>
+      <p>The discount will expire at this date</p>
+      <%= f.date_select :expiry, with_css_classes: true, order: [:day, :month, :year] %>
+    </div>
+    <div class="field">
+      <p>Select all of the resources you want the discount to be applied to.</p>
+      <%= select_tag 'resources', options_from_collection_for_select(Resource.all, "id", "full_name"), :multiple => true %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

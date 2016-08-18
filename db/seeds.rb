@@ -50,6 +50,7 @@ create_managers('Shannon', 'Ziegelaar', 'shannon@bloom.org.au')
 create_resource("fun", "Fun Room", "bloom.org.au_2d34323031373634322d373530@resource.calendar.google.com", 30, 10, 'meeting_room')
 create_resource("serious", "Serious Room", "bloom.org.au_3931313239303239343537@resource.calendar.google.com", 30, 10, 'meeting_room')
 create_resource("main", "Main Room", "bloom.org.au_39343634313833322d383137@resource.calendar.google.com", 50, 30, 'main_room')
+create_resource("emmywood", "Emmy Wood Theatre", "bloom.org.au_2d3836333538353036323139@resource.calendar.google.com", 50, 30, 'emmy_wood')
 
 # WARNING: Don't change membership names, currently hard-coded in some places
 

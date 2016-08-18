@@ -31,7 +31,6 @@ gem 'omniauth-google-oauth2'
 gem 'paper_trail'
 gem 'workflow'
 
-#For some nice CSS I hope
 gem 'bourbon'
 gem 'neat'
 gem 'normalize-rails'

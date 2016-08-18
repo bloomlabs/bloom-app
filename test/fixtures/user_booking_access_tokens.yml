@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  booking_access_token_id: 
+
+two:
+  user_id: 
+  booking_access_token_id: 

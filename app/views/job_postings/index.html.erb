@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1 style="display: inline-block">Listing Job Postings</h1>
+<%= link_to 'New Job posting', new_job_posting_path %>
+
+<table>
+  <thead>
+  <tr>
+    <th id="job-listing-header-user">User</th>
+    <th>Description</th>
+    <th>Title</th>
+    <th>Expiry</th>
+    <th>Requirements</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @job_postings.each do |job_posting| %>
+      <tr>
+        <td><%= job_posting.user.name %></td>
+        <td><%= job_posting.description %></td>
+        <td><%= job_posting.title %></td>
+        <td><%= job_posting.expiry %></td>
+        <td><%= job_posting.requirements %></td>
+        <td><%= link_to 'Show', job_posting %>
+          <% if job_posting.allows_editing(current_user) %>
+            <%= link_to 'Edit', edit_job_posting_path(job_posting) %>
+            <%= link_to 'Destroy', job_posting, method: :delete, data: {confirm: 'Are you sure?'} %>
+        <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= javascript_include_tag 'job_postings' %>

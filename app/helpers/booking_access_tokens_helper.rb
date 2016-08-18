@@ -1,0 +1,2 @@
+module BookingAccessTokensHelper
+end

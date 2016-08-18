@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: MyString
+  discount: 1
+  expiry: 2016-08-17
+  signup_expiry: 2016-08-17
+
+two:
+  token: MyString
+  discount: 1
+  expiry: 2016-08-17
+  signup_expiry: 2016-08-17

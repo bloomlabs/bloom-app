@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations'}
 
   resources :user_profiles, only: [:new, :create]
+  resources :job_postings
+  resources :booking_access_tokens, only: [:new, :create, :show, :index] do
+    collection do
+      get :signup
+    end
+  end
   resource :wifi, only: [:show, :update], controller: 'wifi'
 
   scope 'membership_payments', controller: :membership_payments do

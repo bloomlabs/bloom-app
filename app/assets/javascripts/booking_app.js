@@ -50,7 +50,7 @@ $(document).ready(function () {
             startTime = start;
             endTime = end;
             var duration = (endTime - startTime) / (60 * 60 * 1000);
-            if (remainingFreeTime - duration > 0) {
+            if (remainingFreeTime - duration > 0 || roomPricing == 0) {
                 $payBtn.html("Book");
             } else {
                 $payBtn.html("Pay");
@@ -124,7 +124,7 @@ $(document).ready(function () {
         e.preventDefault();
         $payBtns.attr('disabled', true);
         var duration = ((endTime - startTime) / (60 * 60 * 1000)) - remainingFreeTime;
-        if (duration < 0) {
+        if (duration < 0 || roomPricing == 0) {
             submitForm();
             return;
         }

@@ -1,0 +1,13 @@
+<h1>Booking access token</h1>
+<p>Discount: <%= @token.discount %>%</p>
+<p>Expiry: <%= @token.expiry %></p>
+<p>Signup expiry: <%= @token.signup_expiry %></p>
+<p>Link: <%= request.protocol + request.host_with_port + signup_booking_access_tokens_path(uuid: @token.token) %></p>
+<h4>Resources</h4>
+<ul>
+  <% BookingAccessTokenResource.where(booking_access_token_id: @token.id).each do |token_resource| %>
+      <li>
+        <%= token_resource.resource.full_name %>
+      </li>
+  <% end %>
+</ul>
