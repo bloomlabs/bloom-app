@@ -123,7 +123,7 @@ class BookingController < ApplicationController
 
   def get_discount(user, resource)
     if user.nil?
-      return
+      return 0
     end
     result = BookingAccessToken
                  .joins(:user_booking_access_tokens, :booking_access_token_resources)
