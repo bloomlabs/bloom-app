@@ -117,7 +117,7 @@ class BookingController < ApplicationController
   def get_pricing_cents(user, resource, duration)
     discount = get_discount(user, resource)
     pricing_cents = (!user.nil? && user.has_subscription?) ? resource.pricing_cents_member : resource.pricing_cents
-    pricing_cents = (pricing_cents * (discount / 100.0)).round
+    pricing_cents = (pricing_cents * (1 - (discount / 100.0))).round
     pricing_cents * duration
   end
 
