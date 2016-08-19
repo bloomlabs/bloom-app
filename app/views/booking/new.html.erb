@@ -20,6 +20,9 @@
 <% elsif @remainingFreeTime > 0 %>
     You have <%= @remainingFreeTime %> free booking hours left for this week.
 <% end %>
+<p>
+   Click and drag to make a booking on the time/day you want. A booking can last for a maximum of three hours.
+</p>
 <div id='calendar' data-calendar-id="<%= @resource.google_calendar_id %>"></div>
 <%= form_tag({:controller => 'booking', :action => 'pay'}, id: 'form') do -%>
     <input type="hidden" id="stripeToken" name="stripeToken">
