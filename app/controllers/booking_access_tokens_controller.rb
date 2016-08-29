@@ -18,7 +18,7 @@ class BookingAccessTokensController < ApplicationController
 
   def index
     head 422 and return if current_user.nil? or not current_user.manager?
-    @tokens = BookingAccessToken.where('expiry <= ?', Date.today)
+    @tokens = BookingAccessToken.where('expiry >= ?', Date.today)
   end
 
   def show
