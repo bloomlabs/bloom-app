@@ -48,7 +48,7 @@ class MembershipRequest < ActiveRecord::Base
 
   workflow do
     state :new do
-      event :submit, transitions_to: :notify_pitching_night
+      event :submit, transitions_to: :book_interview
       event :cancel, transitions_to: :cancelled
       event :autoapprove, transitions_to: :payment_required
     end

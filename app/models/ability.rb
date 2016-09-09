@@ -45,6 +45,7 @@ class Ability
       can :destroy, MembershipRequest, :user_id => user.id
 
       can :workflow_new, MembershipRequest, :user_id => user.id
+      can :workflow_notify_pitching_night, :user_id => user.id
       can :workflow_book_interview, MembershipRequest, :user_id => user.id
       can :workflow_pending_decision, MembershipRequest, :user_id => user.id
       can :workflow_payment_required, MembershipRequest, :user_id => user.id
