@@ -76,6 +76,31 @@ class MembershipRequestsController < ApplicationController
     end
   end
 
+  def workflow_notify_pitching_night
+    if request.post?
+      @membership_request.notify!
+      redirect_to membership_request_path(@membership_request) and return
+    end
+
+    graph = Koala::Facebook::API.new(Rails.configuration.facebook[:app_token])
+    events = graph.get_connections('BloomPerth', 'events?since=' + Time.now.to_i)
+    @found_event = nil
+    while true
+      events.each do |event|
+        dt = DateTime.parse(event['start_time'.freeze])
+        if event['name'.freeze].include? 'Pitching Night'.freeze and DateTime.now < dt and
+            (@found_event.nil? or dt < DateTime.parse(@found_event['start_time'].freeze))
+          @found_event = event
+        end
+      end
+      if events.respond_to? :next_page and not events.next_page.nil?
+        events = events.next_page
+      else
+        break
+      end
+    end
+  end
+
   def workflow_pending_decision
 
   end

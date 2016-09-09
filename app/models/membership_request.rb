@@ -48,9 +48,14 @@ class MembershipRequest < ActiveRecord::Base
 
   workflow do
     state :new do
-      event :submit, transitions_to: :book_interview
+      event :submit, transitions_to: :notify_pitching_night
       event :cancel, transitions_to: :cancelled
       event :autoapprove, transitions_to: :payment_required
+    end
+
+    state :notify_pitching_night do
+      event :notify, transitions_to: :pending_decision
+      event :cancel, transitions_to: :cancelled
     end
 
     state :book_interview do
@@ -103,6 +108,10 @@ class MembershipRequest < ActiveRecord::Base
 
   def payment_fail
     puts 'TODO: Uh oh ya messed up'
+  end
+
+  def notify
+    MembershipRequestsMailer.delay.new_membership_request(self)
   end
 
   def cancel

@@ -1,5 +1,5 @@
-<%= @request.user.firstname %> <%= @request.user.lastname %> has submitted a new <%= @request.membership_type.name %> membership request and is ready for an interview.
+<%= @request.user.firstname %> <%= @request.user.lastname %> has submitted a new <%= @request.membership_type.name %> membership request and is ready to attend a pitching night.
 
-You can review the specifics of their application / interview times here; <%= rails_admin.show_url(model_name: 'membership_request', id: @request.id) %>
+You can review the specifics of their application here; <%= rails_admin.show_url(model_name: 'membership_request', id: @request.id) %>
 
-Please get in touch with them to organize an interview time and use the above link to accept/reject their application when necessary.
+Please get in touch with them to confirm the pitching night they wish to attend and use the above link to accept/reject their application when necessary.

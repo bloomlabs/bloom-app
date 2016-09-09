@@ -33,6 +33,7 @@ gem 'workflow'
 
 gem 'bourbon'
 gem 'neat'
+gem 'koala'
 gem 'normalize-rails'
 
 gem 'stripe'
