@@ -38,7 +38,7 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def has_subscription?
-    !self.stripe_subscription_id.nil?
+    !self.stripe_subscription_id.nil? and workflow_state == 'active_membership'
   end
 
   def set_subscription!(customer, plan_id)

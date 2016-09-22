@@ -135,7 +135,12 @@ class BookingController < ApplicationController
   end
 
   def get_free_hours(user)
-    user.active_memberships.first.membership_type.free_booking_hours
+    active_membership = user.active_memberships.first
+    if active_membership.nil?
+      0
+    else
+      active_membership.membership_type.free_booking_hours
+    end
   end
 
   def get_remaining_free_time(resource)
