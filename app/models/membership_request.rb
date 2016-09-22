@@ -27,7 +27,9 @@ class MembershipRequest < ActiveRecord::Base
   end
 
   def delete_subscription
-    stripe_subscription.delete
+    if !self.stripe_subscription_id.nil?
+      stripe_subscription.delete
+    end
     self.stripe_subscription_id = nil
   end
 
