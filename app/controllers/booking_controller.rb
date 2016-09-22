@@ -130,7 +130,7 @@ class BookingController < ApplicationController
                  .where('user_booking_access_tokens.user_id' => user.id,
                         'booking_access_token_resources.resource_id' => resource.id)
                  .where('expiry >= ?', Date.today)
-                 .order(discount: :desc).first 
+                 .order(discount: :desc).first
     result.nil? ? 0 : result.discount
   end
 

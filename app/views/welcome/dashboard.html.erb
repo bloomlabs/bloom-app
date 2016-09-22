@@ -9,9 +9,9 @@
         <h2>Active Applications / Memberships</h2>
         <% @active_applications.each do |request| %>
             <% if not request.cancelled? and not request.expired? %>
-                <%= link_to "#{request.membership_type.name}", request %> <br>
+                <%= link_to "#{request.membership_type.name}", request %>
                 <% if request.active_membership? and request.has_subscription? %>
-                    (<%= link_to "Cancel subscription", action: 'cancel_subscription', controller: 'membership_payments', :membership_request_id => request.id %>)
+                    (<%= link_to 'Cancel subscription', action: 'cancel_subscription', controller: 'membership_payments', :membership_request_id => request.id %>)
                     <br>
                 <% end %>
             <% end %>
