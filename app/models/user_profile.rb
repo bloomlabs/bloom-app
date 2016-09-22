@@ -17,6 +17,7 @@ class UserProfile < ActiveRecord::Base
     show do
       field :user
       field :created_at
+      field :telephone_number
       field :signup_reason
       field :date_of_birth
       field :gender
