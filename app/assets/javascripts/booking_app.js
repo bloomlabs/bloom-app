@@ -31,7 +31,7 @@ $(document).ready(function () {
         viewRender: function (view, element) {
             view.timeGrid.computeSelection = function (span0, span1) {
                 var span = this.computeSelectionSpan(span0, span1);
-                if (span && (!this.view.calendar.isSelectionSpanAllowed(span) || span.end - span.start > 10800000
+                if (span && (!this.view.calendar.isSelectionSpanAllowed(span) || span.end - span.start > 36000000 
                     || span.start.clone().toDate() < new Date(moment(new Date()).format('YYYY-MM-DDTHH:mm')))) {
                     return false;
                 }
@@ -124,7 +124,7 @@ $(document).ready(function () {
         e.preventDefault();
         $payBtns.attr('disabled', true);
         var duration = ((endTime - startTime) / (60 * 60 * 1000)) - remainingFreeTime;
-        if (duration < 0 || roomPricing == 0) {
+        if (duration <= 0 || roomPricing == 0) {
             submitForm();
             return;
         }

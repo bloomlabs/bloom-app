@@ -1,10 +1,14 @@
 <p>Dear <%= @request.user.firstname %>,</p>
 
-<p>Thank you for applying to become a Bloom <%= @request.membership_type.name %>.</p>
+<% if @request.membership_type.stripe_id == 'dedicated' %>
+<p>Thank you for applying for a Bloom <%= @request.membership_type.name %>.</p>
+<% else %>
+<p>Thank you for applying for Bloom <%= @request.membership_type.name %>.</p>
+<% end %>
 
 <p>We're sorry to inform you that we're not able to accept your application at this time.</p>
 
-<p>We would like to encourage you to become a Bloom Community Member - you can get access to all the workshops and advisors you need to develop your idea and apply again.</p>
+<p>We would like to encourage you to sign up for a Bloom Freelancer Pass - you can get access to all the workshops and advisors you need to develop your idea and apply again.</p>
 
 <p>For any more information or questions, please don't hesitate to reach out to me.</p>
 

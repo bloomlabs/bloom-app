@@ -1,5 +1,56 @@
 <%= render 'workflow_header' %>
-
-<p>Thank you for submitting your application to become a Bloom <%= @membership_request.membership_type.name %>! A Bloom team member will be in contact with you in the next few days to organise an interview.</p>
-
+<% if @membership_type.name == 'freelancer' %>
+    <p>
+      Thank you for submitting your application to become a Bloom Freelancer!
+    </p>
+    <p>
+      A Bloom team member will be in contact with you in the next few days to arrange an induction session and set you
+      up with a 24/7 access card for use out of business hours.
+    </p>
+    <ul>
+      <li>Like the <a href="http://facebook.com/BloomPerth">Bloom Facebook Page</a> and subscribe to our events
+        feed
+      </li>
+      <li>Join the <a href="http://facebook.com/groups/bloom.community">Bloom Community</a> and
+        <a href="http://facebook.com/groups/867349346651609">Bloom Member</a> Facebook Groups
+      </li>
+      <li>
+        Come along to our next monthly Friday community pitch night & drinks
+      </li>
+    </ul>
+    <p>Welcome to Bloom!</p>
+<% else %>
+    <p>Thank you for submitting your application for a Bloom <%= @membership_request.membership_type.name %>!</p>
+    <p>To be accepted as a member you need to complete a lean canvas and pitch at one of our monthly pitch nights.
+      <% if !@next_pitching_night.nil? %>
+          Our next pitch night is happening
+          on <%= DateTime.parse(@next_pitching_night['start_time']).strftime('%d %B') %>. Sign up to pitch
+          <a href="http://facebook.com/events/<%= @next_pitching_night['id'] %>">here</a>.
+      <% else %>
+          Watch our <a href="https://www.facebook.com/BloomPerth/events">events feed</a> to sign up for the next pitching
+          night.
+      <% end %>
+    </p>
+    <p>
+      To help you get ready to pitch come to our event "Your Business Model on a Page" to help you prepare your lean
+      canvas.
+      <% if !@next_leancanvas_night.nil? %>
+          The next event is happening on <%= DateTime.parse(@next_leancanvas_night['start_time']).strftime('%d %B') %>
+          and you can sign up to pitch
+          <a href="http://facebook.com/events/<%= @next_leancanvas_night['id'] %>">here</a>.
+      <% end %>
+    </p>
+    <p>
+      We also run "Preparing to Pitch" events so you know what should go in your 3 minute pitch to become a member.
+      <% if !@next_preparing_to_pitch_night.nil? %>
+          The next "Preparing to Pitch" event is happening
+          on <%= DateTime.parse(@next_preparing_to_pitch_night['start_time']).strftime('%d %B') %> and you can
+          sign up to pitch
+          <a href="http://facebook.com/events/<%= @next_preparing_to_pitch_night['id'] %>">here</a>.
+      <% end %>
+    </p>
+    <p>
+      You can always find the latest events on our <a href="http://facebook.com/BloomPerth">Facebook page</a>.
+    </p>
+<% end %>
 <%= render 'workflow_footer' %>

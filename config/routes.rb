@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   get 'booking/:id/confirmation' => 'booking#confirmation'
 
   scope 'api', controller: :api do
+    get 'st_cats_admin' => 'api#profiles_csv'
     post 'user_auth_token'
     post 'profiles/:id' => 'api#get_profile_info'
     post 'profiles/:id/update' => 'api#update_profile_info'

@@ -1,5 +1,5 @@
 class BookingAccessTokensController < ApplicationController
-  before_action :authenticate_user!, only: [:signup_for_token]
+  before_action :authenticate_user!, only: [:signup]
 
   def signup
     @token = BookingAccessToken.find_by_token(params[:uuid])

@@ -62,7 +62,6 @@ class MembershipRequestsController < ApplicationController
       @membership_request.save!
       @membership_request.submit!
       redirect_to membership_request_path(@membership_request)
-
     end
   end
 
@@ -76,21 +75,25 @@ class MembershipRequestsController < ApplicationController
     end
   end
 
-  def workflow_notify_pitching_night
-    if request.post?
-      @membership_request.notify!
-      redirect_to membership_request_path(@membership_request) and return
-    end
-
+  def workflow_pending_decision
     graph = Koala::Facebook::API.new(Rails.configuration.facebook[:app_token])
-    events = graph.get_connections('BloomPerth', 'events?since=' + Time.now.to_i)
-    @found_event = nil
+    events = graph.get_connections('BloomPerth', "events?since=#{Time.now.to_i}")
+    @next_pitching_night = nil
+    @next_leancanvas_night = nil
+    @next_preparing_to_pitch_night = nil
+    @membership_type = @membership_request.membership_type
+    now = DateTime.now
     while true
       events.each do |event|
-        dt = DateTime.parse(event['start_time'.freeze])
-        if event['name'.freeze].include? 'Pitching Night'.freeze and DateTime.now < dt and
-            (@found_event.nil? or dt < DateTime.parse(@found_event['start_time'].freeze))
-          @found_event = event
+        dt = DateTime.parse(event['start_time'])
+        return if now > dt
+        name = event['name'].downcase
+        if name.include? 'pitching night' and (@next_pitching_night.nil? or dt < DateTime.parse(@next_pitching_night['start_time']))
+          @next_pitching_night = event
+        elsif name.include? 'prepare to pitch' and (@next_preparing_to_pitch_night.nil? or dt < DateTime.parse(@next_preparing_to_pitch_night['start_time']))
+          @next_preparing_to_pitch_night = event
+        elsif name.include? 'lean canvas' and (@next_leancanvas_night.nil? or dt < DateTime.parse(@next_leancanvas_night['start_time']))
+          @next_leancanvas_night = event
         end
       end
       if events.respond_to? :next_page and not events.next_page.nil?
@@ -99,10 +102,6 @@ class MembershipRequestsController < ApplicationController
         break
       end
     end
-  end
-
-  def workflow_pending_decision
-
   end
 
   def workflow_payment_required

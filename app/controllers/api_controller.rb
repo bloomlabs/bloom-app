@@ -1,6 +1,6 @@
 class ApiController < ActionController::Base
-  before_filter :set_format
-  before_action :authenticate
+  before_filter :set_format, except: [:profiles_csv]
+  before_action :authenticate, except: [:profiles_csv]
   before_action :authenticate_user_token, only: [:get_profile_info]
 =begin
   s3 = Aws::S3::Client.new(
@@ -24,6 +24,15 @@ class ApiController < ActionController::Base
     }
   end
 =end
+
+  def profiles_csv
+    if params[:auth] != ENV['ST_CATS_ADMIN_SECRET']
+      render :status => 404 and return
+    end
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename=bloom_members_' + Time.now.to_i.to_s + '.csv'
+    @memberships = MembershipRequest.where(workflow_state: 'active_membership')
+  end
 
   def update_profile_info
     user = User.find(params[:id])

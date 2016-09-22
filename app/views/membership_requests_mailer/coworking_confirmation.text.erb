@@ -1,16 +1,17 @@
 Dear <%= @request.user.firstname %>,
 
-Great to have you on board as a Bloom <%= @request.membership_type.name %>!
+Great to have you on board, your Bloom <%= @request.membership_type.name %> has been accepted!
 
 Here's a few next steps:
-* Like the Bloom Facebook Page <http://facebook.com/ProfectusAustralia> and subscribe to our events feed
-* Join the Bloom UWA <http://facebook.com/groups/bloom.uwa> or Bloom Curtin <http://facebook.com/groups/CurtinBloom> Facebook Groups and Join the Bloom Members http://facebook.com/groups/867349346651609> Facebook Group
-* Set your Bloom WiFi password at <<%= wifi_url %>> so you can sign-in to the 'BloomLab Members' WiFi network at the Lab
-* Visit the BloomLab during business hours (M-F 9am-5pm) to start working
-* Come along to our next Friday night drinks! They're every Friday at 5pm at the BloomLab
+* Like the Bloom Facebook Page <http://facebook.com/BloomPerth> and subscribe to our events feed
+* Join the Bloom Community <http://facebook.com/groups/bloom.community> and Bloom Members <http://facebook.com/groups/867349346651609> Facebook Groups
+* Set your Bloom WiFi password at <%= link_to 'here', wifi_url %> so you can sign-in to the 'BloomLab Members' WiFi network at the Lab
+* Start working out of the BloomLab! (When we meet I will set you up with a 24/7 access card for use out of business hours)
+* Come along to our next Friday community pitch night & drinks
+* Subscribe to our newsletter here <http://www.bloom.org.au/#footer>
 
-I'll be in contact shortly to arrange an induction and welcome session.
+Either Shyaam or myself will be in contact shortly to arrange an induction and welcome session.
 
-If you have any questions, please don't hesitate to reach out to me.
+If you have any questions, please don't hesitate to reach out to us.
 
 <%= render 'signature' %>

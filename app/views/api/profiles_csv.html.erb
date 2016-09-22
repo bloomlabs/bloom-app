@@ -1,0 +1,16 @@
+Name,Email,UWA Student Number (if applicable)
+<% require 'csv' %>
+<% @memberships.each do |membership| %>
+  <%
+     profile = membership.user.user_profiles.first
+     student_number = nil
+     if !profile.nil?
+       u = profile.university
+       # TODO: could parse email here
+       if !u.nil? && !profile.university_student_number.nil? && (u.downcase == 'uwa' || u.downcase == 'university of western australia')
+         student_number = profile.university_student_number
+       end
+     end
+  %>
+  <%= [(membership.user.firstname + " " + membership.user.lastname), membership.user.email, student_number].to_csv( row_sep: nil ) %>
+<% end %>
