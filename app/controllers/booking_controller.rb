@@ -116,7 +116,6 @@ class BookingController < ApplicationController
   private
   def get_pricing_cents(user, resource, duration)
     discount = get_discount(user, resource)
-    puts discount
     pricing_cents = (!user.nil? && user.has_subscription?) ? resource.pricing_cents_member : resource.pricing_cents
     pricing_cents = (pricing_cents * (1 - (discount / 100.0))).round
     pricing_cents * duration
@@ -131,8 +130,7 @@ class BookingController < ApplicationController
                  .where('user_booking_access_tokens.user_id' => user.id,
                         'booking_access_token_resources.resource_id' => resource.id)
                  .where('expiry >= ?', Date.today)
-                 .order(discount: :desc).first
-    puts result.nil?
+                 .order(discount: :desc).first 
     result.nil? ? 0 : result.discount
   end
 
